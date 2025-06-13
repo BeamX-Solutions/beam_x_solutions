@@ -102,8 +102,8 @@ const ContactPage: React.FC = () => {
                     <Phone className="h-5 w-5 text-primary mr-3 flex-shrink-0" />
                     <div>
                       <p className="text-gray-600 mb-1">
-                        <a href="tel:+14155550123" className="hover:text-primary transition-colors">
-                          +234(0)816-471-1076
+                        <a href="tel:+2348164711076" className="hover:text-primary transition-colors">
+                          +234 816 471 1076
                         </a>
                       </p>
                     </div>
