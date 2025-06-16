@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-// Update the import path if Navbar is located elsewhere, for example:
 import Navbar from './Navbar';
-// Or, if Navbar does not exist, create it at src/components/Navbar.tsx
 import Footer from './Footer';
+import Loading from './Loading';
 
-const Layout: React.FC = () => {
+interface LayoutProps {
+  isLoading: boolean;
+}
+
+const Layout: React.FC<LayoutProps> = ({ isLoading }) => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -20,11 +23,10 @@ const Layout: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar isScrolled={isScrolled} />
-      
-      <main className="flex-grow">
+      <main className="flex-grow relative">
+        {isLoading && <Loading />}
         <Outlet />
       </main>
-      
       <Footer />
     </div>
   );
