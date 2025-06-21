@@ -8,7 +8,10 @@ import ServicesPage from './pages/ServicesPage';
 import BlogPage from './pages/BlogPage';
 import BlogPostPage from './pages/BlogPostPage';
 import ContactPage from './pages/ContactPage';
+import CaseStudiesPage from './pages/CaseStudiesPage';
+import CaseStudyDetailPage from './pages/CaseStudyDetailPage';
 import ScrollToTop from './components/ScrollToTop';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 
 // Simple Error Boundary component
 interface ErrorBoundaryProps {
@@ -56,12 +59,8 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    console.log('Route changed to:', location.pathname); // Debug: Log route changes
     setIsLoading(true);
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-      console.log('Loading state ended for:', location.pathname); // Debug: Log loading end
-    }, 1500); // Increased to 1.5s for visibility
+    const timer = setTimeout(() => setIsLoading(false), 200);
     return () => clearTimeout(timer);
   }, [location]);
 
@@ -74,9 +73,12 @@ function App() {
             <Route index element={<HomePage />} />
             <Route path="about" element={<AboutPage />} />
             <Route path="services" element={<ServicesPage />} />
+            <Route path="case-studies" element={<CaseStudiesPage />} />
+            <Route path="case-studies/:slug" element={<CaseStudyDetailPage />} />
             <Route path="blog" element={<BlogPage />} />
             <Route path="blog/:slug" element={<BlogPostPage />} />
             <Route path="contact" element={<ContactPage />} />
+            <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
           </Route>
         </Routes>
       </ErrorBoundary>

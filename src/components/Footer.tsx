@@ -10,9 +10,9 @@ const Footer: React.FC = () => {
           {/* Company Info */}
           <div>
             <img 
-              src="/beam-x-logo3.jpg" // Replace with your actual logo filename in public/
+              src="/Beamx-Logo-Colour.png" 
               alt="BeamX Solutions Logo"
-              className="h-12 w-auto max-w-[200px] mb-6" // Larger height for rectangular logo
+              className="h-12 w-auto max-w-[200px] mb-6" 
             />
             <p className="text-gray-400 mb-6">
               Empowering businesses to unlock the full potential of their data through expert data strategy, 
@@ -108,9 +108,12 @@ const Footer: React.FC = () => {
         </div>
         
         <div className="py-6 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-500 text-sm mb-4 md:mb-0">
+          <p className="text-gray-500 text-sm">
             © {new Date().getFullYear()} BeamX Solutions. All rights reserved.
           </p>
+          <Link to="/privacy-policy" className="text-gray-500 text-sm mb-4 md:mb-0 hover:text-primary transition-colors">
+            Privacy Policy
+          </Link>
         </div>
       </div>
     </footer>

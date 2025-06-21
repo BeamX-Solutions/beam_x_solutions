@@ -70,13 +70,15 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
       </style>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isBlogPostPage || isScrolled ? 'bg-white shadow-md py-3' : 'bg-white/95 backdrop-blur-sm py-5'
+          isScrolled || isBlogPostPage
+            ? 'bg-white shadow-md py-3'
+            : 'bg-transparent backdrop-blur-sm py-5'
         }`}
       >
         <div className="container-custom mx-auto flex items-center justify-between px-4">
           <NavLink to="/" className="flex items-center gap-4">
             <img
-              src="/beam-x-logo3.jpg"
+              src="/Beamx-Logo-Colour.png"
               alt="BeamX Solutions Logo"
               className="h-12 w-auto max-w-[200px] transition-transform duration-300 hover:scale-105"
             />
@@ -88,6 +90,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
               { name: 'Home', path: '/' },
               { name: 'About', path: '/about' },
               { name: 'Services', path: '/services' },
+              { name: 'Case Studies', path: '/case-studies' },
               { name: 'Blog', path: '/blog' },
               { name: 'Contact Us', path: '/contact' },
             ].map((item) => (
@@ -98,22 +101,22 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
                 className={({ isActive }) =>
                   item.name === 'Contact Us'
                     ? `relative font-semibold transition-all duration-300 contact-glow contact-border flex items-center gap-1.5 px-2 py-1 rounded-md ${
-                        isBlogPostPage || isScrolled
+                        isScrolled || isBlogPostPage
                           ? isActive
                             ? 'text-secondary'
                             : 'text-gray-700 hover:text-secondary'
                           : isActive
-                            ? 'text-secondary'
-                            : 'text-gray-800 hover:text-secondary'
+                            ? 'text-white'
+                            : 'text-gray-200 hover:text-white'
                       }`
                     : `relative font-medium transition-all duration-300 hover:scale-105 ${
-                        isBlogPostPage || isScrolled
+                        isScrolled || isBlogPostPage
                           ? isActive
                             ? 'text-primary'
                             : 'text-gray-700 hover:text-primary'
                           : isActive
-                            ? 'text-primary'
-                            : 'text-gray-800 hover:text-primary'
+                            ? 'text-white'
+                            : 'text-gray-200 hover:text-white'
                       }`
                 }
                 aria-label={item.name === 'Contact Us' ? 'Contact Us' : undefined}
@@ -150,9 +153,9 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
             aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
           >
             {isMobileMenuOpen ? (
-              <X className={isBlogPostPage || isScrolled ? 'text-gray-900' : 'text-gray-800'} size={24} />
+              <X className={isScrolled || isBlogPostPage ? 'text-gray-900' : 'text-white'} size={24} />
             ) : (
-              <Menu className={isBlogPostPage || isScrolled ? 'text-gray-900' : 'text-gray-800'} size={24} />
+              <Menu className={isScrolled || isBlogPostPage ? 'text-gray-900' : 'text-white'} size={24} />
             )}
           </button>
 
@@ -168,6 +171,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
                 { name: 'Home', path: '/' },
                 { name: 'About', path: '/about' },
                 { name: 'Services', path: '/services' },
+                { name: 'Case Studies', path: '/case-studies' },
                 { name: 'Blog', path: '/blog' },
                 { name: 'Contact Us', path: '/contact' },
               ].map((item, index) => (
@@ -185,7 +189,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={({ isActive }) =>
                       item.name === 'Contact Us'
-                        ? `block text-lg font-semibold px-6 py-4 contact-glow contact-border flex items-center justify-center gap-2 transition-all mx-4 my-1 rounded-md ${
+                        ? `text-lg font-semibold px-6 py-4 contact-glow contact-border flex items-center justify-center gap-2 transition-all mx-4 my-1 rounded-md ${
                             isActive
                               ? 'text-secondary bg-secondary/10'
                               : 'text-gray-800 hover:text-secondary hover:bg-secondary/5'
