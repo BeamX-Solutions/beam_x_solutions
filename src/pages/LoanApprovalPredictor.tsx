@@ -109,19 +109,6 @@ const LoanApprovalPredictor: React.FC = () => {
     }
   };
 
-  const wakeBackend = async () => {
-    try {
-      const response = await fetch("https://loan-approval-api-11n8.onrender.com/");
-      if (response.ok) {
-        alert("Backend is awake!");
-      } else {
-        throw new Error("Failed to wake backend.");
-      }
-    } catch {
-      alert("Failed to wake backend.");
-    }
-  };
-
   return (
     <>
       {/* Hero Section */}
@@ -300,13 +287,6 @@ const LoanApprovalPredictor: React.FC = () => {
                   </div>
                 </div>
 
-                <Button
-                  variant="secondary"
-                  onClick={wakeBackend}
-                  className="w-full py-2 mt-2 text-sm"
-                >
-                  Wake Backend
-                </Button>
                 <Button
                   type="submit"
                   variant="primary"

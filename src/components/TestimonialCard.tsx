@@ -25,7 +25,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.5, delay: delay * 0.1 }}
     >
-      <Quote className="h-10 w-10 text-primary mb-6" />
+      <Quote className="h-10 w-10  text-green-500 mb-6" />
       <p className="text-gray-700 mb-6 italic">{quote}</p>
       <div>
         <p className="font-semibold text-gray-900">{author}</p>

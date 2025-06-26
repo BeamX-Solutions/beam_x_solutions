@@ -75,8 +75,8 @@ const ServicesPage: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h1 className="text-white text-4xl md:text-5xl font-bold mb-6 tracking-tight">Our Services</h1>
-              <p className="text-gray-100 text-lg md:text-xl mb-8 leading-relaxed">
+              <h1 className="text-white mb-6">Our Services</h1>
+              <p className="text-gray-100 text-lg mb-8">
                 Empowering your business with innovative, data-driven solutions tailored to your growth.
               </p>
             </motion.div>

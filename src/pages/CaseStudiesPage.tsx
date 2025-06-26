@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import SectionHeader from '../components/SectionHeader';
 import Button from '../components/Button';
 import CTASection from '../components/CTASection';
@@ -26,6 +26,26 @@ const flagshipTools = [
 ];
 
 const CaseStudiesPage: React.FC = () => {
+  const navigate = useNavigate();
+  const [isWaking, setIsWaking] = useState(false);
+
+  const handleTryNow = async (slug: string) => {
+    if (slug === "loan-approval-predictor") {
+      setIsWaking(true);
+      try {
+        const response = await fetch("https://loan-approval-api-11n8.onrender.com/");
+        if (!response.ok) {
+          throw new Error("Failed to wake backend.");
+        }
+      } catch {
+        console.error("Failed to wake backend.");
+      } finally {
+        setIsWaking(false);
+      }
+    }
+    navigate(`/tools/${slug}`);
+  };
+
   return (
     <>
       {/* Hero Section */}
@@ -38,7 +58,7 @@ const CaseStudiesPage: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h1 className="text-white mb-6">Case Studies & Tools</h1>
+              <h1 className="text-white mb-6">Tools & Case Studies</h1>
               <p className="text-gray-100 text-lg mb-8">
                 Explore real-world examples and innovative tools that transform data into actionable solutions.
               </p>
@@ -47,8 +67,55 @@ const CaseStudiesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Case Studies Grid */}
+      {/* Flagship Products/Tools Grid */}
       <section className="section bg-white">
+        <div className="container-custom mx-auto px-4 sm:px-6">
+          <SectionHeader
+            title="Flagship Products & Tools"
+            subtitle="Explore our cutting-edge tools designed to empower your business with intelligent solutions."
+            center
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-4 sm:px-0">
+            {flagshipTools.map((tool, index) => (
+              <motion.article
+                key={tool.id}
+                className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+              >
+                <div className="relative h-32 overflow-hidden">
+                  <img
+                    src={tool.image}
+                    alt={tool.title}
+                    className="w-full h-full object-cover bg-white"
+                  />
+                </div>
+                <div className="p-4">
+                  <NavLink to={`/tools/${tool.slug}`}>
+                    <h2 className="text-lg font-semibold mb-2 hover:text-primary transition-colors line-clamp-2">
+                      {tool.title}
+                    </h2>
+                  </NavLink>
+                  <p className="text-gray-600 text-sm mb-3 line-clamp-3">{tool.description}</p>
+                  <Button
+                    variant="primary"
+                    className="text-sm"
+                    onClick={() => handleTryNow(tool.slug)}
+                    disabled={isWaking}
+                  >
+                    {isWaking && tool.slug === "loan-approval-predictor" ? "Waking Backend..." : "Try Now"}
+                  </Button>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Case Studies Grid */}
+      <section className="section bg-gray-50">
         <div className="container-custom mx-auto px-4 sm:px-6">
           <SectionHeader
             title="Our Success Stories"
@@ -82,50 +149,6 @@ const CaseStudiesPage: React.FC = () => {
                   <NavLink to={`/case-studies/${study.slug}`}>
                     <Button variant="primary" className="text-sm">
                       Read More
-                    </Button>
-                  </NavLink>
-                </div>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Flagship Products/Tools Grid */}
-      <section className="section bg-gray-50">
-        <div className="container-custom mx-auto px-4 sm:px-6">
-          <SectionHeader
-            title="Flagship Products & Tools"
-            subtitle="Explore our cutting-edge tools designed to empower your business with intelligent solutions."
-            center
-          />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-4 sm:px-0">
-            {flagshipTools.map((tool, index) => (
-              <motion.article
-                key={tool.id}
-                className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-              >
-                <div className="relative h-32 overflow-hidden">
-                  <img
-                    src={tool.image}
-                    alt={tool.title}
-                    className="w-full h-full object-cover bg-white"
-                  />
-                </div>
-                <div className="p-4">
-                  <NavLink to={`/tools/${tool.slug}`}>
-                    <h2 className="text-lg font-semibold mb-2 hover:text-primary transition-colors line-clamp-2">
-                      {tool.title}
-                    </h2>
-                  </NavLink>
-                  <p className="text-gray-600 text-sm mb-3 line-clamp-3">{tool.description}</p>
-                  <NavLink to={`/tools/${tool.slug}`}>
-                    <Button variant="primary" className="text-sm">
-                      Try Now
                     </Button>
                   </NavLink>
                 </div>

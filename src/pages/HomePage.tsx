@@ -7,13 +7,12 @@ import TestimonialCard from '../components/TestimonialCard';
 import CTASection from '../components/CTASection';
 import LogoScroller from '../components/LogoScroller';
 
-
 const HomePage: React.FC = () => {
   return (
     <>
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 lg:pt-56 lg:pb-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-primary z-0" />
+        <div className="absolute inset-0 bg-gradient-primary bg-opacity-75 z-0" />
         <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/7988079/pexels-photo-7988079.jpeg?auto=compress&cs=tinysrgb&w=1920')] bg-cover bg-center opacity-20 z-10" />
         
         <div className="container-custom relative z-20">
@@ -108,54 +107,44 @@ const HomePage: React.FC = () => {
             center
           />
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <motion.div
-              className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="bg-primary bg-opacity-10 p-4 rounded-lg w-fit mb-6">
-                <Users className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-semibold mb-4">Expert Team</h3>
-              <p className="text-gray-600">
-                Our team of data scientists, engineers, and analysts brings years of experience across industries to deliver exceptional results.
-              </p>
-            </motion.div>
-
-            <motion.div
-              className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <div className="bg-primary bg-opacity-10 p-4 rounded-lg w-fit mb-6">
-                <BrainCircuit className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-semibold mb-4">Innovative Solutions</h3>
-              <p className="text-gray-600">
-                We leverage cutting-edge technologies and methodologies to develop custom solutions that drive real business value.
-              </p>
-            </motion.div>
-
-            <motion.div
-              className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <div className="bg-primary bg-opacity-10 p-4 rounded-lg w-fit mb-6">
-                <LineChart className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-semibold mb-4">Proven Results</h3>
-              <p className="text-gray-600">
-                Our track record of successful implementations and satisfied clients speaks to our commitment to excellence.
-              </p>
-            </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                icon: <BrainCircuit className="h-8 w-8 text-green-500" />,
+                title: "Strategy First",
+                description: "We start with your business goals, not the latest tech trends. Every solution is built to move your specific metrics."
+              },
+              {
+                icon: <Server className="h-8 w-8 text-green-500" />,
+                title: "Built to Scale",
+                description: "Our systems grow with you. No expensive rebuilds when you hit your next milestone."
+              },
+              {
+                icon: <BarChart3 className="h-8 w-8 text-green-500" />,
+                title: "Value-Led",
+                description: "We care about ROI, not buzzwords. If it doesn’t make you money or save you time, we don’t build it."
+              },
+              {
+                icon: <Database className="h-8 w-8 text-green-500" />,
+                title: "Insight + Action",
+                description: "Pretty dashboards are useless without smart automation. We give you both the data and the systems that act on it."
+              }
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                className="bg-white p-6 rounded-lg shadow-sm"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="bg-green-50 p-3 rounded-lg w-fit mb-4">
+                  {item.icon}
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">{item.title}</h3>
+                <p className="text-gray-600 text-base">{item.description}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -171,10 +160,10 @@ const HomePage: React.FC = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <TestimonialCard
-              quote="BeamX helped us build a data strategy that completely transformed how we make decisions. The insights we've gained have been invaluable to our growth."
-              author="Sarah Johnson"
-              position="CTO"
-              company="TechNova Inc."
+              quote="BeamX didn’t just build our site, they redesigned our business operations. We now attract the kind of clients we always wanted, and we’re finally growing with confidence."
+              author="Emeka Dioha"
+              position="CEO"
+              company="Maple Maven Designs"
               delay={0}
             />
             <TestimonialCard
