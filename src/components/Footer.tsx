@@ -62,11 +62,11 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold text-white mb-6">Our Services</h3>
             <ul className="space-y-4">
               {[
-                { name: 'Data Strategy', path: '/services' },
-                { name: 'Business Intelligence', path: '/services' },
-                { name: 'Artificial Intelligence', path: '/services' },
-                { name: 'Data Engineering', path: '/services' },
-                { name: 'Data Visualization', path: '/services' },
+                { name: 'Web & Workflow Engineering', path: '/services' },
+                { name: 'Data Infrastructure & Automation', path: '/services' },
+                { name: 'Insights & Dashboards', path: '/services' },
+                { name: 'AI & Machine Learning', path: '/services' },
+                { name: 'Custom AI Agents', path: '/services' },
               ].map((item) => (
                 <li key={item.name}>
                   <Link 

@@ -2,8 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Award, Users, Target, Shield } from 'lucide-react';
 import CountUp from 'react-countup';
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
 import SectionHeader from '../components/SectionHeader';
 import Button from '../components/Button';
 import CTASection from '../components/CTASection';
@@ -26,22 +24,25 @@ const AboutPage: React.FC = () => {
 
   const stats = [
     {
-      percentage: 75,
+      value: 75,
       label: "Faster Insights",
       description:
         "We engineer data flows and analytics systems to deliver faster insights that fuel smarter decisions and business growth.",
+      suffix: "%",
     },
     {
-      percentage: 90,
+      value: 90,
       label: "AI Adoption Success",
       description:
-        "With 80% of our clients successfully adopting Gen AI solutions, we help you maximize AI technology to grow your business.",
+        "With 90% of our clients successfully adopting Gen AI solutions, we help you maximize AI technology to grow your business.",
+      suffix: "%",
     },
     {
-      percentage: 100,
+      value: 100,
       label: "Results-Focused",
       description:
         "Our client-centric approach ensures measurable growth through improved efficiency, increased revenue, or optimized costs.",
+      suffix: "%",
     },
   ];
 
@@ -130,18 +131,17 @@ const AboutPage: React.FC = () => {
                 >
                   {activeTab === 'mission' && (
                     <p className="text-lg">
-                      To be a global leader in strategic analytics, driven by the success of businesses across diverse industries by reducing failure rates and unlocking their full potential through data-driven solutions.
+                      To convert data into intelligent business decisions through strategy-first solutions that drive real growth and measurable results.
                     </p>
                   )}
                   {activeTab === 'vision' && (
                     <p className="text-lg">
-                      To empower entrepreneurs and businesses to navigate growth challenges with confidence, 
-                      leveraging actionable insights and AI innovation to build remarkable success stories.
+                      To become the go-to intelligence partner for ambitious businesses worldwide, using smart technology so any company can compete through data-led solutions and AI.
                     </p>
                   )}
                   {activeTab === 'goal' && (
                     <p className="text-lg">
-                      To help SMBs achieve measurable growth by leveraging the power of data and AI solutions.
+                      To empower 500+ growth-focused businesses with intelligent systems that save 10,000+ hours through automation while delivering measurable ROI across operations, finance, and customer retention.
                     </p>
                   )}
                 </motion.div>
@@ -197,43 +197,37 @@ const AboutPage: React.FC = () => {
           {/* Stats Section */}
           <section className="section bg-white">
             <div className="container-custom">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <SectionHeader
+                title="Our Impact"
+                subtitle="Delivering measurable results through data-driven solutions."
+                center
+              />
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
                 {stats.map((stat, index) => (
                   <motion.div
                     key={index}
-                    className="text-center p-6 rounded-xl shadow-sm border border-gray-100"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
+                    className="relative bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-100px' }}
-                    transition={{ duration: 1.5, delay: index * 0.2 }}
+                    transition={{ duration: 0.5, delay: index * 0.2 }}
                   >
-                    <div className="w-24 h-24 mx-auto mb-4 relative flex items-center justify-center">
-                      <CircularProgressbar
-                        value={stat.percentage}
-                        text={`${stat.percentage}%`}
-                        styles={buildStyles({
-                          textColor: "transparent", // Hide default text
-                          pathColor: "#3B82F6",
-                          trailColor: "#E5E7EB",
-                          textSize: "20px",
-                          pathTransitionDuration: 2.5,
-                        })}
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-gray-900 text-xl font-bold">
-                          <CountUp
-                            start={0}
-                            end={stat.percentage}
-                            duration={4.5}
-                            suffix="%"
-                            enableScrollSpy
-                            scrollSpyOnce
-                          />
-                        </span>
+                    {/* Background Accent */}
+                    <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
+                    <div className="relative z-10">
+                      <div className="text-4xl font-bold text-primary mb-4">
+                        <CountUp
+                          start={0}
+                          end={stat.value}
+                          duration={3}
+                          suffix={stat.suffix}
+                          enableScrollSpy
+                          scrollSpyOnce
+                        />
                       </div>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">{stat.label}</h3>
+                      <p className="text-gray-600 text-sm">{stat.description}</p>
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{stat.label}</h3>
-                    <p className="text-gray-600 text-sm">{stat.description}</p>
                   </motion.div>
                 ))}
               </div>
