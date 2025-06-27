@@ -4,6 +4,7 @@ import Button from '../components/Button';
 import CTASection from '../components/CTASection';
 
 interface FormData {
+  Dependents: number;
   Gender: string;
   Married: string;
   Education: string;
@@ -12,17 +13,18 @@ interface FormData {
   CoapplicantIncome: number;
   LoanAmount: number;
   Loan_Amount_Term: number;
-  CreditScore: number;
+  Credit_History: number;
   Property_Area: string;
 }
 
 interface PredictionResult {
-  approved: boolean;
   approval_probability: number;
+  prediction: string;
 }
 
 const LoanApprovalPredictor: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
+    Dependents: 0,
     Gender: "Male",
     Married: "Yes",
     Education: "Graduate",
@@ -31,7 +33,7 @@ const LoanApprovalPredictor: React.FC = () => {
     CoapplicantIncome: 0,
     LoanAmount: 0,
     Loan_Amount_Term: 360,
-    CreditScore: 600,
+    Credit_History: 1,
     Property_Area: "Semiurban",
   });
 
@@ -47,14 +49,15 @@ const LoanApprovalPredictor: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { ApplicantIncome, CoapplicantIncome, LoanAmount, Loan_Amount_Term, CreditScore } = formData;
+    const { Dependents, ApplicantIncome, CoapplicantIncome, LoanAmount, Loan_Amount_Term, Credit_History } = formData;
 
     if (
+      Dependents < 0 ||
       ApplicantIncome < 0 ||
       CoapplicantIncome < 0 ||
       LoanAmount < 0 ||
       Loan_Amount_Term < 0 ||
-      CreditScore < 0
+      Credit_History < 0
     ) {
       setError("All numeric fields must be non-negative.");
       return;
@@ -64,24 +67,23 @@ const LoanApprovalPredictor: React.FC = () => {
     setError(null);
     setResult(null);
 
-    const creditHistoryBinary = CreditScore >= 600 ? 1 : 0;
-
     const payload = {
-      Gender_Male: formData.Gender === "Male" ? 1 : 0,
-      Married_Yes: formData.Married === "Yes" ? 1 : 0,
-      Education_NotGraduate: formData.Education === "Not Graduate" ? 1 : 0,
-      Self_Employed_Yes: formData.Self_Employed === "Yes" ? 1 : 0,
+      Dependents: parseInt(Dependents.toString()),
       ApplicantIncome: parseFloat(ApplicantIncome.toString()),
       CoapplicantIncome: parseFloat(CoapplicantIncome.toString()),
       LoanAmount: parseFloat(LoanAmount.toString()),
       Loan_Amount_Term: parseFloat(Loan_Amount_Term.toString()),
-      Credit_History: creditHistoryBinary,
+      Credit_History: parseFloat(Credit_History.toString()),
+      Gender_Male: formData.Gender === "Male" ? 1 : 0,
+      Married_Yes: formData.Married === "Yes" ? 1 : 0,
+      Education_Not_Graduate: formData.Education === "Not Graduate" ? 1 : 0,
+      Self_Employed_Yes: formData.Self_Employed === "Yes" ? 1 : 0,
       Property_Area_Semiurban: formData.Property_Area === "Semiurban" ? 1 : 0,
       Property_Area_Urban: formData.Property_Area === "Urban" ? 1 : 0,
     };
 
     try {
-      const response = await fetch("https://loan-approval-api-11n8.onrender.com/predict", {
+      const response = await fetch("https://<your-render-url>.onrender.com/predict", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -142,6 +144,20 @@ const LoanApprovalPredictor: React.FC = () => {
             <div className="bg-white p-8 rounded-lg shadow-md">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Dependents</label>
+                    <input
+                      type="number"
+                      name="Dependents"
+                      value={formData.Dependents}
+                      onChange={handleChange}
+                      min="0"
+                      step="1"
+                      placeholder="0"
+                      className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-primary focus:border-primary"
+                      required
+                    />
+                  </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700">Gender</label>
                     <select
@@ -204,19 +220,16 @@ const LoanApprovalPredictor: React.FC = () => {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Credit Score</label>
-                    <input
-                      type="number"
-                      name="CreditScore"
-                      value={formData.CreditScore}
+                    <label className="block text-sm font-medium text-gray-700">Credit History</label>
+                    <select
+                      name="Credit_History"
+                      value={formData.Credit_History}
                       onChange={handleChange}
-                      min="0"
-                      max="850"
-                      step="1"
-                      placeholder="0"
                       className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-primary focus:border-primary"
-                      required
-                    />
+                    >
+                      <option value="1">Good (1)</option>
+                      <option value="0">Poor (0)</option>
+                    </select>
                   </div>
                 </div>
 
@@ -233,7 +246,7 @@ const LoanApprovalPredictor: React.FC = () => {
                       min="0"
                       step="0.01"
                       placeholder="0"
-                      className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-primary focus:border-primary"
+                      className="mt-1 block w-full border border-negative rounded-md p-2 text-sm focus:ring-primary focus:border-primary"
                       required
                     />
                   </div>
@@ -255,7 +268,7 @@ const LoanApprovalPredictor: React.FC = () => {
                   </div>
                   <div className="sm:col-span-2">
                     <label className="block text-sm font-medium text-gray-700">
-                      Loan Amount <span className="text-xs text-gray-500">(in thousands USD)</span>
+                      Loan Amount <span className="text-xs text-gray-500">(in USD)</span>
                     </label>
                     <input
                       type="number"
@@ -300,11 +313,11 @@ const LoanApprovalPredictor: React.FC = () => {
               {result && (
                 <div
                   className={`mt-6 p-4 rounded-md ${
-                    result.approved ? 'bg-green-100' : 'bg-red-100'
+                    result.prediction === 'APPROVED' ? 'bg-green-100' : 'bg-red-100'
                   }`}
                 >
                   <h2 className="text-lg font-semibold">
-                    {result.approved ? '✅ Loan Approved' : '❌ Loan Denied'}
+                    {result.prediction === 'APPROVED' ? '✅ Loan Approved' : '❌ Loan Denied'}
                   </h2>
                   <p>Approval Probability: {(result.approval_probability * 100).toFixed(2)}%</p>
                 </div>
