@@ -100,7 +100,7 @@ const LoanApprovalPredictor: React.FC = () => {
     };
 
     try {
-      const response = await fetch("https://<your-render-url>.onrender.com/predict", {
+      const response = await fetch("https://loan-approval-api-11n8.onrender.com/predict", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
