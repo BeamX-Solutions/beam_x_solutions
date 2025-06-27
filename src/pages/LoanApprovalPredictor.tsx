@@ -191,8 +191,8 @@ const LoanApprovalPredictor: React.FC = () => {
                         className={`block w-full border ${formErrors.Married ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
                       >
                         <option value="" disabled>Select your marital status</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
+                        <option value="Yes">Married</option>
+                        <option value="No">Single</option>
                       </select>
                       {formErrors.Married && <p className="text-red-500 text-xs mt-1">{formErrors.Married}</p>}
                     </div>
