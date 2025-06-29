@@ -79,7 +79,7 @@ export const blogPosts = [
     excerpt: "AI agents are intelligent software systems that can perceive their environment, make decisions, and take actions to achieve specific goals. Learn how they're transforming business operations and how to implement them effectively.",
     image: "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     author: "BeamX Solutions",
-    date: "March 15, 2024",
+    date: "August 17, 2024",
     readTime: "12 min read",
     category: "AI & Automation",
     fullContent: (
@@ -391,7 +391,7 @@ export const blogPosts = [
     excerpt: "Discover how predictive analytics can transform your business strategy in 2025. Learn to identify patterns, predict future outcomes, and make data-driven decisions that drive growth.",
     image: "https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     author: "BeamX Solutions",
-    date: "March 18, 2024",
+    date: "January 22, 2025",
     readTime: "15 min read",
     category: "Predictive Analytics",
     fullContent: (
@@ -684,7 +684,7 @@ export const blogPosts = [
     excerpt: "Discover the real impact of poor data quality on your business and learn practical strategies to transform data chaos into competitive advantage.",
     image: "https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     author: "BeamX Solutions",
-    date: "March 22, 2024",
+    date: "June 27, 2025",
     readTime: "14 min read",
     category: "Data Quality",
     fullContent: (

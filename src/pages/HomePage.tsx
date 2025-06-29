@@ -8,6 +8,42 @@ import CTASection from '../components/CTASection';
 import LogoScroller from '../components/LogoScroller';
 
 const HomePage: React.FC = () => {
+
+  const [currentTestimonial, setCurrentTestimonial] = React.useState(0);
+
+  const testimonials = [
+    {
+      quote: "BeamX didn't just build our site, they redesigned our business operations. We now attract the kind of clients we always wanted, and we're finally growing with confidence.",
+      author: "Emeka Dioha",
+      position: "CEO",
+      company: "Maple Maven Designs",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
+    },
+    {
+      quote: "The data insights BeamX provided transformed how we make decisions. Our revenue increased by 40% in just six months after implementing their recommendations.",
+      author: "Sarah Chen",
+      position: "Operations Director",
+      company: "TechFlow Solutions",
+      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face"
+    },
+    {
+      quote: "Their AI automation saved us 20 hours per week on manual tasks. The ROI was immediate and the team was incredibly professional throughout the entire process.",
+      author: "Marcus Rodriguez",
+      position: "Founder",
+      company: "DataDriven Logistics",
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
+    }
+  ];
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+    }, 5000); // Auto-advance every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [testimonials.length]);
+
+
   return (
     <>
       {/* Hero Section */}
@@ -31,7 +67,7 @@ const HomePage: React.FC = () => {
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button href="/contact" variant="white" icon>
-                  Contact Us
+                  Get Free Consultation
                 </Button>
                 <Button href="/services" variant="outline" className="text-white border-white hover:bg-white hover:text-primary" icon>
                   Our Services
@@ -153,33 +189,46 @@ const HomePage: React.FC = () => {
       <section className="section bg-gray-50">
         <div className="container-custom">
           <SectionHeader
-            title="What Our Clients Say"
-            subtitle="Don't just take our word for it. Here's what our clients have to say about working with BeamX Solutions."
+            title="Client Testimonials"
+            subtitle="Hear what our clients have to say about their experience working with BeamX Solutions."
             center
           />
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <TestimonialCard
-              quote="BeamX didn’t just build our site, they redesigned our business operations. We now attract the kind of clients we always wanted, and we’re finally growing with confidence."
-              author="Emeka Dioha"
-              position="CEO"
-              company="Maple Maven Designs"
-              delay={0}
-            />
-            <TestimonialCard
-              quote="The team at BeamX Solutions delivered a BI solution that exceeded our expectations. Their expertise and attention to detail made all the difference."
-              author="Michael Chen"
-              position="Director of Analytics"
-              company="Global Retail Group"
-              delay={1}
-            />
-            <TestimonialCard
-              quote="Working with BeamX on our AI initiative has given us a competitive edge in our industry. Their approach is both innovative and practical."
-              author="Jennifer Martinez"
-              position="VP of Operations"
-              company="HealthPlus Systems"
-              delay={2}
-            />
+          {/* Testimonials Carousel */}
+          <div className="max-w-4xl mx-auto">
+            <div className="relative overflow-hidden">
+              <motion.div
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{ transform: `translateX(-${currentTestimonial * 100}%)` }}
+              >
+                {testimonials.map((testimonial, index) => (
+                  <div key={index} className="w-full flex-shrink-0">
+                    <TestimonialCard
+                      quote={testimonial.quote}
+                      author={testimonial.author}
+                      position={testimonial.position}
+                      company={testimonial.company}
+                      avatar={testimonial.avatar}
+                      delay={0}
+                    />
+                  </div>
+                ))}
+              </motion.div>
+            </div>
+            
+            {/* Carousel indicators */}
+            <div className="flex justify-center mt-8 space-x-2">
+              {testimonials.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentTestimonial(index)}
+                  className={`w-3 h-3 rounded-full transition-colors duration-300 ${
+                    currentTestimonial === index ? 'bg-blue-600' : 'bg-gray-300 hover:bg-gray-400'
+                  }`}
+                  aria-label={`Go to testimonial ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
