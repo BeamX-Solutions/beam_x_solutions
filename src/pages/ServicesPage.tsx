@@ -15,7 +15,7 @@ const ServicesPage: React.FC = () => {
         "Automated workflow integration",
         "Scalable and responsive solutions"
       ],
-      imageUrl: "https://images.pexels.com/photos/270360/pexels-photo-270360.jpeg?auto=compress&cs=tinysrgb&w=400"
+      imageUrl: "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=400"
     },
     {
       icon: <Database className="h-10 w-10 text-green-500" />,
@@ -26,7 +26,7 @@ const ServicesPage: React.FC = () => {
         "Seamless API integration",
         "Automated data pipelines"
       ],
-      imageUrl: "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=400"
+      imageUrl: "https://images.pexels.com/photos/325229/pexels-photo-325229.jpeg?auto=compress&cs=tinysrgb&w=400"
     },
     {
       icon: <BarChart className="h-10 w-10 text-green-500" />,
@@ -37,7 +37,7 @@ const ServicesPage: React.FC = () => {
         "Real-time data visualization",
         "Actionable insights delivery"
       ],
-      imageUrl: "https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=400"
+      imageUrl: "https://images.pexels.com/photos/590020/pexels-photo-590020.jpeg?auto=compress&cs=tinysrgb&w=400"
     },
     {
       icon: <Brain className="h-10 w-10 text-green-500" />,
@@ -48,7 +48,7 @@ const ServicesPage: React.FC = () => {
         "Fraud detection systems",
         "Opportunity identification"
       ],
-      imageUrl: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400"
+      imageUrl: "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=400"
     },
     {
       icon: <Bot className="h-10 w-10 text-green-500" />,
@@ -59,7 +59,7 @@ const ServicesPage: React.FC = () => {
         "Lead qualification automation",
         "24/7 data analysis"
       ],
-      imageUrl: "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=400"
+      imageUrl: "https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg?auto=compress&cs=tinysrgb&w=400"
     }
   ];
 
@@ -85,9 +85,8 @@ const ServicesPage: React.FC = () => {
       </section>
 
       {/* Services Section */}
-      <section className="relative py-24">
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-100 via-green-100 to-orange-100 z-0" />
-        <div className="container-custom relative z-10 mx-auto px-4 sm:px-6">
+      <section className="section bg-white">
+        <div className="container-custom mx-auto px-4 sm:px-6">
           <SectionHeader
             title="Our Expertise"
             subtitle="Explore how we transform data into actionable growth opportunities for your business."
@@ -97,7 +96,7 @@ const ServicesPage: React.FC = () => {
             {services.map((service, index) => (
               <motion.div
                 key={index}
-                className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-8 bg-white p-8 rounded-xl shadow-sm hover:shadow-xl border border-gray-100 transition-all duration-300 group`}
+                className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-8 bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-lg border border-gray-100 transition-all duration-300 group`}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-100px' }}
@@ -118,7 +117,7 @@ const ServicesPage: React.FC = () => {
                 <div className="flex-1">
                   <div className="flex items-center gap-4 mb-4">
                     {service.icon}
-                    <h3 className="text-2xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">{service.title}</h3>
+                    <h3 className="text-2xl font-semibold text-gray-900 group-hover:text-primary transition-colors duration-300">{service.title}</h3>
                   </div>
                   <p className="text-gray-600 text-base mb-4 leading-relaxed">{service.description}</p>
                   <ul className="space-y-2">
@@ -130,7 +129,7 @@ const ServicesPage: React.FC = () => {
                     ))}
                   </ul>
                   <motion.div
-                    className="w-0 h-0.5 bg-orange-500 origin-left mt-4"
+                    className="w-0 h-0.5 bg-primary origin-left mt-4"
                     whileInView={{ width: "50%" }}
                     transition={{ duration: 1, delay: index * 0.2 }}
                   />
@@ -144,7 +143,7 @@ const ServicesPage: React.FC = () => {
       {/* CTA Section */}
       <CTASection
         title="Ready to Unlock Your Potential?"
-        subtitle="Let’s collaborate to transform your data into a competitive advantage."
+        subtitle="Let's collaborate to transform your data into a competitive advantage."
         primaryButtonText="Get in Touch"
         primaryButtonHref="/contact"
       />
