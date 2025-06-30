@@ -16,15 +16,15 @@ const HomePage: React.FC = () => {
       quote: "BeamX didn't just build our site, they redesigned our business operations. We now attract the kind of clients we always wanted, and we're finally growing with confidence.",
       author: "Emeka Dioha",
       position: "CEO",
-      company: "Maple Maven Designs",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
+      company: "Maple Maven Designs", 
+      avatar: "/first-person1.jpg"
     },
     {
       quote: "The data insights BeamX provided transformed how we make decisions. Our revenue increased by 40% in just six months after implementing their recommendations.",
-      author: "Sarah Chen",
+      author: "Jamie Richards",
       position: "Operations Director",
       company: "TechFlow Solutions",
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face"
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
     },
     {
       quote: "Their AI automation saved us 20 hours per week on manual tasks. The ROI was immediate and the team was incredibly professional throughout the entire process.",
