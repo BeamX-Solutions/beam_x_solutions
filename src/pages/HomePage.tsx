@@ -146,22 +146,22 @@ const HomePage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
-                icon: <BrainCircuit className="h-8 w-8 text-green-500" />,
+                icon: <BrainCircuit className="h-8 w-8 text-blue-500" />,
                 title: "Strategy First",
                 description: "We start with your business goals, not the latest tech trends. Every solution is built to move your specific metrics."
               },
               {
-                icon: <Server className="h-8 w-8 text-green-500" />,
+                icon: <Server className="h-8 w-8 text-blue-500" />,
                 title: "Built to Scale",
                 description: "Our systems grow with you. No expensive rebuilds when you hit your next milestone."
               },
               {
-                icon: <BarChart3 className="h-8 w-8 text-green-500" />,
+                icon: <BarChart3 className="h-8 w-8 text-blue-500" />,
                 title: "Value-Led",
                 description: "We care about ROI, not buzzwords. If it doesn’t make you money or save you time, we don’t build it."
               },
               {
-                icon: <Database className="h-8 w-8 text-green-500" />,
+                icon: <Database className="h-8 w-8 text-blue-500" />,
                 title: "Insight + Action",
                 description: "Pretty dashboards are useless without smart automation. We give you both the data and the systems that act on it."
               }
@@ -174,7 +174,7 @@ const HomePage: React.FC = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
               >
-                <div className="bg-green-50 p-3 rounded-lg w-fit mb-4">
+                <div className="bg-blue-50 p-3 rounded-lg w-fit mb-4">
                   {item.icon}
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">{item.title}</h3>

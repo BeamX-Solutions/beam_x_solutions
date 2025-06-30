@@ -228,6 +228,23 @@ const LoanApprovalPredictor: React.FC = () => {
                       </select>
                       {formErrors.Self_Employed && <p className="text-red-500 text-xs mt-1">{formErrors.Self_Employed}</p>}
                     </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Property Area
+                      </label>
+                      <select
+                        name="Property_Area"
+                        value={formData.Property_Area}
+                        onChange={handleChange}
+                        className={`block w-full border ${formErrors.Property_Area ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
+                      >
+                        <option value="" disabled>Select your property area</option>
+                        <option value="Semiurban">Semiurban</option>
+                        <option value="Urban">Urban</option>
+                        <option value="Rural">Rural</option>
+                      </select>
+                      {formErrors.Property_Area && <p className="text-red-500 text-xs mt-1">{formErrors.Property_Area}</p>}
+                    </div>
                   </div>
                 </div>
 
@@ -344,23 +361,6 @@ const LoanApprovalPredictor: React.FC = () => {
                         required
                       />
                       {formErrors.Loan_Amount_Term && <p className="text-red-500 text-xs mt-1">{formErrors.Loan_Amount_Term}</p>}
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Property Area
-                      </label>
-                      <select
-                        name="Property_Area"
-                        value={formData.Property_Area}
-                        onChange={handleChange}
-                        className={`block w-full border ${formErrors.Property_Area ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
-                      >
-                        <option value="" disabled>Select your property area</option>
-                        <option value="Semiurban">Semiurban</option>
-                        <option value="Urban">Urban</option>
-                        <option value="Rural">Rural</option>
-                      </select>
-                      {formErrors.Property_Area && <p className="text-red-500 text-xs mt-1">{formErrors.Property_Area}</p>}
                     </div>
                   </div>
                 </div>

@@ -46,6 +46,27 @@ const AboutPage: React.FC = () => {
     },
   ];
 
+  const teamMembers = [
+    {
+      name: "Obinna Nweke",
+      role: "CEO & Founder",
+      bio: "With over 15 years of experience in data science and AI, Obinna leads our team in developing cutting-edge analytics solutions.",
+      image: "/second-person.jpg",
+    },
+    {
+      name: "Michael Chen",
+      role: "Lead AI Engineer",
+      bio: "Michael specializes in building scalable AI systems, ensuring seamless integration and optimal performance for our clients.",
+      image: "https://via.placeholder.com/300x300?text=Michael+Chen",
+    },
+    {
+      name: "Sarah Johnson",
+      role: "Head of Strategy",
+      bio: "Sarah drives our client success by crafting data-driven strategies that align with business goals and deliver measurable results.",
+      image: "https://via.placeholder.com/300x300?text=Sarah+Johnson",
+    },
+  ];
+
   return (
     <>
       {/* Hero Section */}
@@ -89,7 +110,7 @@ const AboutPage: React.FC = () => {
       {showFinalHeader && (
         <>
           {/* Mission, Vision & Goal Section */}
-          <section className="section bg-gray-50">
+          <section className="section bg-white">
             <div className="container-custom">
               <SectionHeader
                 title="Our Mission & Values"
@@ -98,7 +119,7 @@ const AboutPage: React.FC = () => {
               />
 
               {/* Toggle Tabs */}
-              <div className="mb-16 max-w-3xl mx-auto">
+              <div className="mb-12 max-w-3xl mx-auto">
                 <div className="flex justify-center mb-6">
                   {['mission', 'vision', 'goal'].map((tab) => (
                     <button
@@ -146,48 +167,50 @@ const AboutPage: React.FC = () => {
                   )}
                 </motion.div>
               </div>
+            </div>
+          </section>
 
-              {/* Values */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Our Approach to Data Excellence */}
+          <section className="section bg-gray-50">
+            <div className="container-custom">
+              <SectionHeader
+                title="Our Approach to Data Excellence"
+                subtitle="A step-by-step process to transform your data into actionable success."
+                center
+              />
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
                 {[
                   {
-                    icon: Award,
-                    title: "Excellence",
-                    description:
-                      "We strive for excellence in every aspect of our work, from technical implementation to client communication.",
+                    step: 1,
+                    title: "Insight",
+                    description: "We extract valuable insights from your business and industry data.",
                   },
                   {
-                    icon: Users,
-                    title: "Collaboration",
-                    description:
-                      "We believe in the power of collaboration, working closely with our clients and on our team.",
+                    step: 2,
+                    title: "Connectivity",
+                    description: "Insights in isolation might point to a faster horse, not a car. We stay connected to the latest technology and AI solutions to best help your business achieve their goals.",
                   },
                   {
-                    icon: Target,
-                    title: "Innovation",
-                    description:
-                      "We continuously explore new technologies and methodologies to deliver innovative solutions.",
+                    step: 3,
+                    title: "Execution",
+                    description: "We don’t stop at recommendations; our unmatched execution style makes us the best partners to bring those ideas to light and help them scale.",
                   },
-                  {
-                    icon: Shield,
-                    title: "Integrity",
-                    description:
-                      "We operate with integrity, maintaining the highest ethical standards in all our interactions.",
-                  },
-                ].map((value, index) => (
+                ].map((step, index) => (
                   <motion.div
                     key={index}
-                    className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:bg-gray-50 transition-all duration-300"
-                    initial={{ opacity: 0, y: 30 }}
+                    className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 text-center"
+                    initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-100px' }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                   >
-                    <div className="bg-primary bg-opacity-10 p-3 rounded-lg w-fit mb-4">
-                      <value.icon className="h-6 w-6 text-primary" />
+                    <div className="mb-4">
+                      <span className="inline-flex items-center justify-center w-10 h-10 bg-blue-100 text-blue-600 rounded-full text-lg font-bold">
+                        {step.step}
+                      </span>
                     </div>
-                    <h3 className="text-xl font-semibold mb-2">{value.title}</h3>
-                    <p className="text-gray-600">{value.description}</p>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{step.title}</h3>
+                    <p className="text-gray-600 text-sm">{step.description}</p>
                   </motion.div>
                 ))}
               </div>
@@ -228,6 +251,38 @@ const AboutPage: React.FC = () => {
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">{stat.label}</h3>
                       <p className="text-gray-600 text-sm">{stat.description}</p>
                     </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Meet Our Team Section */}
+          <section className="section bg-gray-50">
+            <div className="container-custom">
+              <SectionHeader
+                title="Meet Our Team"
+                subtitle="Our dedicated experts are passionate about driving your success through innovative data solutions."
+                center
+              />
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                {teamMembers.map((member, index) => (
+                  <motion.div
+                    key={index}
+                    className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 text-center"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-100px' }}
+                    transition={{ duration: 0.5, delay: index * 0.2 }}
+                  >
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
+                    />
+                    <h3 className="text-xl font-semibold text-gray-900">{member.name}</h3>
+                    <p className="text-primary font-medium mb-2">{member.role}</p>
+                    <p className="text-gray-600 text-sm">{member.bio}</p>
                   </motion.div>
                 ))}
               </div>

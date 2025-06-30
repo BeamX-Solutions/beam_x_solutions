@@ -55,7 +55,7 @@ export default {
         'soft': '0 10px 25px -3px rgba(0, 0, 0, 0.05)',
       },
       backgroundImage: {
-        'gradient-primary': 'linear-gradient(135deg, #0F5AE0 0%, #06D6A0 100%)',
+        'gradient-primary': 'linear-gradient(135deg, #008bd8 0%, #02428e 100%)', // Updated gradient
         'gradient-dark': 'linear-gradient(135deg, #0A43A8 0%, #05A37A 100%)',
       },
       container: {
