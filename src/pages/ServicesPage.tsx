@@ -15,7 +15,7 @@ const ServicesPage: React.FC = () => {
         "Real-time data visualization",
         "Actionable insights delivery"
       ],
-      imageUrl: "https://images.pexels.com/photos/590020/pexels-photo-590020.jpeg?auto=compress&cs=tinysrgb&w=400"
+      imageUrl: "/insights_and_dashboards.webp"
     },
     {
       icon: <Globe className="h-10 w-10 text-green-500" />,
@@ -26,7 +26,7 @@ const ServicesPage: React.FC = () => {
         "Automated workflow integration",
         "Scalable and responsive solutions"
       ],
-      imageUrl: "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=400"
+      imageUrl: "/web_and_workflow.jpeg"
     },
     {
       icon: <Database className="h-10 w-10 text-green-500" />,
@@ -37,7 +37,7 @@ const ServicesPage: React.FC = () => {
         "Seamless API integration",
         "Automated data pipelines"
       ],
-      imageUrl: "https://images.pexels.com/photos/325229/pexels-photo-325229.jpeg?auto=compress&cs=tinysrgb&w=400"
+      imageUrl: "/data_infrastructure.webp"
     },
     {
       icon: <Brain className="h-10 w-10 text-green-500" />,
@@ -48,7 +48,7 @@ const ServicesPage: React.FC = () => {
         "Fraud detection systems",
         "Opportunity identification"
       ],
-      imageUrl: "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=400"
+      imageUrl: "/ai_and_machine_learning.webp"
     },
     {
       icon: <Bot className="h-10 w-10 text-green-500" />,
@@ -59,7 +59,7 @@ const ServicesPage: React.FC = () => {
         "Lead qualification automation",
         "24/7 data analysis"
       ],
-      imageUrl: "https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg?auto=compress&cs=tinysrgb&w=400"
+      imageUrl: "/custom_ai_agents.webp"
     }
   ];
 

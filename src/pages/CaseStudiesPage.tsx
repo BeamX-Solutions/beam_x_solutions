@@ -21,7 +21,7 @@ const flagshipTools = [
     slug: "loan-approval-predictor",
     title: "Loan Approval Predictor",
     description: "Automated lending decisions that are faster, smarter, and more accurate than manual reviews.",
-    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f",
+    image: "/loan_approval.jpg",
   },
 ];
 
