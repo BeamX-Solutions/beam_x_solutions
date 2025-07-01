@@ -20,18 +20,11 @@ const HomePage: React.FC = () => {
       avatar: "/first-person1.jpg"
     },
     {
-      quote: "The data insights BeamX provided transformed how we make decisions. Our revenue increased by 40% in just six months after implementing their recommendations.",
-      author: "Jamie Richards",
-      position: "Operations Director",
-      company: "TechFlow Solutions",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
-    },
-    {
-      quote: "Their AI automation saved us 20 hours per week on manual tasks. The ROI was immediate and the team was incredibly professional throughout the entire process.",
-      author: "Marcus Rodriguez",
-      position: "Founder",
-      company: "DataDriven Logistics",
-      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
+      quote: "BeamX joined us as a data partner and first provided a real-time dashboard and a model informing us 30 days before customers are likely to churn. In just 90 days, we improved retention by 28%, our team saves over 20 hours weekly, and we've cut $10K in annual costs.",
+      author: "Franklin Chigozie",
+      position: "Co-founder",
+      company: "AffixDot.com",
+      avatar: "/affix_rep.jpg"
     }
   ];
 

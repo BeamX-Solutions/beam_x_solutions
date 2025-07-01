@@ -7,6 +7,17 @@ import CTASection from '../components/CTASection';
 const ServicesPage: React.FC = () => {
   const services = [
     {
+      icon: <BarChart className="h-10 w-10 text-green-500" />,
+      title: "Insights & Dashboards",
+      description: "Get the insights that matter most with dashboards that show your North Star metrics and help you make better decisions.",
+      features: [
+        "Customizable dashboards",
+        "Real-time data visualization",
+        "Actionable insights delivery"
+      ],
+      imageUrl: "https://images.pexels.com/photos/590020/pexels-photo-590020.jpeg?auto=compress&cs=tinysrgb&w=400"
+    },
+    {
       icon: <Globe className="h-10 w-10 text-green-500" />,
       title: "Web & Workflow Engineering",
       description: "We build websites that actually convert and create automated workflows that save you hours every day.",
@@ -27,17 +38,6 @@ const ServicesPage: React.FC = () => {
         "Automated data pipelines"
       ],
       imageUrl: "https://images.pexels.com/photos/325229/pexels-photo-325229.jpeg?auto=compress&cs=tinysrgb&w=400"
-    },
-    {
-      icon: <BarChart className="h-10 w-10 text-green-500" />,
-      title: "Insights & Dashboards",
-      description: "Get the insights that matter most with dashboards that show your North Star metrics and help you make better decisions.",
-      features: [
-        "Customizable dashboards",
-        "Real-time data visualization",
-        "Actionable insights delivery"
-      ],
-      imageUrl: "https://images.pexels.com/photos/590020/pexels-photo-590020.jpeg?auto=compress&cs=tinysrgb&w=400"
     },
     {
       icon: <Brain className="h-10 w-10 text-green-500" />,

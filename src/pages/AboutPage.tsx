@@ -258,6 +258,7 @@ const AboutPage: React.FC = () => {
           </section>
 
           {/* Meet Our Team Section */}
+          {/*
           <section className="section bg-gray-50">
             <div className="container-custom">
               <SectionHeader
@@ -288,6 +289,7 @@ const AboutPage: React.FC = () => {
               </div>
             </div>
           </section>
+          */}
 
           {/* CTA Section (Footer) */}
           <CTASection

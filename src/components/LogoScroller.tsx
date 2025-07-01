@@ -2,12 +2,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const logos = [
-  '/david-smith-logo.PNG',
-  '/cara-indoors-logo.PNG',
+  '/logo34.png',
+  '/CA-logo-main.png',
+  '/Rotary_Logo_Lekki.png',
+  '/affix.PNG',
+  '/slots logo.png',
   '/lifeguard-logo.PNG',
-  '/climb-the-mountain-logo.PNG',
-  '/chippy-logo.PNG',
-  '/geek-haven-logo.PNG',
   '/ostrich-cafe-logo.PNG',
 ];
 
@@ -37,7 +37,7 @@ const LogoScroller: React.FC = () => {
               <img
                 src={logo}
                 alt={`Company ${index + 1}`}
-                className="h-12 max-w-none object-contain"
+                className="h-16 max-w-none object-contain"
               />
             </div>
           ))}
