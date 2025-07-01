@@ -23,24 +23,34 @@ const flagshipTools = [
     description: "Automated lending decisions that are faster, smarter, and more accurate than manual reviews.",
     image: "/loan_approval.jpg",
   },
+  {
+    id: 2,
+    slug: "scorecard-predictor",
+    title: "Scorecard Predictor",
+    description: "Evaluate your business readiness with detailed insights and tailored growth strategies.",
+    image: "/web_and_workflow.jpeg", // Update with appropriate image path
+  },
 ];
 
 const CaseStudiesPage: React.FC = () => {
   const navigate = useNavigate();
-  const [isWaking, setIsWaking] = useState(false);
+  const [isWaking, setIsWaking] = useState<Record<string, boolean>>({});
 
   const handleTryNow = async (slug: string) => {
-    if (slug === "loan-approval-predictor") {
-      setIsWaking(true);
+    if (slug === "loan-approval-predictor" || slug === "scorecard-predictor") {
+      setIsWaking((prev) => ({ ...prev, [slug]: true }));
       try {
-        const response = await fetch("https://loan-approval-api-11n8.onrender.com/");
+        const baseUrl = slug === "loan-approval-predictor" 
+          ? "https://loan-approval-api-11n8.onrender.com/" 
+          : "https://beamx-scorecard.onrender.com/";
+        const response = await fetch(baseUrl, { method: "HEAD" });
         if (!response.ok) {
           throw new Error("Failed to wake backend.");
         }
       } catch {
-        console.error("Failed to wake backend.");
+        console.error(`Failed to wake backend for ${slug}.`);
       } finally {
-        setIsWaking(false);
+        setIsWaking((prev) => ({ ...prev, [slug]: false }));
       }
     }
     navigate(`/tools/${slug}`);
@@ -103,9 +113,9 @@ const CaseStudiesPage: React.FC = () => {
                     variant="primary"
                     className="text-sm"
                     onClick={() => handleTryNow(tool.slug)}
-                    disabled={isWaking}
+                    disabled={isWaking[tool.slug] || false}
                   >
-                    {isWaking && tool.slug === "loan-approval-predictor" ? "Waking Backend..." : "Try Now"}
+                    {isWaking[tool.slug] ? "Waking Backend..." : "Try Now"}
                   </Button>
                 </div>
               </motion.article>

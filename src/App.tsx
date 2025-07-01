@@ -11,6 +11,7 @@ import ContactPage from './pages/ContactPage';
 import CaseStudiesPage from './pages/CaseStudiesPage';
 import CaseStudyDetailPage from './pages/CaseStudyDetailPage';
 import LoanApprovalPredictor from './pages/LoanApprovalPredictor';
+import ScorecardPredictor from './pages/ScorecardPredictor';
 import ScrollToTop from './components/ScrollToTop';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 
@@ -77,6 +78,7 @@ function App() {
             <Route path="case-studies" element={<CaseStudiesPage />} />
             <Route path="case-studies/:slug" element={<CaseStudyDetailPage />} />
             <Route path="tools/loan-approval-predictor" element={<LoanApprovalPredictor />} />
+            <Route path="tools/scorecard-predictor" element={<ScorecardPredictor />} />
             <Route path="blog" element={<BlogPage />} />
             <Route path="blog/:slug" element={<BlogPostPage />} />
             <Route path="contact" element={<ContactPage />} />
