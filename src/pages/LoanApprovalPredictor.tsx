@@ -3,53 +3,72 @@ import { motion } from 'framer-motion';
 import Button from '../components/Button';
 import CTASection from '../components/CTASection';
 
-interface FormData {
-  Dependents: number | undefined;
-  Gender: string;
-  Married: string;
-  Education: string;
-  Self_Employed: string;
-  ApplicantIncome: number | undefined;
-  CoapplicantIncome: number | undefined;
-  LoanAmount: number | undefined;
-  Loan_Amount_Term: number | undefined;
-  Credit_Score: number | undefined;
-  Property_Area: string;
+interface ScorecardInput {
+  revenue: string;
+  profit_margin_known: string;
+  monthly_burn: string;
+  cac_tracked: string;
+  retention_rate: string;
+  digital_campaigns: string;
+  analytics_tools: string;
+  crm_used: string;
+  data_mgmt: string;
+  sops_doc: string;
+  team_size: string;
+  pain_point: string;
+  industry: string;
 }
 
-interface PredictionResult {
-  approval_probability: number;
-  prediction: string;
+interface ScorecardResult {
+  score: number;
+  label: string;
+  sub_scores: {
+    financial: number;
+    growth: number;
+    digital: number;
+    operations: number;
+  };
+  insights: string;
 }
 
-const LoanApprovalPredictor: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
-    Dependents: undefined,
-    Gender: "",
-    Married: "",
-    Education: "",
-    Self_Employed: "",
-    ApplicantIncome: undefined,
-    CoapplicantIncome: undefined,
-    LoanAmount: undefined,
-    Loan_Amount_Term: undefined,
-    Credit_Score: undefined,
-    Property_Area: "",
+const industries = [
+  "Technology",
+  "Healthcare",
+  "Retail",
+  "Finance",
+  "Manufacturing",
+  "Education",
+  "Hospitality",
+  "Real Estate",
+  "Non-Profit",
+  "Other"
+];
+
+const ScorecardPredictor: React.FC = () => {
+  const [formData, setFormData] = useState<ScorecardInput>({
+    revenue: "",
+    profit_margin_known: "",
+    monthly_burn: "",
+    cac_tracked: "",
+    retention_rate: "",
+    digital_campaigns: "",
+    analytics_tools: "",
+    crm_used: "",
+    data_mgmt: "",
+    sops_doc: "",
+    team_size: "",
+    pain_point: "",
+    industry: "",
   });
-
-  const [result, setResult] = useState<PredictionResult | null>(null);
+  const [result, setResult] = useState<ScorecardResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [formErrors, setFormErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+  const [formErrors, setFormErrors] = useState<Partial<Record<keyof ScorecardInput, string>>>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    const parsedValue = e.target.type === 'number' ? (value === '' ? undefined : parseFloat(value)) : value;
-    
-    setFormData({ ...formData, [name]: parsedValue });
-    
-    // Clear error for the field when user starts typing
-    if (formErrors[name as keyof FormData]) {
+    setFormData({ ...formData, [name]: value });
+    if (formErrors[name as keyof ScorecardInput]) {
       setFormErrors({ ...formErrors, [name]: undefined });
     }
   };
@@ -57,25 +76,21 @@ const LoanApprovalPredictor: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { Dependents, ApplicantIncome, CoapplicantIncome, LoanAmount, Loan_Amount_Term, Credit_Score, Gender, Married, Education, Self_Employed, Property_Area } = formData;
-
-    // Validation
-    const errors: Partial<Record<keyof FormData, string>> = {};
-    if (Dependents === undefined || Dependents < 0) errors.Dependents = "Number of dependents must be non-negative";
-    if (ApplicantIncome === undefined || ApplicantIncome < 0) errors.ApplicantIncome = "Applicant income must be non-negative";
-    if (CoapplicantIncome === undefined || CoapplicantIncome < 0) errors.CoapplicantIncome = "Coapplicant income must be non-negative";
-    if (LoanAmount === undefined || LoanAmount < 0) errors.LoanAmount = "Loan amount must be non-negative";
-    if (Loan_Amount_Term === undefined || Loan_Amount_Term < 0) errors.Loan_Amount_Term = "Loan term must be non-negative";
-    if (Credit_Score === undefined || Credit_Score < 0 || Credit_Score > 850) errors.Credit_Score = "Credit score must be between 0 and 850";
-    if (!Gender) errors.Gender = "Please select a gender";
-    if (!Married) errors.Married = "Please select marital status";
-    if (!Education) errors.Education = "Please select education level";
-    if (!Self_Employed) errors.Self_Employed = "Please select employment status";
-    if (!Property_Area) errors.Property_Area = "Please select property area";
+    const requiredFields: (keyof ScorecardInput)[] = [
+      "revenue", "profit_margin_known", "monthly_burn", "cac_tracked", "retention_rate",
+      "digital_campaigns", "analytics_tools", "crm_used", "data_mgmt", "sops_doc",
+      "team_size", "pain_point", "industry"
+    ];
+    const errors: Partial<Record<keyof ScorecardInput, string>> = {};
+    requiredFields.forEach((field) => {
+      if (!formData[field]) {
+        errors[field] = "This field is required.";
+      }
+    });
 
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
-      setError("Please fill out all fields correctly.");
+      setError("Please fill out all fields.");
       return;
     }
 
@@ -84,37 +99,19 @@ const LoanApprovalPredictor: React.FC = () => {
     setResult(null);
     setFormErrors({});
 
-    const payload = {
-      Dependents: parseInt(Dependents!.toString()),
-      ApplicantIncome: parseFloat(ApplicantIncome!.toString()),
-      CoapplicantIncome: parseFloat(CoapplicantIncome!.toString()),
-      LoanAmount: parseFloat(LoanAmount!.toString()),
-      Loan_Amount_Term: parseFloat(Loan_Amount_Term!.toString()),
-      Credit_History: Credit_Score! >= 600 ? 1 : 0,
-      Gender_Male: Gender === "Male" ? 1 : 0,
-      Married_Yes: Married === "Yes" ? 1 : 0,
-      Education_Not_Graduate: Education === "Not Graduate" ? 1 : 0,
-      Self_Employed_Yes: Self_Employed === "Yes" ? 1 : 0,
-      Property_Area_Semiurban: Property_Area === "Semiurban" ? 1 : 0,
-      Property_Area_Urban: Property_Area === "Urban" ? 1 : 0,
-    };
-
     try {
-      const response = await fetch("https://loan-approval-api-11n8.onrender.com/predict", {
+      const response = await fetch("https://beamx-scorecard-api.onrender.com/score", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(formData),
         signal: AbortSignal.timeout(90000), // 90s timeout
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(
-          `Error ${response.status}: ${errorData.detail || "Unknown error"}`
-        );
+        throw new Error(`Error ${response.status}: ${await response.text()}`);
       }
 
-      const data: PredictionResult = await response.json();
+      const data: ScorecardResult = await response.json();
       setResult(data);
     } catch (err) {
       const error = err as Error;
@@ -140,9 +137,9 @@ const LoanApprovalPredictor: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h1 className="text-white text-4xl font-bold mb-6">Loan Approval Predictor</h1>
+              <h1 className="text-white text-4xl font-bold mb-6">Scorecard Predictor</h1>
               <p className="text-gray-100 text-lg mb-8">
-                Automated lending decisions that are faster, smarter, and more accurate than manual reviews.
+                Evaluate your business readiness with detailed insights and tailored growth strategies.
               </p>
             </motion.div>
           </div>
@@ -160,207 +157,246 @@ const LoanApprovalPredictor: React.FC = () => {
           >
             <div className="bg-white p-8 rounded-lg shadow-lg border border-gray-100">
               <form onSubmit={handleSubmit} className="space-y-8">
-                {/* Personal Information */}
                 <div>
-                  <h2 className="text-lg font-semibold text-gray-800 mb-4">Personal Information</h2>
+                  <h2 className="text-lg font-semibold text-gray-800 mb-4">Business Details</h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Gender
-                      </label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Revenue</label>
                       <select
-                        name="Gender"
-                        value={formData.Gender}
+                        name="revenue"
+                        value={formData.revenue}
                         onChange={handleChange}
-                        className={`block w-full border ${formErrors.Gender ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
+                        className={`block w-full border ${
+                          formErrors.revenue ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
                       >
-                        <option value="" disabled>Select your gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
+                        <option value="" disabled={formData.revenue !== ""}>Select revenue</option>
+                        <option value="Under $10K">Under $10K</option>
+                        <option value="$10K–$50K">$10K–$50K</option>
+                        <option value="$50K–$250K">$50K–$250K</option>
+                        <option value="$250K–$1M">$250K–$1M</option>
+                        <option value="Over $1M">Over $1M</option>
                       </select>
-                      {formErrors.Gender && <p className="text-red-500 text-xs mt-1">{formErrors.Gender}</p>}
+                      {formErrors.revenue && <p className="text-red-500 text-xs mt-1">{formErrors.revenue}</p>}
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Married
-                      </label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Profit Margin Known</label>
                       <select
-                        name="Married"
-                        value={formData.Married}
+                        name="profit_margin_known"
+                        value={formData.profit_margin_known}
                         onChange={handleChange}
-                        className={`block w-full border ${formErrors.Married ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
+                        className={`block w-full border ${
+                          formErrors.profit_margin_known ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
                       >
-                        <option value="" disabled>Select your marital status</option>
-                        <option value="Yes">Married</option>
-                        <option value="No">Single</option>
-                      </select>
-                      {formErrors.Married && <p className="text-red-500 text-xs mt-1">{formErrors.Married}</p>}
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Education
-                      </label>
-                      <select
-                        name="Education"
-                        value={formData.Education}
-                        onChange={handleChange}
-                        className={`block w-full border ${formErrors.Education ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
-                      >
-                        <option value="" disabled>Select your education level</option>
-                        <option value="Graduate">Graduate</option>
-                        <option value="Not Graduate">Not Graduate</option>
-                      </select>
-                      {formErrors.Education && <p className="text-red-500 text-xs mt-1">{formErrors.Education}</p>}
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Self Employed
-                      </label>
-                      <select
-                        name="Self_Employed"
-                        value={formData.Self_Employed}
-                        onChange={handleChange}
-                        className={`block w-full border ${formErrors.Self_Employed ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
-                      >
-                        <option value="" disabled>Select your employment status</option>
+                        <option value="" disabled={formData.profit_margin_known !== ""}>Select</option>
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                       </select>
-                      {formErrors.Self_Employed && <p className="text-red-500 text-xs mt-1">{formErrors.Self_Employed}</p>}
+                      {formErrors.profit_margin_known && (
+                        <p className="text-red-500 text-xs mt-1">{formErrors.profit_margin_known}</p>
+                      )}
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Property Area
-                      </label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Monthly Burn</label>
                       <select
-                        name="Property_Area"
-                        value={formData.Property_Area}
+                        name="monthly_burn"
+                        value={formData.monthly_burn}
                         onChange={handleChange}
-                        className={`block w-full border ${formErrors.Property_Area ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
+                        className={`block w-full border ${
+                          formErrors.monthly_burn ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
                       >
-                        <option value="" disabled>Select your property area</option>
-                        <option value="Semiurban">Semiurban</option>
-                        <option value="Urban">Urban</option>
-                        <option value="Rural">Rural</option>
+                        <option value="" disabled={formData.monthly_burn !== ""}>Select burn rate</option>
+                        <option value="Unknown">Unknown</option>
+                        <option value="≤$1K">≤$1K</option>
+                        <option value="$1K–$5K">$1K–$5K</option>
+                        <option value="$5K–$20K">$5K–$20K</option>
+                        <option value="$20K+">$20K+</option>
                       </select>
-                      {formErrors.Property_Area && <p className="text-red-500 text-xs mt-1">{formErrors.Property_Area}</p>}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Financial Information */}
-                <div>
-                  <h2 className="text-lg font-semibold text-gray-800 mb-4">Financial Information</h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Applicant Income <span className="text-xs text-gray-500">(USD/month)</span>
-                      </label>
-                      <input
-                        type="number"
-                        name="ApplicantIncome"
-                        value={formData.ApplicantIncome ?? ''}
-                        onChange={handleChange}
-                        min="0"
-                        step="0. 01"
-                        placeholder="Enter monthly income"
-                        className={`block w-full border ${formErrors.ApplicantIncome ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
-                        required
-                      />
-                      {formErrors.ApplicantIncome && <p className="text-red-500 text-xs mt-1">{formErrors.ApplicantIncome}</p>}
+                      {formErrors.monthly_burn && <p className="text-red-500 text-xs mt-1">{formErrors.monthly_burn}</p>}
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Coapplicant Income <span className="text-xs text-gray-500">(USD/month)</span>
-                      </label>
-                      <input
-                        type="number"
-                        name="CoapplicantIncome"
-                        value={formData.CoapplicantIncome ?? ''}
+                      <label className="block text-sm font-medium text-gray-700 mb-1">CAC Tracked</label>
+                      <select
+                        name="cac_tracked"
+                        value={formData.cac_tracked}
                         onChange={handleChange}
-                        min="0"
-                        step="0.01"
-                        placeholder="Enter coapplicant income"
-                        className={`block w-full border ${formErrors.CoapplicantIncome ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
-                        required
-                      />
-                      {formErrors.CoapplicantIncome && <p className="text-red-500 text-xs mt-1">{formErrors.CoapplicantIncome}</p>}
+                        className={`block w-full border ${
+                          formErrors.cac_tracked ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
+                      >
+                        <option value="" disabled={formData.cac_tracked !== ""}>Select</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                      </select>
+                      {formErrors.cac_tracked && <p className="text-red-500 text-xs mt-1">{formErrors.cac_tracked}</p>}
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Credit Score <span className="text-xs text-gray-500">(0–850)</span>
-                      </label>
-                      <input
-                        type="number"
-                        name="Credit_Score"
-                        value={formData.Credit_Score ?? ''}
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Retention Rate</label>
+                      <select
+                        name="retention_rate"
+                        value={formData.retention_rate}
                         onChange={handleChange}
-                        min="0"
-                        max="850"
-                        step="1"
-                        placeholder="Enter credit score"
-                        className={`block w-full border ${formErrors.Credit_Score ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
-                        required
-                      />
-                      {formErrors.Credit_Score && <p className="text-red-500 text-xs mt-1">{formErrors.Credit_Score}</p>}
+                        className={`block w-full border ${
+                          formErrors.retention_rate ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
+                      >
+                        <option value="" disabled={formData.retention_rate !== ""}>Select rate</option>
+                        <option value="<10%">{`<10%`}</option>
+                        <option value="10–25%">10–25%</option>
+                        <option value="25–50%">25–50%</option>
+                        <option value="50–75%">50–75%</option>
+                        <option value="75%+">75%+</option>
+                      </select>
+                      {formErrors.retention_rate && (
+                        <p className="text-red-500 text-xs mt-1">{formErrors.retention_rate}</p>
+                      )}
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Dependents
-                      </label>
-                      <input
-                        type="number"
-                        name="Dependents"
-                        value={formData.Dependents ?? ''}
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Digital Campaigns</label>
+                      <select
+                        name="digital_campaigns"
+                        value={formData.digital_campaigns}
                         onChange={handleChange}
-                        min="0"
-                        step="1"
-                        placeholder="Enter number of dependents"
-                        className={`block w-full border ${formErrors.Dependents ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
-                        required
-                      />
-                      {formErrors.Dependents && <p className="text-red-500 text-xs mt-1">{formErrors.Dependents}</p>}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Loan Details */}
-                <div>
-                  <h2 className="text-lg font-semibold text-gray-800 mb-4">Loan Details</h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Loan Amount <span className="text-xs text-gray-500">(USD)</span>
-                      </label>
-                      <input
-                        type="number"
-                        name="LoanAmount"
-                        value={formData.LoanAmount ?? ''}
-                        onChange={handleChange}
-                        min="0"
-                        step="0.01"
-                        placeholder="Enter loan amount"
-                        className={`block w-full border ${formErrors.LoanAmount ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
-                        required
-                      />
-                      {formErrors.LoanAmount && <p className="text-red-500 text-xs mt-1">{formErrors.LoanAmount}</p>}
+                        className={`block w-full border ${
+                          formErrors.digital_campaigns ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
+                      >
+                        <option value="" disabled={formData.digital_campaigns !== ""}>Select frequency</option>
+                        <option value="No">No</option>
+                        <option value="Sometimes">Sometimes</option>
+                        <option value="Consistently">Consistently</option>
+                      </select>
+                      {formErrors.digital_campaigns && (
+                        <p className="text-red-500 text-xs mt-1">{formErrors.digital_campaigns}</p>
+                      )}
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Loan Amount Term <span className="text-xs text-gray-500">(months)</span>
-                      </label>
-                      <input
-                        type="number"
-                        name="Loan_Amount_Term"
-                        value={formData.Loan_Amount_Term ?? ''}
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Analytics Tools</label>
+                      <select
+                        name="analytics_tools"
+                        value={formData.analytics_tools}
                         onChange={handleChange}
-                        min="0"
-                        step="1"
-                        placeholder="Enter loan term"
-                        className={`block w-full border ${formErrors.Loan_Amount_Term ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
-                        required
-                      />
-                      {formErrors.Loan_Amount_Term && <p className="text-red-500 text-xs mt-1">{formErrors.Loan_Amount_Term}</p>}
+                        className={`block w-full border ${
+                          formErrors.analytics_tools ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
+                      >
+                        <option value="" disabled={formData.analytics_tools !== ""}>Select tools</option>
+                        <option value="No">No</option>
+                        <option value="Basic tools (Excel, etc.)">Basic tools (Excel, etc.)</option>
+                        <option value="Advanced or custom dashboards">Advanced or custom dashboards</option>
+                      </select>
+                      {formErrors.analytics_tools && (
+                        <p className="text-red-500 text-xs mt-1">{formErrors.analytics_tools}</p>
+                      )}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">CRM Used</label>
+                      <select
+                        name="crm_used"
+                        value={formData.crm_used}
+                        onChange={handleChange}
+                        className={`block w-full border ${
+                          formErrors.crm_used ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
+                      >
+                        <option value="" disabled={formData.crm_used !== ""}>Select</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                      </select>
+                      {formErrors.crm_used && <p className="text-red-500 text-xs mt-1">{formErrors.crm_used}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Data Management</label>
+                      <select
+                        name="data_mgmt"
+                        value={formData.data_mgmt}
+                        onChange={handleChange}
+                        className={`block w-full border ${
+                          formErrors.data_mgmt ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
+                      >
+                        <option value="" disabled={formData.data_mgmt !== ""}>Select approach</option>
+                        <option value="Scattered or manual">Scattered or manual</option>
+                        <option value="Somewhat structured">Somewhat structured</option>
+                        <option value="Centralized and automated">Centralized and automated</option>
+                      </select>
+                      {formErrors.data_mgmt && <p className="text-red-500 text-xs mt-1">{formErrors.data_mgmt}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">SOPs Documented</label>
+                      <select
+                        name="sops_doc"
+                        value={formData.sops_doc}
+                        onChange={handleChange}
+                        className={`block w-full border ${
+                          formErrors.sops_doc ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
+                      >
+                        <option value="" disabled={formData.sops_doc !== ""}>Select</option>
+                        <option value="No">No</option>
+                        <option value="Somewhat">Somewhat</option>
+                        <option value="Fully documented">Fully documented</option>
+                      </select>
+                      {formErrors.sops_doc && <p className="text-red-500 text-xs mt-1">{formErrors.sops_doc}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Team Size</label>
+                      <select
+                        name="team_size"
+                        value={formData.team_size}
+                        onChange={handleChange}
+                        className={`block w-full border ${
+                          formErrors.team_size ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
+                      >
+                        <option value="" disabled={formData.team_size !== ""}>Select size</option>
+                        <option value="0 (solo)">0 (solo)</option>
+                        <option value="1–3">1–3</option>
+                        <option value="4–10">4–10</option>
+                        <option value="11–50">11–50</option>
+                        <option value="50+">50+</option>
+                      </select>
+                      {formErrors.team_size && <p className="text-red-500 text-xs mt-1">{formErrors.team_size}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Pain Point</label>
+                      <select
+                        name="pain_point"
+                        value={formData.pain_point}
+                        onChange={handleChange}
+                        className={`block w-full border ${
+                          formErrors.pain_point ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
+                      >
+                        <option value="" disabled={formData.pain_point !== ""}>Select pain point</option>
+                        <option value="Not growing">Not growing</option>
+                        <option value="Systems are chaotic">Systems are chaotic</option>
+                        <option value="Don't know what to optimize">Don't know what to optimize</option>
+                        <option value="Need funding">Need funding</option>
+                        <option value="Growing fast, need structure">Growing fast, need structure</option>
+                      </select>
+                      {formErrors.pain_point && <p className="text-red-500 text-xs mt-1">{formErrors.pain_point}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Industry</label>
+                      <select
+                        name="industry"
+                        value={formData.industry}
+                        onChange={handleChange}
+                        className={`block w-full border ${
+                          formErrors.industry ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
+                      >
+                        <option value="" disabled={formData.industry !== ""}>Select industry</option>
+                        {industries.map((industry) => (
+                          <option key={industry} value={industry}>
+                            {industry}
+                          </option>
+                        ))}
+                      </select>
+                      {formErrors.industry && <p className="text-red-500 text-xs mt-1">{formErrors.industry}</p>}
                     </div>
                   </div>
                 </div>
@@ -371,20 +407,21 @@ const LoanApprovalPredictor: React.FC = () => {
                   disabled={loading}
                   className={`w-full py-3 text-sm font-medium ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                  {loading ? 'Processing...' : 'Predict Loan Approval'}
+                  {loading ? 'Processing...' : 'Get Scorecard'}
                 </Button>
               </form>
 
               {result && (
-                <div
-                  className={`mt-8 p-6 rounded-md ${
-                    result.prediction === 'APPROVED' ? 'bg-green-100' : 'bg-red-100'
-                  }`}
-                >
-                  <h2 className="text-lg font-semibold">
-                    {result.prediction === 'APPROVED' ? '✅ Loan Approved' : '❌ Loan Denied'}
-                  </h2>
-                  <p className="text-gray-700">Approval Probability: {(result.approval_probability * 100).toFixed(2)}%</p>
+                <div className="mt-8 p-6 rounded-md bg-green-100">
+                  <h2 className="text-lg font-semibold">Scorecard Results</h2>
+                  <p className="text-gray-700">Total Score: {result.score}/100 ({result.label})</p>
+                  <ul className="list-disc pl-5 mt-2">
+                    <li>Financial: {result.sub_scores.financial}/25</li>
+                    <li>Growth: {result.sub_scores.growth}/25</li>
+                    <li>Digital: {result.sub_scores.digital}/25</li>
+                    <li>Operations: {result.sub_scores.operations}/25</li>
+                  </ul>
+                  <p className="mt-4 text-gray-700"><strong>Insights:</strong> {result.insights}</p>
                 </div>
               )}
 
@@ -412,4 +449,4 @@ const LoanApprovalPredictor: React.FC = () => {
   );
 };
 
-export default LoanApprovalPredictor;
+export default ScorecardPredictor;
