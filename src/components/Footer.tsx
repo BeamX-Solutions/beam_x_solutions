@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
           {/* Company Info */}
           <div>
             <img 
-              src="/Beamx-Logo-Colour3.jpg" 
+              src="/Beamx-Logo-White1.png" 
               alt="BeamX Solutions Logo"
               className="h-12 w-auto max-w-[200px] mb-6" 
             />

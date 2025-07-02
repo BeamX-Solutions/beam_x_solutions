@@ -31,6 +31,19 @@ interface ScorecardResult {
   insights: string;
 }
 
+const industries = [
+  "Technology",
+  "Healthcare",
+  "Retail",
+  "Finance",
+  "Manufacturing",
+  "Education",
+  "Hospitality",
+  "Real Estate",
+  "Non-Profit",
+  "Other"
+];
+
 const ScorecardPredictor: React.FC = () => {
   const [formData, setFormData] = useState<ScorecardInput>({
     revenue: "",
@@ -149,9 +162,17 @@ const ScorecardPredictor: React.FC = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Revenue</label>
-                      <select name="revenue" value={formData.revenue} onChange={handleChange}
-                        className={`block w-full border ${formErrors.revenue ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}>
-                        <option value="">Select revenue</option>
+                      <select
+                        name="revenue"
+                        value={formData.revenue}
+                        onChange={handleChange}
+                        className={`block w-full border ${
+                          formErrors.revenue ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}
+                      >
+                        <option value="" disabled={formData.revenue !== ""}>
+                          Select revenue
+                        </option>
                         <option value="Under $10K">Under $10K</option>
                         <option value="$10K–$50K">$10K–$50K</option>
                         <option value="$50K–$250K">$50K–$250K</option>
@@ -162,19 +183,37 @@ const ScorecardPredictor: React.FC = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Profit Margin Known</label>
-                      <select name="profit_margin_known" value={formData.profit_margin_known} onChange={handleChange}
-                        className={`block w-full border ${formErrors.profit_margin_known ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}>
-                        <option value="">Select</option>
+                      <select
+                        name="profit_margin_known"
+                        value={formData.profit_margin_known}
+                        onChange={handleChange}
+                        className={`block w-full border ${
+                          formErrors.profit_margin_known ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}
+                      >
+                        <option value="" disabled={formData.profit_margin_known !== ""}>
+                          Select
+                        </option>
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                       </select>
-                      {formErrors.profit_margin_known && <p className="text-red-500 text-xs mt-1">{formErrors.profit_margin_known}</p>}
+                      {formErrors.profit_margin_known && (
+                        <p className="text-red-500 text-xs mt-1">{formErrors.profit_margin_known}</p>
+                      )}
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Monthly Burn</label>
-                      <select name="monthly_burn" value={formData.monthly_burn} onChange={handleChange}
-                        className={`block w-full border ${formErrors.monthly_burn ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}>
-                        <option value="">Select burn rate</option>
+                      <select
+                        name="monthly_burn"
+                        value={formData.monthly_burn}
+                        onChange={handleChange}
+                        className={`block w-full border ${
+                          formErrors.monthly_burn ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}
+                      >
+                        <option value="" disabled={formData.monthly_burn !== ""}>
+                          Select burn rate
+                        </option>
                         <option value="Unknown">Unknown</option>
                         <option value="≤$1K">≤$1K</option>
                         <option value="$1K–$5K">$1K–$5K</option>
@@ -185,9 +224,17 @@ const ScorecardPredictor: React.FC = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">CAC Tracked</label>
-                      <select name="cac_tracked" value={formData.cac_tracked} onChange={handleChange}
-                        className={`block w-full border ${formErrors.cac_tracked ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}>
-                        <option value="">Select</option>
+                      <select
+                        name="cac_tracked"
+                        value={formData.cac_tracked}
+                        onChange={handleChange}
+                        className={`block w-full border ${
+                          formErrors.cac_tracked ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}
+                      >
+                        <option value="" disabled={formData.cac_tracked !== ""}>
+                          Select
+                        </option>
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                       </select>
@@ -195,44 +242,82 @@ const ScorecardPredictor: React.FC = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Retention Rate</label>
-                      <select name="retention_rate" value={formData.retention_rate} onChange={handleChange}
-                        className={`block w-full border ${formErrors.retention_rate ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}>
-                        <option value="">Select rate</option>
-                        <option value="<10%">{'<10%'}</option>
+                      <select
+                        name="retention_rate"
+                        value={formData.retention_rate}
+                        onChange={handleChange}
+                        className={`block w-full border ${
+                          formErrors.retention_rate ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}
+                      >
+                        <option value="" disabled={formData.retention_rate !== ""}>
+                          Select rate
+                        </option>
+                        <option value="<10%">{`<10%`}</option>
                         <option value="10–25%">10–25%</option>
                         <option value="25–50%">25–50%</option>
                         <option value="50–75%">50–75%</option>
                         <option value="75%+">75%+</option>
                       </select>
-                      {formErrors.retention_rate && <p className="text-red-500 text-xs mt-1">{formErrors.retention_rate}</p>}
+                      {formErrors.retention_rate && (
+                        <p className="text-red-500 text-xs mt-1">{formErrors.retention_rate}</p>
+                      )}
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Digital Campaigns</label>
-                      <select name="digital_campaigns" value={formData.digital_campaigns} onChange={handleChange}
-                        className={`block w-full border ${formErrors.digital_campaigns ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}>
-                        <option value="">Select frequency</option>
+                      <select
+                        name="digital_campaigns"
+                        value={formData.digital_campaigns}
+                        onChange={handleChange}
+                        className={`block w-full border ${
+                          formErrors.digital_campaigns ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}
+                      >
+                        <option value="" disabled={formData.digital_campaigns !== ""}>
+                          Select frequency
+                        </option>
                         <option value="No">No</option>
                         <option value="Sometimes">Sometimes</option>
                         <option value="Consistently">Consistently</option>
                       </select>
-                      {formErrors.digital_campaigns && <p className="text-red-500 text-xs mt-1">{formErrors.digital_campaigns}</p>}
+                      {formErrors.digital_campaigns && (
+                        <p className="text-red-500 text-xs mt-1">{formErrors.digital_campaigns}</p>
+                      )}
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Analytics Tools</label>
-                      <select name="analytics_tools" value={formData.analytics_tools} onChange={handleChange}
-                        className={`block w-full border ${formErrors.analytics_tools ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}>
-                        <option value="">Select tools</option>
+                      <select
+                        name="analytics_tools"
+                        value={formData.analytics_tools}
+                        onChange={handleChange}
+                        className={`block w-full border ${
+                          formErrors.analytics_tools ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}
+                      >
+                        <option value="" disabled={formData.analytics_tools !== ""}>
+                          Select tools
+                        </option>
                         <option value="No">No</option>
                         <option value="Basic tools (Excel, etc.)">Basic tools (Excel, etc.)</option>
                         <option value="Advanced or custom dashboards">Advanced or custom dashboards</option>
                       </select>
-                      {formErrors.analytics_tools && <p className="text-red-500 text-xs mt-1">{formErrors.analytics_tools}</p>}
+                      {formErrors.analytics_tools && (
+                        <p className="text-red-500 text-xs mt-1">{formErrors.analytics_tools}</p>
+                      )}
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">CRM Used</label>
-                      <select name="crm_used" value={formData.crm_used} onChange={handleChange}
-                        className={`block w-full border ${formErrors.crm_used ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}>
-                        <option value="">Select</option>
+                      <select
+                        name="crm_used"
+                        value={formData.crm_used}
+                        onChange={handleChange}
+                        className={`block w-full border ${
+                          formErrors.crm_used ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}
+                      >
+                        <option value="" disabled={formData.crm_used !== ""}>
+                          Select
+                        </option>
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                       </select>
@@ -240,9 +325,17 @@ const ScorecardPredictor: React.FC = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Data Management</label>
-                      <select name="data_mgmt" value={formData.data_mgmt} onChange={handleChange}
-                        className={`block w-full border ${formErrors.data_mgmt ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}>
-                        <option value="">Select approach</option>
+                      <select
+                        name="data_mgmt"
+                        value={formData.data_mgmt}
+                        onChange={handleChange}
+                        className={`block w-full border ${
+                          formErrors.data_mgmt ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}
+                      >
+                        <option value="" disabled={formData.data_mgmt !== ""}>
+                          Select approach
+                        </option>
                         <option value="Scattered or manual">Scattered or manual</option>
                         <option value="Somewhat structured">Somewhat structured</option>
                         <option value="Centralized and automated">Centralized and automated</option>
@@ -251,9 +344,17 @@ const ScorecardPredictor: React.FC = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">SOPs Documented</label>
-                      <select name="sops_doc" value={formData.sops_doc} onChange={handleChange}
-                        className={`block w-full border ${formErrors.sops_doc ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}>
-                        <option value="">Select</option>
+                      <select
+                        name="sops_doc"
+                        value={formData.sops_doc}
+                        onChange={handleChange}
+                        className={`block w-full border ${
+                          formErrors.sops_doc ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}
+                      >
+                        <option value="" disabled={formData.sops_doc !== ""}>
+                          Select
+                        </option>
                         <option value="No">No</option>
                         <option value="Somewhat">Somewhat</option>
                         <option value="Fully documented">Fully documented</option>
@@ -262,9 +363,17 @@ const ScorecardPredictor: React.FC = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Team Size</label>
-                      <select name="team_size" value={formData.team_size} onChange={handleChange}
-                        className={`block w-full border ${formErrors.team_size ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}>
-                        <option value="">Select size</option>
+                      <select
+                        name="team_size"
+                        value={formData.team_size}
+                        onChange={handleChange}
+                        className={`block w-full border ${
+                          formErrors.team_size ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}
+                      >
+                        <option value="" disabled={formData.team_size !== ""}>
+                          Select size
+                        </option>
                         <option value="0 (solo)">0 (solo)</option>
                         <option value="1–3">1–3</option>
                         <option value="4–10">4–10</option>
@@ -275,9 +384,17 @@ const ScorecardPredictor: React.FC = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Pain Point</label>
-                      <select name="pain_point" value={formData.pain_point} onChange={handleChange}
-                        className={`block w-full border ${formErrors.pain_point ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}>
-                        <option value="">Select pain point</option>
+                      <select
+                        name="pain_point"
+                        value={formData.pain_point}
+                        onChange={handleChange}
+                        className={`block w-full border ${
+                          formErrors.pain_point ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}
+                      >
+                        <option value="" disabled={formData.pain_point !== ""}>
+                          Select pain point
+                        </option>
                         <option value="Not growing">Not growing</option>
                         <option value="Systems are chaotic">Systems are chaotic</option>
                         <option value="Don't know what to optimize">Don't know what to optimize</option>
@@ -288,14 +405,23 @@ const ScorecardPredictor: React.FC = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Industry</label>
-                      <input
-                        type="text"
+                      <select
                         name="industry"
                         value={formData.industry}
                         onChange={handleChange}
-                        placeholder="Enter industry"
-                        className={`block w-full border ${formErrors.industry ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}
-                      />
+                        className={`block w-full border ${
+                          formErrors.industry ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary`}
+                      >
+                        <option value="" disabled={formData.industry !== ""}>
+                          Select industry
+                        </option>
+                        {industries.map((industry) => (
+                          <option key={industry} value={industry}>
+                            {industry}
+                          </option>
+                        ))}
+                      </select>
                       {formErrors.industry && <p className="text-red-500 text-xs mt-1">{formErrors.industry}</p>}
                     </div>
                   </div>

@@ -7,8 +7,9 @@ const logos = [
   '/Rotary_Logo_Lekki.png',
   '/affix.PNG',
   '/slots logo.png',
-  '/lifeguard-logo.PNG',
-  '/ostrich-cafe-logo.PNG',
+  '/montech_logo.png',
+  '/Crestique_logo.png',
+  '/herbility_logo.png',
 ];
 
 const LogoScroller: React.FC = () => {
