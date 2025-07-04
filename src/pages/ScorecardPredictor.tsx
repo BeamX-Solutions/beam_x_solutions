@@ -20,9 +20,9 @@ interface ScorecardInput {
 }
 
 interface ScorecardResult {
-  score: number;
+  total_score: number;
   label: string;
-  sub_scores: {
+  breakdown: {
     financial: number;
     growth: number;
     digital: number;
@@ -333,12 +333,12 @@ const ScorecardPredictor: React.FC = () => {
               {result && (
                 <div className="mt-8 p-6 rounded-md bg-green-50">
                   <h2 className="text-lg font-semibold text-green-800">Scorecard Results</h2>
-                  <p className="text-gray-700">Total Score: {result.score}/100 ({result.label})</p>
+                  <p className="text-gray-700">Total Score: {result.total_score}/100 ({result.label})</p>
                   <ul className="list-disc pl-5 mt-2 text-gray-700">
-                    <li>Financial Health: {result.sub_scores.financial}/25</li>
-                    <li>Growth Readiness: {result.sub_scores.growth}/25</li>
-                    <li>Digital Maturity: {result.sub_scores.digital}/25</li>
-                    <li>Operational Efficiency: {result.sub_scores.operations}/25</li>
+                    <li>Financial Health: {result.breakdown.financial}/25</li>
+                    <li>Growth Readiness: {result.breakdown.growth}/25</li>
+                    <li>Digital Maturity: {result.breakdown.digital}/25</li>
+                    <li>Operational Efficiency: {result.breakdown.operations}/25</li>
                   </ul>
                   <p className="mt-4 text-gray-700">
                     <strong>Insights:</strong> {result.insights}
