@@ -28,7 +28,7 @@ interface ScorecardResult {
     digital: number;
     operations: number;
   };
-  advisory: string;  // Updated to reflect new field
+  advisory: string;
 }
 
 const industries = [
@@ -344,7 +344,13 @@ const ScorecardPredictor: React.FC = () => {
                   </p>
                   <div
                     className="mt-2 p-4 bg-white border border-gray-200 rounded-md"
-                    dangerouslySetInnerHTML={{ __html: result.advisory.replace(/\n/g, '<br>') }}
+                    dangerouslySetInnerHTML={{ __html: result.advisory
+                      .replace(/\n/g, '<br>')
+                      .replace(/- ([^*]+):/g, '<strong>$1:</strong>')
+                      .replace(/- /g, '<li>')
+                      .replace(/<\/li>\n- /g, '</li><li>')
+                      .replace(/<\/ul>/g, '</li></ul>')
+                      .replace(/<ul>/g, '<ul><li>') }}
                   />
                 </div>
               )}
