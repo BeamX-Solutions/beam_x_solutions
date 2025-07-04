@@ -346,7 +346,7 @@ const ScorecardPredictor: React.FC = () => {
                     className="mt-2 p-4 bg-white border border-gray-200 rounded-md"
                     dangerouslySetInnerHTML={{ __html: result.advisory
                       .replace(/\n/g, '<br>')
-                      .replace(/- ([^*]+):/g, '<strong>$1:</strong>')
+                      .replace(/- ([^*]+):/g, '<strong>$1:</strong><br>')
                       .replace(/- /g, '<li>')
                       .replace(/<\/li>\n- /g, '</li><li>')
                       .replace(/<\/ul>/g, '</li></ul>')
