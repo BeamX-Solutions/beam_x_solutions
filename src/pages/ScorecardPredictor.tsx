@@ -28,8 +28,7 @@ interface ScorecardResult {
     digital: number;
     operations: number;
   };
-  insights: string;
-  html_report: string;
+  advisory: string;  // Updated to reflect new field
 }
 
 const industries = [
@@ -341,11 +340,11 @@ const ScorecardPredictor: React.FC = () => {
                     <li>Operational Efficiency: {result.breakdown.operations}/25</li>
                   </ul>
                   <p className="mt-4 text-gray-700">
-                    <strong>Insights:</strong> {result.insights}
+                    <strong>Advisory:</strong>
                   </p>
                   <div
-                    className="mt-4 p-4 bg-white border border-gray-200 rounded-md"
-                    dangerouslySetInnerHTML={{ __html: result.html_report }}
+                    className="mt-2 p-4 bg-white border border-gray-200 rounded-md"
+                    dangerouslySetInnerHTML={{ __html: result.advisory.replace(/\n/g, '<br>') }}
                   />
                 </div>
               )}
