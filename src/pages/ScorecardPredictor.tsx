@@ -92,7 +92,7 @@ const ScorecardPredictor: React.FC = () => {
     setFormErrors({});
 
     try {
-      const response = await fetch("https://beamx-scorecard-api.onrender.com/generate-report", {
+      const response = await fetch("https://beamx-scorecard.onrender.com/generate-report", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
