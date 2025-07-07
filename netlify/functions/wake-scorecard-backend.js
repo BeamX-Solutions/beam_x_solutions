@@ -9,24 +9,17 @@ exports.handler = async function (event, context) {
       },
     });
 
-    if (!response.ok) {
-      console.error(`Failed to wake scorecard backend: Status ${response.status}`);
-      return {
-        statusCode: response.status,
-        body: JSON.stringify({ message: `Failed to wake scorecard backend: Status ${response.status}` }),
-      };
-    }
-
-    console.log('Scorecard backend wake-up successful');
+    // Treat 404 as success since it still wakes the backend
+    console.log(`Scorecard backend pinged, status: ${response.status}`);
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: 'Scorecard backend wake-up successful' }),
+      body: JSON.stringify({ message: `Scorecard backend pinged, status: ${response.status}` }),
     };
   } catch (error) {
-    console.error('Error waking scorecard backend:', error);
+    console.error('Error pinging scorecard backend:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Error waking scorecard backend', error: error.message }),
+      body: JSON.stringify({ message: 'Error pinging scorecard backend', error: error.message }),
     };
   }
 };
