@@ -13,6 +13,13 @@ const caseStudies = [
     description: "Developed a modern, user-friendly website to enhance their online presence and drive business growth.",
     image: "/logo34.png",
   },
+  {
+    id: 2,
+    slug: "affixdot",
+    title: "Affixdot",
+    description: "Built a comprehensive insights and reporting infrastructure to transform Affixdot into a data-driven event platform.",
+    image: "/affix.PNG",
+  },
 ];
 
 const flagshipTools = [
@@ -28,7 +35,7 @@ const flagshipTools = [
     slug: "scorecard-predictor",
     title: "Scorecard Predictor",
     description: "Evaluate your business readiness with detailed insights and tailored growth strategies.",
-    image: "/web_and_workflow.jpeg", // Update with appropriate image path
+    image: "/web_and_workflow.jpeg",
   },
 ];
 

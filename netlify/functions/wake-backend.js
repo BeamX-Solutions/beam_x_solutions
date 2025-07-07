@@ -1,48 +1,32 @@
 const fetch = require('node-fetch');
 
 exports.handler = async function (event, context) {
-  const services = [
-    'https://loan-approval-api-11n8.onrender.com/',
-    'https://beamx-scorecard.onrender.com/',
-  ];
-
   try {
-    const fetchPromises = services.map(async (url) => {
-      try {
-        const response = await fetch(url, { method: 'GET' });
-        if (!response.ok) {
-          throw new Error(`Failed to wake ${url}: Status ${response.status}`);
-        }
-        console.log(`Backend wake-up successful at ${url} at ${new Date().toISOString()}`);
-        return { url, status: response.status, success: true };
-      } catch (error) {
-        console.error(`Error waking ${url} at ${new Date().toISOString()}:`, error.message);
-        return { url, status: null, success: false, error: error.message };
-      }
+    const response = await fetch('https://loan-approval-api-11n8.onrender.com/', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
 
-    const results = await Promise.allSettled(fetchPromises);
-    const successful = results.filter(r => r.status === 'fulfilled' && r.value.success);
-    const failed = results.filter(r => r.status === 'rejected' || !r.value.success);
-
-    if (failed.length > 0) {
-      console.log(`Some backends failed at ${new Date().toISOString()}:`, failed);
+    if (!response.ok) {
+      console.error(`Failed to wake backend: Status ${response.status}`);
       return {
-        statusCode: 500,
-        body: JSON.stringify({ message: 'Some backends failed to wake', results: { successful, failed } }),
+        statusCode: response.status,
+        body: JSON.stringify({ message: `Failed to wake backend: Status ${response.status}` }),
       };
     }
 
-    console.log(`All backends woken successfully at ${new Date().toISOString()}:`, successful);
+    console.log('Backend wake-up successful');
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: 'All backends wake-up successful', results: successful }),
+      body: JSON.stringify({ message: 'Backend wake-up successful' }),
     };
   } catch (error) {
-    console.error(`Unexpected error at ${new Date().toISOString()}:`, error.message);
+    console.error('Error waking backend:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Unexpected error waking backends', error: error.message }),
+      body: JSON.stringify({ message: 'Error waking backend', error: error.message }),
     };
   }
 };

@@ -23,7 +23,9 @@ const caseStudies = [
         title: "Premium Website with Analytics",
         description: "Developed a conversion-optimized website (maplemavendesign.com) with embedded performance tracking for user behavior, inquiry funnel drop-offs, and traffic source ROI."
       },
-      {
+     
+
+{
         title: "KPI Dashboard",
         description: "Built a live metrics dashboard providing real-time insights into revenue trends, client value, service utilization, and acquisition channel performance."
       },
@@ -59,6 +61,52 @@ const caseStudies = [
       }
     },
     websiteUrl: "https://www.maplemavendesigns.com",
+  },
+  {
+    id: 2,
+    slug: "affixdot",
+    title: "Affixdot",
+    logo: "/affix.PNG",
+    description: "Built a comprehensive insights and reporting infrastructure to transform Affixdot into a data-driven event platform.",
+    companyDescription: "Affixdot is an innovative event platform that connects organizers with audiences through 'Dots' - events and articles designed for influencers, businesses, NGOs, and schools.",
+    issue: "Affixdot was experiencing rapid growth but lacked the analytical infrastructure to make data-driven decisions. They faced zero visibility into user behavior patterns and engagement metrics, no centralized reporting system for platform performance, limited insights into which features drove the most value, inability to measure event success for organizers, and fragmented data across multiple touchpoints with no unified view.",
+    solution: [
+      {
+        title: "Real-Time Analytics Dashboard",
+        description: "Developed a dashboard with user engagement tracking across events and articles, event performans:  ce metrics with ROI calculations, user segmentation analysis for different personas, and platform optimization recommendations."
+      },
+      {
+        title: "Structured Survey System",
+        description: "Implemented automated feedback collection at key touchpoints, post-event surveys for organizers and attendees, feature adoption and user satisfaction tracking, and Net Promoter Score (NPS) monitoring."
+      },
+      {
+        title: "Behavioral Insights Engine",
+        description: "Built user journey mapping and conversion funnel analysis, predictive analytics for churn prevention, retention analytics and lifecycle tracking, and an automated alert system for key metrics."
+      }
+    ],
+    screenshots: [
+      "/Dashboard.png",
+      "/affixdot_survey.png",
+      "/affixdot_event_report.png"
+    ],
+    results: {
+      metrics: [
+        { metric: "User Engagement Visibility", before: "0%", after: "45%", impact: "+45% improvement" },
+        { metric: "Decision-Making Speed", before: "Standard", after: "60% faster", impact: "+60% faster insights" },
+        { metric: "Data-Driven Feature Development", before: "Limited", after: "80% increase", impact: "+80% adoption" },
+        { metric: "Post-Event Analytics Detail", before: "Basic", after: "70% more detailed", impact: "+70% detail" },
+        { metric: "Organizer Satisfaction", before: "Moderate", after: "50% increase", impact: "+50% satisfaction" },
+        { metric: "Analytics Feature Adoption", before: "0%", after: "90%", impact: "+90% adoption rate" },
+        { metric: "Manual Reporting Time", before: "High", after: "75% reduction", impact: "-75% time" },
+        { metric: "Feedback Response Rates", before: "Low", after: "65% improvement", impact: "+65% response rate" },
+        { metric: "Performance Tracking", before: "Manual", after: "100% automated", impact: "Full automation" }
+      ],
+      quote: {
+        text: "The insights infrastructure BeamX built has become the backbone of our decision-making process. We now have unprecedented visibility into user behavior and platform optimization opportunities. Our event organizers have access to analytics that rival enterprise platforms, significantly increasing their satisfaction and success.",
+        author: "Chigozie Franklin, Co-Founder, Affixdot"
+      }
+    },
+    websiteUrl: "https://affixdot.com/",
   },
 ];
 
@@ -170,15 +218,15 @@ const CaseStudyDetailPage: React.FC = () => {
           >
             <div className="flex items-center gap-3 mb-4">
               <CheckCircle className="h-8 w-8 text-green-500" />
-              <h2 className="text-2xl font-semibold text-gray-900">Website Showcase</h2>
+              <h2 className="text-2xl font-semibold text-gray-900">Work Sample</h2>
             </div>
-            <p className="text-gray-600 mb-4">Maple Maven Design’s new website, optimized for conversions</p>
+            <p className="text-gray-600 mb-4">Affixdot’s analytics infrastructure, optimized for data-driven decisions</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {caseStudy.screenshots.map((src, index) => (
                 <motion.img
                   key={index}
                   src={src}
-                  alt={`Maple Maven Design website screenshot ${index + 1}`}
+                  alt={`Affixdot analytics screenshot ${index + 1}`}
                   className="max-w-full h-auto max-h-64 rounded-lg shadow-sm border border-green-100"
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}

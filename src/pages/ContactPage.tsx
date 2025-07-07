@@ -27,7 +27,7 @@ const ContactPage: React.FC = () => {
     },
     {
       question: "How do you handle data security and privacy?",
-      answer: "We take data security and privacy extremely seriously. We implement robust security measures, follow industry best practices, and ensure compliance with relevant regulations like GDPR, HIPAA, and CCPA depending on your industry and location."
+      answer: "We take data security and privacy extremely seriously. We implement robust security measures, follow industry best practices, and ensure compliance with relevant regulations like NDPR and GDPR depending on your industry and location."
     },
     {
       question: "Can you work with our existing systems and tools?",
