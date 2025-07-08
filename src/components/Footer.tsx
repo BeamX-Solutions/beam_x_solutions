@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, X, Linkedin, Instagram } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
@@ -15,20 +15,20 @@ const Footer: React.FC = () => {
               className="h-12 w-auto max-w-[200px] mb-6" 
             />
             <p className="text-gray-400 mb-6">
-              Empowering businesses to unlock the full potential of their data through expert data strategy, 
+              Partnering with businesses to unlock the full potential of their data through expert data strategy, 
               business intelligence, and AI solutions.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-primary transition-colors" aria-label="Facebook">
+              <a href="https://facebook.com/beamxsolutions" className="text-gray-400 hover:text-primary transition-colors" aria-label="Facebook">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-primary transition-colors" aria-label="Twitter">
-                <Twitter className="h-5 w-5" />
+              <a href="https://x.com/beamxsolutions" className="text-gray-400 hover:text-primary transition-colors" aria-label="X">
+                <X className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-primary transition-colors" aria-label="LinkedIn">
+              <a href="https://linkedin.com/company/beamxsolutions" className="text-gray-400 hover:text-primary transition-colors" aria-label="LinkedIn">
                 <Linkedin className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-primary transition-colors" aria-label="Instagram">
+              <a href="https://instagram.com/beamxsolutions" className="text-gray-400 hover:text-primary transition-colors" aria-label="Instagram">
                 <Instagram className="h-5 w-5" />
               </a>
             </div>
@@ -62,10 +62,10 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold text-white mb-6">Our Services</h3>
             <ul className="space-y-4">
               {[
-                { name: 'Web & Workflow Engineering', path: '/services' },
-                { name: 'Data Infrastructure & Automation', path: '/services' },
                 { name: 'Insights & Dashboards', path: '/services' },
-                { name: 'AI & Machine Learning', path: '/services' },
+                { name: 'Website & Workflow Engineering', path: '/services' },
+                { name: 'Data Infrastructure & Automation', path: '/services' },
+                { name: 'AI & Machine Learning Models', path: '/services' },
                 { name: 'Custom AI Agents', path: '/services' },
               ].map((item) => (
                 <li key={item.name}>
@@ -87,14 +87,14 @@ const Footer: React.FC = () => {
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
                 <span className="text-gray-400">
-                  123 Business Ave, Suite 100<br />
-                  San Francisco, CA 94107
+                  Springfield Ave<br />
+                  Chicago, IL 60625
                 </span>
               </li>
               <li className="flex items-center">
                 <Phone className="h-5 w-5 text-primary mr-3 flex-shrink-0" />
-                <a href="tel:+2348164711076" className="text-gray-400 hover:text-primary transition-colors">
-                  +234 816 471 1076
+                <a href="tel:+14146506035" className="text-gray-400 hover:text-primary transition-colors">
+                  +1 (414) 650-6035
                 </a>
               </li>
               <li className="flex items-center">

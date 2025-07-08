@@ -19,7 +19,7 @@ const ServicesPage: React.FC = () => {
     },
     {
       icon: <Globe className="h-10 w-10 text-green-500" />,
-      title: "Web & Workflow Engineering",
+      title: "Websites & Workflow Engineering",
       description: "We build websites that actually convert and create automated workflows that save you hours every day.",
       features: [
         "High-conversion web design",
@@ -31,7 +31,7 @@ const ServicesPage: React.FC = () => {
     {
       icon: <Database className="h-10 w-10 text-green-500" />,
       title: "Data Infrastructure & Automation",
-      description: "No more data chaos. We set up clean databases, smooth APIs, and systems that talk to each other automatically.",
+      description: "We clean, connect, and automate your data so every team has the insights they need in real time.",
       features: [
         "Robust database setup",
         "Seamless API integration",
@@ -41,7 +41,7 @@ const ServicesPage: React.FC = () => {
     },
     {
       icon: <Brain className="h-10 w-10 text-green-500" />,
-      title: "AI & Machine Learning",
+      title: "AI & Machine Learning Models",
       description: "We deploy smart models that predict customer behavior, catch fraud, and identify your most valuable opportunities.",
       features: [
         "Predictive modeling",
@@ -142,7 +142,7 @@ const ServicesPage: React.FC = () => {
 
       {/* CTA Section */}
       <CTASection
-        title="Ready to Unlock Your Potential?"
+        title="Ready to Unlock Your Business's Potential?"
         subtitle="Let's collaborate to transform your data into a competitive advantage."
         primaryButtonText="Get in Touch"
         primaryButtonHref="/contact"

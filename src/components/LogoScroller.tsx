@@ -2,14 +2,13 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const logos = [
-  '/logo34.png',
-  '/CA-logo-main.png',
-  '/Rotary_Logo_Lekki.png',
-  '/affix.PNG',
-  '/slots logo.png',
+  '/logo34_gray.png',
+  '/CA-logo-main_gray.png',
+  '/affix_gray.PNG',
+  '/slots logo_gray.png',
   '/montech_logo.png',
-  '/Crestique_logo.png',
-  '/herbility_logo.png',
+  '/Crestique_logo_gray.png',
+  '/herbility_logo_gray.png',
 ];
 
 const LogoScroller: React.FC = () => {

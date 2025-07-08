@@ -174,7 +174,7 @@ const ScorecardPredictor: React.FC = () => {
             transition={{ duration: 0.6 }}
             className="max-w-3xl mx-auto text-center"
           >
-            <h1 className="text-white text-4xl md:text-5xl font-bold mb-6">Scorecard Predictor</h1>
+            <h1 className="text-white text-4xl md:text-5xl font-bold mb-6">Business Health Assessment</h1>
             <p className="text-gray-100 text-lg md:text-xl mb-8">
               Evaluate your business readiness with detailed insights and tailored growth strategies.
             </p>

@@ -117,7 +117,7 @@ const BlogPage: React.FC = () => {
 
       {/* CTA Section */}
       <CTASection
-        title="Ready to Transform Your Data Strategy?"
+        title="Ready to See What’s Possible?"
         subtitle="Let's discuss how we can help you unlock the full potential of your data."
         primaryButtonText="Get Started"
         primaryButtonHref="/contact"

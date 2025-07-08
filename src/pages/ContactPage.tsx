@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Mail, Phone, Clock, ChevronDown } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
-// import ContactForm from '../components/common/ContactForm';
-// Update the import path below to the correct location of ContactForm, for example:
 import ContactForm from '../components/ContactForm';
-// Or, if ContactForm does not exist, create it at the expected path.
 
 const ContactPage: React.FC = () => {
   // State to track which FAQ is expanded
@@ -84,8 +81,8 @@ const ContactPage: React.FC = () => {
                   <li className="flex items-start">
                     <MapPin className="h-5 w-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
                     <span className="text-gray-600">
-                      123 Business Ave, Suite 100<br />
-                      San Francisco, CA 94107
+                      Springfield Ave<br />
+                      Chicago, IL 60625
                     </span>
                   </li>
                   <li className="flex items-center">
@@ -101,6 +98,11 @@ const ContactPage: React.FC = () => {
                   <li className="flex items-center">
                     <Phone className="h-5 w-5 text-primary mr-3 flex-shrink-0" />
                     <div>
+                      <p className="text-gray-600 mb-1">
+                        <a href="tel:+14146506035" className="hover:text-primary transition-colors">
+                          +1 (414) 650-6035
+                        </a>
+                      </p>
                       <p className="text-gray-600 mb-1">
                         <a href="tel:+2348164711076" className="hover:text-primary transition-colors">
                           +234 816 471 1076
@@ -143,14 +145,14 @@ const ContactPage: React.FC = () => {
         <div className="container-custom">
           <SectionHeader
             title="Visit Our Office"
-            subtitle="We're located in the heart of San Francisco's tech district."
+            subtitle="We're located in the heart of Chicago."
             center
           />
           
           <div className="rounded-xl overflow-hidden shadow-lg h-96">
             <iframe
               title="BeamX Solutions Office Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50470.95213414416!2d-122.43097264717885!3d37.75890636422538!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80859a6d00690021%3A0x4a501367f076adff!2sSan%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1623273234181!5m2!1sen!2sus"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d47447.68410361446!2d-87.6976355!3d41.9790229!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x880fd2e37f9b8d2d%3A0x62ad8b907dd6d4d5!2sSpringfield%20Ave%2C%20Chicago%2C%20IL%2060625!5e0!3m2!1sen!2sus!4v1697832494187!5m2!1sen!2sus"
               width="100%"
               height="100%"
               style={{ border: 0 }}

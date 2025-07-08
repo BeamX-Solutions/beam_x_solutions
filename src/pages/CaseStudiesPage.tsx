@@ -32,8 +32,8 @@ const flagshipTools = [
   },
   {
     id: 2,
-    slug: "scorecard-predictor",
-    title: "Scorecard Predictor",
+    slug: "business-health-assessment",
+    title: "Business Health Assessment",
     description: "Evaluate your business readiness with detailed insights and tailored growth strategies.",
     image: "/web_and_workflow.jpeg",
   },
@@ -44,7 +44,7 @@ const CaseStudiesPage: React.FC = () => {
   const [isWaking, setIsWaking] = useState<Record<string, boolean>>({});
 
   const handleTryNow = async (slug: string) => {
-    if (slug === "loan-approval-predictor" || slug === "scorecard-predictor") {
+    if (slug === "loan-approval-predictor" || slug === "business-health-assessment") {
       setIsWaking((prev) => ({ ...prev, [slug]: true }));
       try {
         const baseUrl = slug === "loan-approval-predictor" 
@@ -177,7 +177,7 @@ const CaseStudiesPage: React.FC = () => {
 
       {/* CTA Section */}
       <CTASection
-        title="Ready to Transform Your Business?"
+        title="Ready to See What’s Possible?"
         subtitle="Let's discuss how we can tailor a solution for your needs."
         primaryButtonText="Get Started"
         primaryButtonHref="/contact"

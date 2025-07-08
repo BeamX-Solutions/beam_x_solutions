@@ -52,7 +52,7 @@ const HomePage: React.FC = () => {
               transition={{ duration: 0.6 }}
             >
               <h1 className="text-white font-bold mb-6">
-                Transforming Data Into <span className="text-secondary">Strategic Assets</span>
+                Turning Data Into <span className="text-secondary">Action</span>
               </h1>
               <p className="text-gray-100 text-lg mb-8 max-w-lg">
                 We help businesses leverage the full potential of their data through expert data strategy, 
@@ -60,7 +60,7 @@ const HomePage: React.FC = () => {
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button href="/contact" variant="white" icon>
-                  Get Free Consultation
+                  Book Free Consultation
                 </Button>
                 <Button href="/services" variant="outline" className="text-white border-white hover:bg-white hover:text-primary" icon>
                   Our Services
@@ -182,7 +182,7 @@ const HomePage: React.FC = () => {
       <section className="section bg-gray-50">
         <div className="container-custom">
           <SectionHeader
-            title="Client Testimonials"
+            title="What our Clients Say"
             subtitle="Hear what our clients have to say about their experience working with BeamX Solutions."
             center
           />
@@ -228,7 +228,7 @@ const HomePage: React.FC = () => {
       
       {/* CTA Section */}
       <CTASection
-        title="Ready to Transform Your Data Strategy?"
+        title="Ready to See What’s Possible?"
         subtitle="Let's discuss how we can help you unlock the full potential of your data."
         primaryButtonText="Get Started"
         primaryButtonHref="/contact"
