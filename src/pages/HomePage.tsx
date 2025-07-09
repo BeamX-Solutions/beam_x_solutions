@@ -59,7 +59,7 @@ const HomePage: React.FC = () => {
                 business intelligence, and AI solutions.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Button href="/contact" variant="white" icon>
+                <Button href="https://calendly.com/beamxsolutions" variant="white" icon>
                   Book Free Consultation
                 </Button>
                 <Button href="/services" variant="outline" className="text-white border-white hover:bg-white hover:text-primary" icon>
