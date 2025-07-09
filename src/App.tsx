@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Component, ReactNode } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
+import { HelmetProvider, HelmetData } from 'react-helmet-async';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
@@ -15,36 +15,23 @@ import ScorecardPredictor from './pages/ScorecardPredictor';
 import ScrollToTop from './components/ScrollToTop';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 
-// Declare dataLayer on the Window interface for TypeScript
-declare global {
-  interface Window {
-    dataLayer: any[];
-  }
-}
-
-// Simple Error Boundary component
 interface ErrorBoundaryProps {
   children: ReactNode;
 }
-
 interface ErrorBoundaryState {
   hasError: boolean;
 }
-
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false };
   }
-
   static getDerivedStateFromError(_: Error): ErrorBoundaryState {
     return { hasError: true };
   }
-
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('Error caught by ErrorBoundary:', error, errorInfo);
-  }
-
+componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+  console.error('Error caught by ErrorBoundary:', error, errorInfo);
+}
   render() {
     if (this.state.hasError) {
       return (
@@ -63,27 +50,52 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   }
 }
 
+declare global {
+  interface Window {
+    dataLayer: any[];
+  }
+}
+
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
+  const [lastPath, setLastPath] = useState<string | null>(null);
+
+  const pageTitles: { [key: string]: string } = {
+    '/': 'BeamX Solutions | Home',
+    '/about': 'BeamX Solutions | About Us',
+    '/services': 'BeamX Solutions | Services',
+    '/case-studies': 'BeamX Solutions | Case Studies',
+    '/tools/loan-approval-predictor': 'BeamX Solutions | Loan Approval Predictor',
+    '/tools/business-health-assessment': 'BeamX Solutions | Business Health Assessment',
+    '/blog': 'BeamX Solutions | Blog',
+    '/contact': 'BeamX Solutions | Contact Us',
+    '/privacy-policy': 'BeamX Solutions | Privacy Policy',
+  };
 
   useEffect(() => {
-    // Handle loading state
-    setIsLoading(true);
-    const timer = setTimeout(() => setIsLoading(false), 200);
-
-    // Push pageview event to GTM dataLayer
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      event: 'pageview',
-      page: {
+    if (lastPath !== location.pathname + location.search) {
+      setIsLoading(true);
+      const timer = setTimeout(() => setIsLoading(false), 200);
+      const title = pageTitles[location.pathname] || document.title; // Use document.title as fallback
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'pageview',
+        page: {
+          path: location.pathname + location.search,
+          title: title,
+        },
+      });
+      console.log('Pushed to dataLayer:', {
         path: location.pathname + location.search,
-        title: document.title,
-      },
-    });
+        title: title,
+      });
+      setLastPath(location.pathname + location.search);
+      return () => clearTimeout(timer);
+    }
+  }, [location.pathname, location.search]);
 
-    return () => clearTimeout(timer);
-  }, [location]);
+  // Removed custom helmetContext as it's not compatible with HelmetProvider's context prop
 
   return (
     <HelmetProvider>

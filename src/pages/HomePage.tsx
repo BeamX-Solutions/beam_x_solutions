@@ -1,6 +1,7 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async'; // Changed to react-helmet-async
 import { motion } from 'framer-motion';
-import { BarChart3, BrainCircuit, Database, LineChart, Server, Users } from 'lucide-react';
+import { BarChart3, BrainCircuit, Database, LineChart, Server} from 'lucide-react';
 import Button from '../components/Button';
 import SectionHeader from '../components/SectionHeader';
 import TestimonialCard from '../components/TestimonialCard';
@@ -8,7 +9,6 @@ import CTASection from '../components/CTASection';
 import LogoScroller from '../components/LogoScroller';
 
 const HomePage: React.FC = () => {
-
   const [currentTestimonial, setCurrentTestimonial] = React.useState(0);
 
   const testimonials = [
@@ -16,7 +16,7 @@ const HomePage: React.FC = () => {
       quote: "BeamX didn't just build our site, they redesigned our business operations. We now attract the kind of clients we always wanted, and we're finally growing with confidence.",
       author: "Emeka Dioha",
       position: "CEO",
-      company: "Maple Maven Designs", 
+      company: "Maple Maven Designs",
       avatar: "/first-person1.jpg"
     },
     {
@@ -36,9 +36,12 @@ const HomePage: React.FC = () => {
     return () => clearInterval(interval);
   }, [testimonials.length]);
 
-
   return (
     <>
+      <Helmet>
+        <title>BeamX Solutions | Home</title>
+      </Helmet>
+
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 lg:pt-56 lg:pb-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-primary bg-opacity-75 z-0" />
@@ -54,7 +57,7 @@ const HomePage: React.FC = () => {
               <h1 className="text-white font-bold mb-6">
                 Turning Data Into <span className="text-secondary">Action</span>
               </h1>
-              <p className="text-gray-100 text-lg mb-8 max-w-lg">
+              <p className="text-gray-100 text-lg mb-8 max-w0-lg">
                 We help businesses leverage the full potential of their data through expert data strategy, 
                 business intelligence, and AI solutions.
               </p>
@@ -151,7 +154,7 @@ const HomePage: React.FC = () => {
               {
                 icon: <BarChart3 className="h-8 w-8 text-blue-500" />,
                 title: "Value-Led",
-                description: "We care about ROI, not buzzwords. If it doesn’t make you money or save you time, we don’t build it."
+                description: "We care about ROI, not buzzwords. If it doesn’t make you money or save you time, we Пиwe don’t build it."
               },
               {
                 icon: <Database className="h-8 w-8 text-blue-500" />,

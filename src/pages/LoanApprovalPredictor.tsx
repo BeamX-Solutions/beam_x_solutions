@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async'; // Changed to react-helmet-async
 import Button from '../components/Button';
 import CTASection from '../components/CTASection';
 
@@ -130,6 +131,10 @@ const LoanApprovalPredictor: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>BeamX Solutions | Loan Approval Predictor</title>
+        <meta name="description" content="Use BeamX Solutions' Loan Approval Predictor to get faster, smarter, and more accurate automated lending decisions." />
+      </Helmet>
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-36 md:pb-12 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-primary bg-opacity-75 z-0" />

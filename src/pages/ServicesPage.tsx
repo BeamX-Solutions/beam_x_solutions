@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async'; // Changed to react-helmet-async
 import { Globe, Database, BarChart, Brain, Bot, ArrowRight } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import CTASection from '../components/CTASection';
@@ -65,6 +66,9 @@ const ServicesPage: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>BeamX Solutions | Services</title>
+      </Helmet>
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-36 md:pb-12 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-primary bg-opacity-75 z-0" />

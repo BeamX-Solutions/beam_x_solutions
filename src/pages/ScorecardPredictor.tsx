@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Button from '../components/Button';
+import { Helmet } from 'react-helmet-async'; // Changed to react-helmet-async
 import CTASection from '../components/CTASection';
 
 interface ScorecardInput {
@@ -165,6 +166,10 @@ const ScorecardPredictor: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>BeamX Solutions | Business Health Assessment</title>
+        <meta name="description" content="Evaluate your business readiness with BeamX Solutions' Business Health Assessment tool, providing detailed insights and tailored growth strategies." />
+      </Helmet>
       <section className="relative pt-32 pb-20 md:pt-36 md:pb-12 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-primary bg-opacity-75 z-0"/>
         <div className="container mx-auto px-4 sm:px-6 relative z-10">

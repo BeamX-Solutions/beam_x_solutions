@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams, NavLink } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Quote, Building, AlertCircle, CheckCircle, BarChart } from 'lucide-react';
 import Button from '../components/Button';
@@ -130,6 +131,15 @@ const CaseStudyDetailPage: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>BeamX Solutions | {caseStudy.title}</title>
+        <meta name="description" content={caseStudy.description} />
+        <meta property="og:title" content={`BeamX Solutions | ${caseStudy.title}`} />
+        <meta property="og:description" content={caseStudy.description} />
+        <meta property="og:image" content={caseStudy.logo} />
+        <meta property="og:url" content={`https://beamxsolutions.com/case-studies/${caseStudy.slug}`} />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Helmet>
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-36 md:pb-12 bg-gradient-primary bg-opacity-75 z-0">
         <div className="container-custom mx-auto px-4 sm:px-6">

@@ -1,9 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Award, Users, Target, Shield } from 'lucide-react';
+import { Helmet } from 'react-helmet-async'; // Changed to react-helmet-async
 import CountUp from 'react-countup';
 import SectionHeader from '../components/SectionHeader';
-import Button from '../components/Button';
 import CTASection from '../components/CTASection';
 
 const AboutPage: React.FC = () => {
@@ -69,6 +68,9 @@ const AboutPage: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>BeamX Solutions | About Us</title>
+      </Helmet>
       {/* Hero Section */}
       <section
         className={`relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden ${

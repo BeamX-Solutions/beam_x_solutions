@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async'; // Changed to react-helmet-async
 import { MapPin, Mail, Phone, Clock, ChevronDown } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import ContactForm from '../components/ContactForm';
@@ -38,6 +39,9 @@ const ContactPage: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>BeamX Solutions | Contact Us</title>
+      </Helmet>
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-primary z-0" />
