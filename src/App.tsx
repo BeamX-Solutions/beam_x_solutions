@@ -15,6 +15,13 @@ import ScorecardPredictor from './pages/ScorecardPredictor';
 import ScrollToTop from './components/ScrollToTop';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 
+// Declare dataLayer on the Window interface for TypeScript
+declare global {
+  interface Window {
+    dataLayer: any[];
+  }
+}
+
 // Simple Error Boundary component
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -61,8 +68,20 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
+    // Handle loading state
     setIsLoading(true);
     const timer = setTimeout(() => setIsLoading(false), 200);
+
+    // Push pageview event to GTM dataLayer
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'pageview',
+      page: {
+        path: location.pathname + location.search,
+        title: document.title,
+      },
+    });
+
     return () => clearTimeout(timer);
   }, [location]);
 
