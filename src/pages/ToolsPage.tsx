@@ -143,13 +143,13 @@ const ToolsPage: React.FC = () => {
                   />
                 </div>
                 <div className="p-4">
-                  <NavLink to={`/case-studies/${study.slug}`}>
+                  <NavLink to={`/tools/${study.slug}`}>
                     <h2 className="text-lg font-semibold mb-2 hover:text-primary transition-colors line-clamp-2">
                       {study.title}
                     </h2>
                   </NavLink>
                   <p className="text-gray-600 text-sm mb-3 line-clamp-3">{study.description}</p>
-                  <NavLink to={`/case-studies/${study.slug}`}>
+                  <NavLink to={`/tools/${study.slug}`}>
                     <Button variant="primary" className="text-sm">
                       Read More
                     </Button>
