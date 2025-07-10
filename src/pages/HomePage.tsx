@@ -154,7 +154,7 @@ const HomePage: React.FC = () => {
               {
                 icon: <BarChart3 className="h-8 w-8 text-blue-500" />,
                 title: "Value-Led",
-                description: "We care about ROI, not buzzwords. If it doesn’t make you money or save you time, we Пиwe don’t build it."
+                description: "We care about ROI, not buzzwords. If it doesn’t make you money or save you time, we don’t build it."
               },
               {
                 icon: <Database className="h-8 w-8 text-blue-500" />,

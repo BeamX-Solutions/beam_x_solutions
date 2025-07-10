@@ -111,7 +111,7 @@ const caseStudies = [
   },
 ];
 
-const CaseStudyDetailPage: React.FC = () => {
+const ToolsDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const caseStudy = caseStudies.find((study) => study.slug === slug);
 
@@ -121,8 +121,8 @@ const CaseStudyDetailPage: React.FC = () => {
         <div className="text-center">
           <h2 className="text-2xl font-semibold mb-4">Case Study Not Found</h2>
           <p className="text-gray-600 mb-6">The case study you're looking for does not exist.</p>
-          <NavLink to="/case-studies" className="text-blue-600 hover:underline">
-            Back to Case Studies
+          <NavLink to="/tools" className="text-blue-600 hover:underline">
+            Back to Tools & Case Studies
           </NavLink>
         </div>
       </div>
@@ -137,7 +137,7 @@ const CaseStudyDetailPage: React.FC = () => {
         <meta property="og:title" content={`BeamX Solutions | ${caseStudy.title}`} />
         <meta property="og:description" content={caseStudy.description} />
         <meta property="og:image" content={caseStudy.logo} />
-        <meta property="og:url" content={`https://beamxsolutions.com/case-studies/${caseStudy.slug}`} />
+        <meta property="og:url" content={`https://beamxsolutions.com/tools/${caseStudy.slug}`} />
         <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
       {/* Hero Section */}
@@ -318,4 +318,4 @@ const CaseStudyDetailPage: React.FC = () => {
   );
 };
 
-export default CaseStudyDetailPage;
+export default ToolsDetailPage;

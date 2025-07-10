@@ -167,8 +167,8 @@ const ScorecardPredictor: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>BeamX Solutions | Business Health Assessment</title>
-        <meta name="description" content="Evaluate your business readiness with BeamX Solutions' Business Health Assessment tool, providing detailed insights and tailored growth strategies." />
+        <title>BeamX Solutions | Business Assessment</title>
+        <meta name="description" content="Evaluate your business readiness with BeamX Solutions' Business Assessment tool, providing detailed insights and tailored growth strategies." />
       </Helmet>
       <section className="relative pt-32 pb-20 md:pt-36 md:pb-12 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-primary bg-opacity-75 z-0"/>
@@ -179,7 +179,7 @@ const ScorecardPredictor: React.FC = () => {
             transition={{ duration: 0.6 }}
             className="max-w-3xl mx-auto text-center"
           >
-            <h1 className="text-white text-4xl md:text-5xl font-bold mb-6">Business Health Assessment</h1>
+            <h1 className="text-white text-4xl md:text-5xl font-bold mb-6">Business Assessment</h1>
             <p className="text-gray-100 text-lg md:text-xl mb-8">
               Evaluate your business readiness with detailed insights and tailored growth strategies.
             </p>

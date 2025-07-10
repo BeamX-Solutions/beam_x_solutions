@@ -90,7 +90,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
               { name: 'Home', path: '/' },
               { name: 'About', path: '/about' },
               { name: 'Services', path: '/services' },
-              { name: 'Case Studies', path: '/case-studies' },
+              { name: 'Tools', path: '/tools' },
               { name: 'Blog', path: '/blog' },
               { name: 'Contact Us', path: '/contact' },
             ].map((item) => (
@@ -171,7 +171,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
                 { name: 'Home', path: '/' },
                 { name: 'About', path: '/about' },
                 { name: 'Services', path: '/services' },
-                { name: 'Case Studies', path: '/case-studies' },
+                { name: 'Tools', path: '/tools' },
                 { name: 'Blog', path: '/blog' },
                 { name: 'Contact Us', path: '/contact' },
               ].map((item, index) => (

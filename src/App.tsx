@@ -8,8 +8,8 @@ import ServicesPage from './pages/ServicesPage';
 import BlogPage from './pages/BlogPage';
 import BlogPostPage from './pages/BlogPostPage';
 import ContactPage from './pages/ContactPage';
-import CaseStudiesPage from './pages/CaseStudiesPage';
-import CaseStudyDetailPage from './pages/CaseStudyDetailPage';
+import ToolsPage from './pages/ToolsPage';
+import ToolsDetailPage from './pages/ToolsDetailPage';
 import LoanApprovalPredictor from './pages/LoanApprovalPredictor';
 import ScorecardPredictor from './pages/ScorecardPredictor';
 import ScrollToTop from './components/ScrollToTop';
@@ -65,9 +65,9 @@ function App() {
     '/': 'BeamX Solutions | Home',
     '/about': 'BeamX Solutions | About Us',
     '/services': 'BeamX Solutions | Services',
-    '/case-studies': 'BeamX Solutions | Case Studies',
+    '/tools': 'BeamX Solutions | Tools',
     '/tools/loan-approval-predictor': 'BeamX Solutions | Loan Approval Predictor',
-    '/tools/business-health-assessment': 'BeamX Solutions | Business Health Assessment',
+    '/tools/business-assessment': 'BeamX Solutions | Business Assessment',
     '/blog': 'BeamX Solutions | Blog',
     '/contact': 'BeamX Solutions | Contact Us',
     '/privacy-policy': 'BeamX Solutions | Privacy Policy',
@@ -106,10 +106,10 @@ function App() {
             <Route index element={<HomePage />} />
             <Route path="about" element={<AboutPage />} />
             <Route path="services" element={<ServicesPage />} />
-            <Route path="case-studies" element={<CaseStudiesPage />} />
-            <Route path="case-studies/:slug" element={<CaseStudyDetailPage />} />
+            <Route path="tools" element={<ToolsPage />} />
+            <Route path="tools/:slug" element={<ToolsDetailPage />} />
             <Route path="tools/loan-approval-predictor" element={<LoanApprovalPredictor />} />
-            <Route path="tools/business-health-assessment" element={<ScorecardPredictor />} />
+            <Route path="tools/business-assessment" element={<ScorecardPredictor />} />
             <Route path="blog" element={<BlogPage />} />
             <Route path="blog/:slug" element={<BlogPostPage />} />
             <Route path="contact" element={<ContactPage />} />

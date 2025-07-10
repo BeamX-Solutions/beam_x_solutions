@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async'; // Changed to react-helmet-async
+import { Helmet } from 'react-helmet-async';
 import { NavLink, useNavigate } from 'react-router-dom';
 import SectionHeader from '../components/SectionHeader';
 import Button from '../components/Button';
@@ -33,41 +33,24 @@ const flagshipTools = [
   },
   {
     id: 2,
-    slug: "business-health-assessment",
-    title: "Business Health Assessment",
+    slug: "business-assessment",
+    title: "Business Assessment",
     description: "Evaluate your business readiness with detailed insights and tailored growth strategies.",
     image: "/web_and_workflow.jpeg",
   },
 ];
 
-const CaseStudiesPage: React.FC = () => {
+const ToolsPage: React.FC = () => {
   const navigate = useNavigate();
-  const [isWaking, setIsWaking] = useState<Record<string, boolean>>({});
 
-  const handleTryNow = async (slug: string) => {
-    if (slug === "loan-approval-predictor" || slug === "business-health-assessment") {
-      setIsWaking((prev) => ({ ...prev, [slug]: true }));
-      try {
-        const baseUrl = slug === "loan-approval-predictor" 
-          ? "https://loan-approval-api-11n8.onrender.com/" 
-          : "https://beamx-scorecard.onrender.com/";
-        const response = await fetch(baseUrl, { method: "HEAD" });
-        if (!response.ok) {
-          throw new Error("Failed to wake backend.");
-        }
-      } catch {
-        console.error(`Failed to wake backend for ${slug}.`);
-      } finally {
-        setIsWaking((prev) => ({ ...prev, [slug]: false }));
-      }
-    }
+  const handleTryNow = (slug: string) => {
     navigate(`/tools/${slug}`);
   };
 
   return (
     <>
       <Helmet>
-        <title>BeamX Solutions | Case Studies</title>
+        <title>BeamX Solutions | Tools</title>
       </Helmet>
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-36 md:pb-12 overflow-hidden">
@@ -124,9 +107,8 @@ const CaseStudiesPage: React.FC = () => {
                     variant="primary"
                     className="text-sm"
                     onClick={() => handleTryNow(tool.slug)}
-                    disabled={isWaking[tool.slug] || false}
                   >
-                    {isWaking[tool.slug] ? "Waking Backend..." : "Try Now"}
+                    Try Now
                   </Button>
                 </div>
               </motion.article>
@@ -181,7 +163,7 @@ const CaseStudiesPage: React.FC = () => {
 
       {/* CTA Section */}
       <CTASection
-        title="Ready to See What’s Possible?"
+        title="Ready to See What's Possible?"
         subtitle="Let's discuss how we can tailor a solution for your needs."
         primaryButtonText="Get Started"
         primaryButtonHref="/contact"
@@ -192,4 +174,4 @@ const CaseStudiesPage: React.FC = () => {
   );
 };
 
-export default CaseStudiesPage;
+export default ToolsPage;

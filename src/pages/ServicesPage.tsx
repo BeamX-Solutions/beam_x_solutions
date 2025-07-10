@@ -146,10 +146,12 @@ const ServicesPage: React.FC = () => {
 
       {/* CTA Section */}
       <CTASection
-        title="Ready to Unlock Your Business's Potential?"
-        subtitle="Let's collaborate to transform your data into a competitive advantage."
-        primaryButtonText="Get in Touch"
+        title="Ready to See What's Possible?"
+        subtitle="Let's discuss how we can tailor a solution for your needs."
+        primaryButtonText="Get Started"
         primaryButtonHref="/contact"
+        secondaryButtonText="Explore Our Tools"
+        secondaryButtonHref="/tools"
       />
     </>
   );

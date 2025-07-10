@@ -76,7 +76,7 @@ const PrivacyPolicyPage: React.FC = () => {
 
               <h2 className="text-2xl font-semibold text-gray-800 mb-4">7. International Data Transfers</h2>
               <p className="text-gray-600 mb-6">
-                Your data may be processed internationally. We adhere to data protection laws, implementing safeguards for cross-border transfers.
+                Your data may be processed internationally. We adhere to data protection laws and relevant regulations like NDPR and GDPR depending on your industry and location, thereby implementing safeguards for cross-border transfers.
               </p>
 
               <h2 className="text-2xl font-semibold text-gray-800 mb-4">8. Changes to This Policy</h2>
