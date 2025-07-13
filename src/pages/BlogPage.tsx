@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async'; // Changed to react-helmet-async
+import { Helmet } from 'react-helmet-async';
 import { NavLink } from 'react-router-dom';
 import { Calendar, Clock, User } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
@@ -103,18 +103,28 @@ const BlogPage: React.FC = () => {
               subtitle="Get our latest insights and updates delivered straight to your inbox."
               center
             />
-            <form className="mt-8">
-              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto px-4 sm:px-0">
+            <div className="mt-8">
+              <div className="flex flex-col gap-4 max-w-md mx-auto px-4 sm:px-0">
+                <input
+                  type="text"
+                  placeholder="First name"
+                  className="flex-grow px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary"
+                />
+                <input
+                  type="text"
+                  placeholder="Last name"
+                  className="flex-grow px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary"
+                />
                 <input
                   type="email"
                   placeholder="Your email"
                   className="flex-grow px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary"
                 />
-                <Button type="submit" variant="primary">
+                <Button type="button" variant="primary">
                   Subscribe
                 </Button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </section>
