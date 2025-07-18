@@ -20,12 +20,16 @@ exports.handler = async (event) => {
 
     // Send confirmation email
     const emailResponse = await resend.emails.send({
-      from: 'chimaobi@beamxsolutions.com',
+      from: 'info@beamxsolutions.com',
       to: email,
       subject: 'Welcome to BeamX Solutions Newsletter!',
+      headers: {
+        'List-Unsubscribe': `<mailto:unsubscribe-${audienceResponse.data.id}@beamxsolutions.com?subject=unsubscribe>`,
+        'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+      },
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <img src="public/Beamx-Logo-Colour3.jpg" alt="BeamX Solutions Logo" style="max-width: 200px; display: block; margin: 0 auto 20px;">
+          <img src="https://beamxsolutions.com/Beamx-Logo-Colour3.jpg" alt="BeamX Solutions Logo" style="max-width: 200px; display: block; margin: 0 auto 20px;">
           <h1 style="color: #333; text-align: center;">Welcome, ${firstName} ${lastName}!</h1>
           <p style="color: #555; line-height: 1.6;">Thank you for joining the BeamX Solutions community! We're thrilled to have you on board. Our newsletter will keep you updated with the latest insights, trends, and innovations in data analytics, artificial intelligence, and digital transformation.</p>
           <p style="color: #555; line-height: 1.6;">Here's what you can expect:</p>
@@ -36,10 +40,10 @@ exports.handler = async (event) => {
           </ul>
           <p style="color: #555; line-height: 1.6;">Stay tuned for our next edition, where we'll dive into cutting-edge strategies to empower your business. If you have any questions or topics you'd like us to cover, feel free to reply to this email!</p>
           <p style="color: #555; text-align: center; margin-top: 30px;">
-            <a href="https://beamxsolutions.com/unsubscribe?email=${encodeURIComponent(email)}" style="color: #0066cc; text-decoration: none;">Unsubscribe</a>
+            <a href="mailto:unsubscribe-${audienceResponse.data.id}@beamxsolutions.com?subject=unsubscribe" style="display: inline-block; background-color: #0066cc; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold;">Unsubscribe</a>
           </p>
           <p style="color: #888; font-size: 12px; text-align: center; margin-top: 20px;">
-            BeamX Solutions | 123 Innovation Drive, Tech City | &copy; 2025 BeamX Solutions
+            BeamX Solutions | Springfield Ave, Chicago, IL 60625 | © 2025 BeamX Solutions
           </p>
         </div>
       `,
