@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { NavLink } from 'react-router-dom';
@@ -8,7 +8,57 @@ import Button from '../components/Button';
 import CTASection from '../components/CTASection';
 import { blogPosts } from '../data/blogPosts';
 
-const BlogPage: React.FC = () => {
+const BlogPage = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+  });
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  interface FormData {
+    firstName: string;
+    lastName: string;
+    email: string;
+  }
+
+  interface InputChangeEvent extends React.ChangeEvent<HTMLInputElement> {}
+
+  const handleInputChange = (e: InputChangeEvent) => {
+    const { name, value } = e.target;
+    setFormData((prev: FormData) => ({ ...prev, [name]: value }));
+  };
+
+  interface SubscribeResponse {
+    message: string;
+    [key: string]: any;
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage('');
+
+    try {
+      const response: Response = await fetch('/.netlify/functions/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const result: SubscribeResponse = await response.json();
+      setMessage(result.message);
+      if (response.ok) {
+        setFormData({ firstName: '', lastName: '', email: '' });
+      }
+    } catch (error: unknown) {
+      console.error('Error:', error);
+      setMessage('Error: Could not subscribe. Please try again.');
+    }
+    setLoading(false);
+  };
+
   return (
     <>
       <Helmet>
@@ -103,28 +153,39 @@ const BlogPage: React.FC = () => {
               subtitle="Get our latest insights and updates delivered straight to your inbox."
               center
             />
-            <div className="mt-8">
-              <div className="flex flex-col gap-4 max-w-md mx-auto px-4 sm:px-0">
-                <input
-                  type="text"
-                  placeholder="First name"
-                  className="flex-grow px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary"
-                />
-                <input
-                  type="text"
-                  placeholder="Last name"
-                  className="flex-grow px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary"
-                />
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  className="flex-grow px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary"
-                />
-                <Button type="button" variant="primary">
-                  Subscribe
-                </Button>
-              </div>
-            </div>
+            <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-4 max-w-md mx-auto px-4 sm:px-0">
+              <input
+                type="text"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleInputChange}
+                placeholder="First name"
+                className="flex-grow px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary"
+                required
+              />
+              <input
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleInputChange}
+                placeholder="Last name"
+                className="flex-grow px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary"
+                required
+              />
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="Your email"
+                className="flex-grow px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary"
+                required
+              />
+              <Button type="submit" variant="primary" disabled={loading}>
+                {loading ? 'Subscribing...' : 'Subscribe'}
+              </Button>
+              {message && <p className="mt-4 text-sm text-gray-600">{message}</p>}
+            </form>
           </div>
         </div>
       </section>
@@ -132,7 +193,7 @@ const BlogPage: React.FC = () => {
       {/* CTA Section */}
       <CTASection
         title="Ready to See What’s Possible?"
-        subtitle="Let's discuss how we can help you unlock the full potential of your data."
+        subtitle="Let's אני            Let's discuss how we can help you unlock the full potential of your data."
         primaryButtonText="Get Started"
         primaryButtonHref="/contact"
         secondaryButtonText="Explore Services"

@@ -11,7 +11,7 @@
     "functions:serve": "netlify functions:serve"
   },
   "dependencies": {
-    "@mailchimp/mailchimp_marketing": "^3.0.80",
+    "resend": "^4.0.0",
     "axios": "^1.10.0",
     "dotenv": "^16.5.0",
     "framer-motion": "^11.18.2",
