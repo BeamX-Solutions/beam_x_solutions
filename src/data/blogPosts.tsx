@@ -6,7 +6,7 @@ export const blogPosts = [
     excerpt: "Generative AI promises smarter decisions and automation, but without a strong data culture, it’s doomed to fail. Learn BeamX’s framework to build trust, fluency, and systems for AI success.",
     image: "gen-ai-strategy.jpeg",
     author: "BeamX Solutions",
-    date: "July 19, 2025",
+    date: "July 29, 2025",
     readTime: "10 min read",
     category: "AI & Data Culture",
     fullContent: (
@@ -120,7 +120,7 @@ export const blogPosts = [
     excerpt: "Fragmented data systems slow growth and bury opportunities. Learn BeamX’s 8-week roadmap to streamline integrations, boost visibility, and build resilient systems for scale.",
     image: "eliminate-data.jpg",
     author: "BeamX Solutions",
-    date: "July 19, 2025",
+    date: "July 22, 2025",
     readTime: "9 min read",
     category: "Data & Integration",
     fullContent: (
@@ -132,6 +132,7 @@ export const blogPosts = [
         <p className="mb-4">
           This isn’t just a technical problem—it’s a business risk. Downtime delays decisions, backlogs hide opportunities, and disconnected systems lead to flawed forecasts and slow execution. This guide presents BeamX’s 8-week roadmap to eliminate integration chaos and build resilient systems for scale.
         </p>
+        <img src="/data-integration-inside-image.jpg" alt="Data Integration Image" />
 
         <h3 className="text-xl font-semibold mb-3">Phase 1: Integration Audit & Bottleneck Mapping (Weeks 1–2)</h3>
         <p className="mb-4">
@@ -231,7 +232,7 @@ export const blogPosts = [
     excerpt: "Custom AI agents are transforming workflows, but rushed deployments can lead to costly failures. Learn BeamX’s 5-phase evaluation blueprint to deploy reliable, high-performing AI agents safely.",
     image: "deploy-custom-ai.avif",
     author: "BeamX Solutions",
-    date: "July 19, 2025",
+    date: "July 15, 2025",
     readTime: "8 min read",
     category: "AI & Automation",
     fullContent: (
@@ -361,7 +362,7 @@ export const blogPosts = [
     excerpt: "AI is pushing data infrastructure to its limits. Discover 2025 trends, risks, and a strategic playbook to build scalable, observable, AI-ready systems that drive growth without bottlenecks.",
     image: "resilient-data-ai.avif",
     author: "BeamX Solutions",
-    date: "July 19, 2025",
+    date: "July 8, 2025",
     readTime: "10 min read",
     category: "AI & Infrastructure",
     fullContent: (
