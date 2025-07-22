@@ -19,7 +19,7 @@ const LogoScroller: React.FC = () => {
     <section className="bg-gray-100 py-10 overflow-hidden">
       <div className="container-custom">
         <h2 className="text-center text-sm font-bold text-gray-600 mb-4 tracking-wide uppercase">
-          Trusted by Leading Brands
+          Platforms We Work With
         </h2>
       </div>
       <div className="relative w-full">
