@@ -74,7 +74,7 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold text-white mb-6">Our Services</h3>
             <ul className="space-y-4">
               {[
-                { name: 'Insights & Dashboards', path: '/services' },
+                { name: 'Managed Intelligence Services', path: '/services' },
                 { name: 'Website & Workflow Engineering', path: '/services' },
                 { name: 'Data Infrastructure & Automation', path: '/services' },
                 { name: 'AI & Machine Learning Models', path: '/services' },
@@ -107,6 +107,12 @@ const Footer: React.FC = () => {
                 <Phone className="h-5 w-5 text-primary mr-3 flex-shrink-0" />
                 <a href="tel:+14146506035" className="text-gray-400 hover:text-primary transition-colors">
                   +1 414 650 6035
+                </a>
+              </li>
+              <li className="flex items-center">
+                <Phone className="h-5 w-5 text-primary mr-3 flex-shrink-0" />
+                <a href="tel:+16788614557" className="text-gray-400 hover:text-primary transition-colors">
+                  +1 678 861 4557
                 </a>
               </li>
               <li className="flex items-center">

@@ -9,8 +9,8 @@ const ServicesPage: React.FC = () => {
   const services = [
     {
       icon: <BarChart className="h-10 w-10 text-green-500" />,
-      title: "Insights & Dashboards",
-      description: "Get the insights that matter most with dashboards that show your North Star metrics and help you make better decisions.",
+      title: "Managed Intelligence Services",
+      description: "Get the insights that matter most with managed intelligence services that show your North Star metrics and help you make better decisions.",
       features: [
         "Customizable dashboards",
         "Real-time data visualization",
