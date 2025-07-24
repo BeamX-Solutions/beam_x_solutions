@@ -43,7 +43,7 @@ const flagshipTools = [
     slug: "business-assessment-v2",
     title: "Business Assessment V2",
     description: "Evaluate your business across six key pillars with enhanced AI-powered insights and tailored strategies.",
-    image: "/web_and_workflow.jpeg",
+    image: "/ai_and_machine_learning.webp",
   },
 ];
 

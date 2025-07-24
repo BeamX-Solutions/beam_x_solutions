@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import Button from '../components/Button';
 import { Helmet } from 'react-helmet-async'; // Changed to react-helmet-async
 import CTASection from '../components/CTASection';
-import BusinessAssessmentV2 from './BusinessAssessmentV2';
 
 interface ScorecardInput {
   revenue: string;
