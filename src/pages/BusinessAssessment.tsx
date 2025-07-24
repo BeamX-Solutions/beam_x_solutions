@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import Button from '../components/Button';
 import { Helmet } from 'react-helmet-async'; // Changed to react-helmet-async
 import CTASection from '../components/CTASection';
+import BusinessAssessmentV2 from './BusinessAssessmentV2';
 
 interface ScorecardInput {
   revenue: string;
@@ -37,7 +38,7 @@ const industries = [
   "Education", "Hospitality", "Real Estate", "Non-Profit", "Other"
 ];
 
-const ScorecardPredictor: React.FC = () => {
+const BusinessAssessment: React.FC = () => {
   const [formData, setFormData] = useState<ScorecardInput>({
     revenue: "",
     profit_margin_known: "",
@@ -376,4 +377,4 @@ const ScorecardPredictor: React.FC = () => {
   );
 };
 
-export default ScorecardPredictor;
+export default BusinessAssessment;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Component, ReactNode } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { HelmetProvider, HelmetData } from 'react-helmet-async';
+import { HelmetProvider } from 'react-helmet-async';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
@@ -11,7 +11,8 @@ import ContactPage from './pages/ContactPage';
 import ToolsPage from './pages/ToolsPage';
 import ToolsDetailPage from './pages/ToolsDetailPage';
 import LoanApprovalPredictor from './pages/LoanApprovalPredictor';
-import ScorecardPredictor from './pages/ScorecardPredictor';
+import BusinessAssessment from './pages/BusinessAssessment';
+import BusinessAssessmentV2 from './pages/BusinessAssessmentV2';
 import ScrollToTop from './components/ScrollToTop';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 
@@ -29,9 +30,9 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   static getDerivedStateFromError(_: Error): ErrorBoundaryState {
     return { hasError: true };
   }
-componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-  console.error('Error caught by ErrorBoundary:', error, errorInfo);
-}
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('Error caught by ErrorBoundary:', error, errorInfo);
+  }
   render() {
     if (this.state.hasError) {
       return (
@@ -68,6 +69,7 @@ function App() {
     '/tools': 'BeamX Solutions | Tools',
     '/tools/loan-approval-predictor': 'BeamX Solutions | Loan Approval Predictor',
     '/tools/business-assessment': 'BeamX Solutions | Business Assessment',
+    '/tools/business-assessment-v2': 'BeamX Solutions | Business Assessment V2',
     '/blog': 'BeamX Solutions | Blog',
     '/contact': 'BeamX Solutions | Contact Us',
     '/privacy-policy': 'BeamX Solutions | Privacy Policy',
@@ -77,7 +79,7 @@ function App() {
     if (lastPath !== location.pathname + location.search) {
       setIsLoading(true);
       const timer = setTimeout(() => setIsLoading(false), 200);
-      const title = pageTitles[location.pathname] || document.title; // Use document.title as fallback
+      const title = pageTitles[location.pathname] || document.title;
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         event: 'pageview',
@@ -95,8 +97,6 @@ function App() {
     }
   }, [location.pathname, location.search]);
 
-  // Removed custom helmetContext as it's not compatible with HelmetProvider's context prop
-
   return (
     <HelmetProvider>
       <ErrorBoundary>
@@ -109,7 +109,8 @@ function App() {
             <Route path="tools" element={<ToolsPage />} />
             <Route path="tools/:slug" element={<ToolsDetailPage />} />
             <Route path="tools/loan-approval-predictor" element={<LoanApprovalPredictor />} />
-            <Route path="tools/business-assessment" element={<ScorecardPredictor />} />
+            <Route path="tools/business-assessment" element={<BusinessAssessment />} />
+            <Route path="tools/business-assessment-v2" element={<BusinessAssessmentV2 />} />
             <Route path="blog" element={<BlogPage />} />
             <Route path="blog/:slug" element={<BlogPostPage />} />
             <Route path="contact" element={<ContactPage />} />

@@ -38,6 +38,13 @@ const flagshipTools = [
     description: "Evaluate your business readiness with detailed insights and tailored growth strategies.",
     image: "/web_and_workflow.jpeg",
   },
+  {
+    id: 3,
+    slug: "business-assessment-v2",
+    title: "Business Assessment V2",
+    description: "Evaluate your business across six key pillars with enhanced AI-powered insights and tailored strategies.",
+    image: "/web_and_workflow.jpeg",
+  },
 ];
 
 const ToolsPage: React.FC = () => {
@@ -52,7 +59,6 @@ const ToolsPage: React.FC = () => {
       <Helmet>
         <title>BeamX Solutions | Tools</title>
       </Helmet>
-      {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-36 md:pb-12 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-primary bg-opacity-75 z-0" />
         <div className="container-custom mx-auto px-4 sm:px-6 relative z-10">
@@ -71,7 +77,6 @@ const ToolsPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Flagship Products/Tools Grid */}
       <section className="section bg-white">
         <div className="container-custom mx-auto px-4 sm:px-6">
           <SectionHeader
@@ -117,7 +122,6 @@ const ToolsPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Case Studies Grid */}
       <section className="section bg-gray-50">
         <div className="container-custom mx-auto px-4 sm:px-6">
           <SectionHeader
@@ -161,7 +165,6 @@ const ToolsPage: React.FC = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
       <CTASection
         title="Ready to See What's Possible?"
         subtitle="Let's discuss how we can tailor a solution for your needs."
