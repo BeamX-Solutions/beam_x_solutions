@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
-import { jsPDF } from 'jspdf';
 import Button from '../components/Button';
 import CTASection from '../components/CTASection';
 
 interface BusinessAssessmentInput {
-  fullName: string;
-  companyName: string;
-  email: string;
   revenue: string;
   revenue_trend: string;
   profit_margin_known: string;
@@ -47,6 +43,9 @@ interface BusinessAssessmentInput {
   primary_challenge: string;
   main_goal: string;
   location_importance: string;
+  full_name: string;
+  company_name: string;
+  email: string;
 }
 
 interface BusinessAssessmentResult {
@@ -66,9 +65,6 @@ interface BusinessAssessmentResult {
 
 const BusinessAssessmentV2: React.FC = () => {
   const [formData, setFormData] = useState<BusinessAssessmentInput>({
-    fullName: "",
-    companyName: "",
-    email: "",
     revenue: "",
     revenue_trend: "",
     profit_margin_known: "",
@@ -107,10 +103,14 @@ const BusinessAssessmentV2: React.FC = () => {
     primary_challenge: "",
     main_goal: "",
     location_importance: "",
+    full_name: "",
+    company_name: "",
+    email: "",
   });
   const [result, setResult] = useState<BusinessAssessmentResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [downloadLoading, setDownloadLoading] = useState(false);
   const [formErrors, setFormErrors] = useState<Partial<Record<keyof BusinessAssessmentInput, string>>>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
@@ -121,65 +121,26 @@ const BusinessAssessmentV2: React.FC = () => {
     }
   };
 
-  const validateEmail = (email: string) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const requiredFields: (keyof BusinessAssessmentInput)[] = [
-      "fullName",
-      "companyName",
-      "email",
-      "revenue",
-      "revenue_trend",
-      "profit_margin_known",
-      "profit_margin",
-      "cash_flow",
-      "financial_planning",
-      "customer_acquisition",
-      "customer_cost_awareness",
-      "customer_retention",
-      "repeat_business",
-      "marketing_budget",
-      "online_presence",
-      "customer_feedback",
-      "record_keeping",
-      "inventory_management",
-      "scheduling_systems",
-      "quality_control",
-      "supplier_relationships",
-      "team_size",
-      "hiring_process",
-      "employee_training",
-      "delegation",
-      "performance_tracking",
-      "payment_systems",
-      "data_backup",
-      "communication_tools",
-      "website_functionality",
-      "social_media_use",
-      "market_knowledge",
-      "competitive_advantage",
-      "customer_segments",
-      "pricing_strategy",
-      "growth_planning",
-      "business_type",
-      "business_age",
-      "primary_challenge",
-      "main_goal",
-      "location_importance",
+      "revenue", "revenue_trend", "profit_margin_known", "profit_margin", "cash_flow", "financial_planning",
+      "customer_acquisition", "customer_cost_awareness", "customer_retention", "repeat_business", "marketing_budget",
+      "online_presence", "customer_feedback", "record_keeping", "inventory_management", "scheduling_systems",
+      "quality_control", "supplier_relationships", "team_size", "hiring_process", "employee_training", "delegation",
+      "performance_tracking", "payment_systems", "data_backup", "communication_tools", "website_functionality",
+      "social_media_use", "market_knowledge", "competitive_advantage", "customer_segments", "pricing_strategy",
+      "growth_planning", "business_type", "business_age", "primary_challenge", "main_goal", "location_importance",
+      "full_name", "company_name", "email"
     ];
     const errors: Partial<Record<keyof BusinessAssessmentInput, string>> = {};
     requiredFields.forEach((field) => {
       if (!formData[field]) {
         errors[field] = "This field is required.";
+      } else if (field === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData[field])) {
+        errors[field] = "Please enter a valid email address.";
       }
     });
-    if (formData.email && !validateEmail(formData.email)) {
-      errors.email = "Please enter a valid email address.";
-    }
 
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
@@ -218,112 +179,44 @@ const BusinessAssessmentV2: React.FC = () => {
     }
   };
 
-  const generatePDF = () => {
+  const handleDownload = async () => {
     if (!result) return;
 
-    const doc = new jsPDF();
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const margin = 15;
-    const lineHeight = 7;
-    let y = margin;
+    setDownloadLoading(true);
+    setError(null);
 
-    // Helper function to add text with word wrapping
-    const addText = (text: string, x: number, fontSize: number, isBold = false) => {
-      doc.setFontSize(fontSize);
-      doc.setFont("helvetica", isBold ? "bold" : "normal");
-      const lines = doc.splitTextToSize(text, pageWidth - 2 * margin);
-      doc.text(lines, x, y);
-      y += lines.length * lineHeight;
-      if (y > doc.internal.pageSize.getHeight() - margin) {
-        doc.addPage();
-        y = margin;
+    try {
+      const response = await fetch("https://beamx-scorecard-v2.onrender.com/download-report", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+        signal: AbortSignal.timeout(90000),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${await response.text()}`);
       }
-    };
 
-    // Header
-    doc.setFillColor(0, 102, 204); // BeamX blue
-    doc.rect(0, 0, pageWidth, 30, "F");
-    doc.setTextColor(255, 255, 255);
-    addText("BeamX Solutions - Business Assessment Report", margin, 16, true);
-    doc.setTextColor(0, 0, 0);
-
-    // User Details
-    y += 5;
-    addText(`Name: ${result.assessment_data.fullName}`, margin, 12, true);
-    addText(`Company: ${result.assessment_data.companyName}`, margin, 12, true);
-    addText(`Email: ${result.assessment_data.email}`, margin, 12, true);
-    addText(`Date: ${new Date().toLocaleDateString()}`, margin, 12, true);
-    y += 5;
-
-    // Scores
-    addText("Assessment Scores", margin, 14, true);
-    addText(`Total Score: ${result.total_score}/${result.max_score}`, margin, 12);
-    addText(`Financial Health: ${result.scores.financial}/25`, margin, 12);
-    addText(`Growth & Marketing: ${result.scores.growth}/25`, margin, 12);
-    addText(`Operations & Systems: ${result.scores.operations}/25`, margin, 12);
-    addText(`Team & Management: ${result.scores.team}/25`, margin, 12);
-    addText(`Digital Adoption: ${result.scores.digital}/25`, margin, 12);
-    addText(`Strategic Position: ${result.scores.strategic}/25`, margin, 12);
-    y += 5;
-
-    // Insights
-    addText("Insights and Recommendations", margin, 14, true);
-    const insightsText = result.insight
-      .replace(/\*\*([^*]+)\*\*/g, "$1") // Remove bold markers
-      .replace(/(\d+\.\s)/g, "\n$1") // Ensure numbered lists break correctly
-      .replace(/- ([^*]+)/g, "• $1"); // Convert hyphens to bullets
-    addText(insightsText, margin, 10);
-
-    // Footer
-    doc.setFillColor(0, 102, 204);
-    doc.rect(0, doc.internal.pageSize.getHeight() - 15, pageWidth, 15, "F");
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(8);
-    doc.text("Generated by BeamX Solutions | https://beamxsolutions.com", margin, doc.internal.pageSize.getHeight() - 5);
-
-    // Download PDF
-    doc.save(`BeamX_Assessment_${result.assessment_data.companyName || "Report"}.pdf`);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${formData.company_name}_Assessment_Report.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      const error = err as Error;
+      if (error.name === "TimeoutError") {
+        setError("Download request timed out. Please try again.");
+      } else {
+        setError(error.message || "Failed to download report.");
+      }
+    } finally {
+      setDownloadLoading(false);
+    }
   };
-
-  const renderInput = (
-    name: keyof BusinessAssessmentInput,
-    label: string,
-    type: 'text' | 'email',
-    placeholder: string,
-    helperText?: string
-  ) => (
-    <div>
-      <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
-        {label}
-        <span className="text-red-500 ml-1">*</span>
-      </label>
-      <div className="relative">
-        <input
-          id={name}
-          name={name}
-          type={type}
-          value={formData[name]}
-          onChange={handleChange}
-          className={`block w-full border ${
-            formErrors[name] ? 'border-red-300' : 'border-gray-300'
-          } rounded-md p-3 text-sm focus:ring-primary focus:border-primary focus:outline-none transition-colors`}
-          placeholder={placeholder}
-          aria-invalid={!!formErrors[name]}
-          aria-describedby={`${name}-error ${name}-helper`}
-        />
-      </div>
-      {helperText && (
-        <p id={`${name}-helper`} className="text-xs text-gray-500 mt-1">
-          {helperText}
-        </p>
-      )}
-      {formErrors[name] && (
-        <p id={`${name}-error`} className="text-red-500 text-xs mt-1">
-          {formErrors[name]}
-        </p>
-      )}
-    </div>
-  );
 
   const renderSelect = (
     name: keyof BusinessAssessmentInput,
@@ -358,6 +251,46 @@ const BusinessAssessmentV2: React.FC = () => {
             </option>
           ))}
         </select>
+      </div>
+      {helperText && (
+        <p id={`${name}-helper`} className="text-xs text-gray-500 mt-1">
+          {helperText}
+        </p>
+      )}
+      {formErrors[name] && (
+        <p id={`${name}-error`} className="text-red-500 text-xs mt-1">
+          {formErrors[name]}
+        </p>
+      )}
+    </div>
+  );
+
+  const renderInput = (
+    name: keyof BusinessAssessmentInput,
+    label: string,
+    type: string,
+    placeholder: string,
+    helperText?: string
+  ) => (
+    <div>
+      <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
+        {label}
+        <span className="text-red-500 ml-1">*</span>
+      </label>
+      <div className="relative">
+        <input
+          id={name}
+          name={name}
+          type={type}
+          value={formData[name]}
+          onChange={handleChange}
+          placeholder={placeholder}
+          className={`block w-full border ${
+            formErrors[name] ? 'border-red-300' : 'border-gray-300'
+          } rounded-md p-3 text-sm focus:ring-primary focus:border-primary focus:outline-none transition-colors`}
+          aria-invalid={!!formErrors[name]}
+          aria-describedby={`${name}-error ${name}-helper`}
+        />
       </div>
       {helperText && (
         <p id={`${name}-helper`} className="text-xs text-gray-500 mt-1">
@@ -415,28 +348,28 @@ const BusinessAssessmentV2: React.FC = () => {
               )}
               <form onSubmit={handleSubmit} className="space-y-8">
                 <div>
-                  <h2 className="text-xl font-semibold text-gray-800 mb-4">Business Owner Information</h2>
+                  <h2 className="text-xl font-semibold text-gray-800 mb-4">Contact Information</h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {renderInput(
-                      "fullName",
+                      "full_name",
                       "Full Name",
                       "text",
                       "Enter your full name",
-                      "Your full name for the assessment report."
+                      "Your full name for the report."
                     )}
                     {renderInput(
-                      "companyName",
+                      "company_name",
                       "Company Name",
                       "text",
                       "Enter your company name",
-                      "Your business or company name."
+                      "The name of your business."
                     )}
                     {renderInput(
                       "email",
                       "Email Address",
                       "email",
                       "Enter your email address",
-                      "Your email for contact and report delivery."
+                      "Your email address for contact."
                     )}
                   </div>
                 </div>
@@ -715,16 +648,9 @@ const BusinessAssessmentV2: React.FC = () => {
                       "business_type",
                       "Business Type",
                       [
-                        "Retail/E-commerce",
-                        "Service Business",
-                        "Restaurant/Food",
-                        "Healthcare/Medical",
-                        "Construction/Trades",
-                        "Professional Services",
-                        "Manufacturing",
-                        "Technology/Software",
-                        "Consulting",
-                        "Other",
+                        "Retail/E-commerce", "Service Business", "Restaurant/Food", "Healthcare/Medical",
+                        "Construction/Trades", "Professional Services", "Manufacturing", "Technology/Software",
+                        "Consulting", "Other"
                       ],
                       "Select business type",
                       "The type of business you operate."
@@ -740,14 +666,9 @@ const BusinessAssessmentV2: React.FC = () => {
                       "primary_challenge",
                       "Primary Challenge",
                       [
-                        "Not enough customers",
-                        "Too busy to grow systematically",
-                        "Inconsistent revenue",
-                        "Managing costs/expenses",
-                        "Finding good employees",
-                        "Competition/pricing pressure",
-                        "Keeping up with technology",
-                        "Time management/work-life balance",
+                        "Not enough customers", "Too busy to grow systematically", "Inconsistent revenue",
+                        "Managing costs/expenses", "Finding good employees", "Competition/pricing pressure",
+                        "Keeping up with technology", "Time management/work-life balance"
                       ],
                       "Select primary challenge",
                       "The main challenge your business faces."
@@ -756,14 +677,9 @@ const BusinessAssessmentV2: React.FC = () => {
                       "main_goal",
                       "Main Goal",
                       [
-                        "Increase revenue/sales",
-                        "Improve profitability",
-                        "Scale the business",
-                        "Reduce time commitment",
-                        "Build systems/processes",
-                        "Expand to new markets",
-                        "Improve quality/service",
-                        "Prepare for succession/sale",
+                        "Increase revenue/sales", "Improve profitability", "Scale the business",
+                        "Reduce time commitment", "Build systems/processes", "Expand to new markets",
+                        "Improve quality/service", "Prepare for succession/sale"
                       ],
                       "Select main goal",
                       "Your primary business goal."
@@ -790,16 +706,7 @@ const BusinessAssessmentV2: React.FC = () => {
 
               {result && (
                 <div className="mt-8 p-6 rounded-md bg-green-50">
-                  <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-lg font-semibold text-green-800">Assessment Results V2</h2>
-                    <Button
-                      variant="secondary"
-                      onClick={generatePDF}
-                      className="py-2 px-4 text-sm font-medium"
-                    >
-                      Download PDF Report
-                    </Button>
-                  </div>
+                  <h2 className="text-lg font-semibold text-green-800">Assessment Results V2</h2>
                   <p className="text-gray-700">Total Score: {result.total_score}/{result.max_score}</p>
                   <ul className="list-disc pl-5 mt-2 text-gray-700">
                     <li>Financial Health: {result.scores.financial}/25</li>
@@ -814,15 +721,23 @@ const BusinessAssessmentV2: React.FC = () => {
                   </p>
                   <div
                     className="mt-2 p-4 bg-white border border-gray-200 rounded-md"
-                    dangerouslySetInnerHTML={{
-                      __html: result.insight
-                        .replace(/\n/g, '<br>')
-                        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-                        .replace(/(\d+\.\s)/g, '<br>$1')
-                        .replace(/- ([^*]+)/g, '<li>$1</li>')
-                        .replace(/^(<li>.*<\/li>)$/, '<ul>$1</ul>'),
+                    dangerouslySetInnerHTML={{ __html: result.insight
+                      .replace(/\n/g, '<br>')
+                      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                      .replace(/(\d+\.\s)/g, '<br>$1')
+                      .replace(/- ([^*]+)/g, '<li>$1</li>')
+                      .replace(/^(<li>.*<\/li>)$/, '<ul>$1</ul>')
                     }}
                   />
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    disabled={downloadLoading}
+                    onClick={handleDownload}
+                    className={`mt-4 w-full py-3 text-sm font-medium ${downloadLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                    {downloadLoading ? 'Generating PDF...' : 'Download PDF Report'}
+                  </Button>
                 </div>
               )}
             </div>
