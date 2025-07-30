@@ -5,7 +5,7 @@ export const blogPosts = [
     slug: "genai-strategy-fails-without-data-culture",
     excerpt: "Generative AI promises smarter decisions and automation, but without a strong data culture, it’s doomed to fail. Learn BeamX’s framework to build trust, fluency, and systems for AI success.",
     image: "/gen-ai-strategy.webp",
-    author: "BeamX Solutions",
+    author: "Christiana Kuku",
     date: "July 29, 2025",
     readTime: "10 min read",
     category: "AI & Data Culture",
@@ -107,11 +107,6 @@ export const blogPosts = [
         </p>
       </>
     ),
-    authorDetails: {
-      name: "BeamX Solutions",
-      website: "https://beamxsolutions.com",
-      description: "We are a strategic analytics partner supporting business growth through data-backed insights.",
-    },
   },
   {
     id: 2,
@@ -119,7 +114,7 @@ export const blogPosts = [
     slug: "eliminate-data-integration-chaos-2025",
     excerpt: "Fragmented data systems slow growth and bury opportunities. Learn BeamX’s 8-week roadmap to streamline integrations, boost visibility, and build resilient systems for scale.",
     image: "/eliminate-data.webp",
-    author: "BeamX Solutions",
+    author: "Christiana Kuku",
     date: "July 22, 2025",
     readTime: "9 min read",
     category: "Data & Integration",
@@ -219,11 +214,6 @@ export const blogPosts = [
         </p>
       </>
     ),
-    authorDetails: {
-      name: "BeamX Solutions",
-      website: "https://beamxsolutions.com",
-      description: "We are a strategic analytics partner supporting business growth through data-backed insights.",
-    },
   },
   {
     id: 3,
@@ -231,7 +221,7 @@ export const blogPosts = [
     slug: "deploy-custom-ai-agents-without-risking-reputation-roi",
     excerpt: "Custom AI agents are transforming workflows, but rushed deployments can lead to costly failures. Learn BeamX’s 5-phase evaluation blueprint to deploy reliable, high-performing AI agents safely.",
     image: "/deploy-custom-ai.webp",
-    author: "BeamX Solutions",
+    author: "Christiana Kuku",
     date: "July 15, 2025",
     readTime: "8 min read",
     category: "AI & Automation",
@@ -349,11 +339,6 @@ export const blogPosts = [
         </p>
       </>
     ),
-    authorDetails: {
-      name: "BeamX Solutions",
-      website: "https://beamxsolutions.com",
-      description: "We are a strategic analytics partner supporting business growth through data-backed insights.",
-    },
   },
   {
     id: 4,
@@ -361,7 +346,7 @@ export const blogPosts = [
     slug: "resilient-data-ai-infrastructure-2025-trends-risks-playbook",
     excerpt: "AI is pushing data infrastructure to its limits. Discover 2025 trends, risks, and a strategic playbook to build scalable, observable, AI-ready systems that drive growth without bottlenecks.",
     image: "/resilient-data-ai.webp",
-    author: "BeamX Solutions",
+    author: "Christiana Kuku",
     date: "July 8, 2025",
     readTime: "10 min read",
     category: "AI & Infrastructure",
@@ -470,11 +455,6 @@ export const blogPosts = [
         </p>
       </>
     ),
-    authorDetails: {
-      name: "BeamX Solutions",
-      website: "https://beamxsolutions.com",
-      description: "We are a strategic analytics partner supporting business growth through data-backed insights.",
-    },
   },
   {
     id: 5,
@@ -482,7 +462,7 @@ export const blogPosts = [
     slug: "ai-agents-business-complete-guide-2025",
     excerpt: "AI agents are intelligent software systems that can perceive their environment, make decisions, and take actions to achieve specific goals. Learn how they're transforming business operations and how to implement them effectively.",
     image: "/ai_and_machine_learning.webp",
-    author: "BeamX Solutions",
+    author: "Christiana Kuku",
     date: "June 27, 2025",
     readTime: "12 min read",
     category: "AI & Automation",
@@ -782,11 +762,6 @@ export const blogPosts = [
         </p>
       </>
     ),
-    authorDetails: {
-      name: "BeamX Solutions",
-      website: "https://beamxsolutions.com",
-      description: "We are a strategic analytics partner supporting business growth through data-backed insights.",
-    },
   },
   {
     id: 6,
@@ -794,7 +769,7 @@ export const blogPosts = [
     slug: "predictive-analytics-2025-growth-strategy-guide",
     excerpt: "Discover how predictive analytics can transform your business strategy in 2025. Learn to identify patterns, predict future outcomes, and make data-driven decisions that drive growth.",
     image: "/predictive_analysis.webp",
-    author: "BeamX Solutions",
+    author: "Christiana Kuku",
     date: "January 22, 2025",
     readTime: "15 min read",
     category: "Predictive Analytics",
@@ -1075,11 +1050,6 @@ export const blogPosts = [
         </p>
       </>
     ),
-    authorDetails: {
-      name: "BeamX Solutions",
-      website: "https://beamxsolutions.com",
-      description: "We are a strategic analytics partner supporting business growth through data-backed insights.",
-    },
   },
   {
     id: 7,
@@ -1087,7 +1057,7 @@ export const blogPosts = [
     slug: "hidden-cost-poor-data-quality-complete-guide",
     excerpt: "Discover the real impact of poor data quality on your business and learn practical strategies to transform data chaos into competitive advantage.",
     image: "/data_quality.webp",
-    author: "BeamX Solutions",
+    author: "Christiana Kuku",
     date: "August 17, 2024",
     readTime: "14 min read",
     category: "Data Quality",
@@ -1411,11 +1381,6 @@ export const blogPosts = [
         </p>
       </>
     ),
-    authorDetails: {
-      name: "BeamX Solutions",
-      website: "https://beamxsolutions.com",
-      description: "We are a strategic analytics partner supporting business growth through data-backed insights.",
-    },
   },
   {
     id: 8,
@@ -1423,7 +1388,7 @@ export const blogPosts = [
     slug: "spot-hidden-gaps-analytics-ecosystem",
     excerpt: "In the age of digital acceleration, data is currency. But too often, businesses are sitting on mountains of data that offer little insight.",
     image: "/data_gaps.webp",
-    author: "BeamX Solutions",
+    author: "Obinna Nweke",
     date: "March 12, 2024",
     readTime: "8 min read",
     category: "Analytics Strategy",
@@ -1484,10 +1449,5 @@ export const blogPosts = [
         </p>
       </>
     ),
-    authorDetails: {
-      name: "BeamX Solutions",
-      website: "https://beamxsolutions.com",
-      description: "We are a strategic analytics partner supporting business growth through data-backed insights.",
-    },
   },
 ];
