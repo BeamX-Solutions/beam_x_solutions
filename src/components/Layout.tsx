@@ -29,7 +29,7 @@ const Layout: React.FC<LayoutProps> = ({ isLoading }) => {
         <Outlet />
       </main>
       <Footer />
-      <WhatsAppButton />
+      {/* <WhatsAppButton /> */}
     </div>
   );
 };
