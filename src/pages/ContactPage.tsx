@@ -107,11 +107,6 @@ const ContactPage: React.FC = () => {
                           +1 414 650 6035
                         </a>
                       </p>
-                      <p className="text-gray-600">
-                        <a href="tel:+16788614557" className="hover:text-primary transition-colors">
-                          +1 678 861 4557
-                        </a>
-                      </p>
                       <p className="text-gray-600 mb-1">
                         <a href="tel:+2348164711076" className="hover:text-primary transition-colors">
                           +234 816 471 1076
