@@ -43,9 +43,6 @@ interface BusinessAssessmentInput {
   primary_challenge: string;
   main_goal: string;
   location_importance: string;
-  full_name: string;
-  company_name: string;
-  email: string;
 }
 
 interface BusinessAssessmentResult {
@@ -103,14 +100,10 @@ const BusinessAssessmentV2: React.FC = () => {
     primary_challenge: "",
     main_goal: "",
     location_importance: "",
-    full_name: "",
-    company_name: "",
-    email: "",
   });
   const [result, setResult] = useState<BusinessAssessmentResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [downloadLoading, setDownloadLoading] = useState(false);
   const [formErrors, setFormErrors] = useState<Partial<Record<keyof BusinessAssessmentInput, string>>>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
@@ -130,21 +123,18 @@ const BusinessAssessmentV2: React.FC = () => {
       "quality_control", "supplier_relationships", "team_size", "hiring_process", "employee_training", "delegation",
       "performance_tracking", "payment_systems", "data_backup", "communication_tools", "website_functionality",
       "social_media_use", "market_knowledge", "competitive_advantage", "customer_segments", "pricing_strategy",
-      "growth_planning", "business_type", "business_age", "primary_challenge", "main_goal", "location_importance",
-      "full_name", "company_name", "email"
+      "growth_planning", "business_type", "business_age", "primary_challenge", "main_goal", "location_importance"
     ];
     const errors: Partial<Record<keyof BusinessAssessmentInput, string>> = {};
     requiredFields.forEach((field) => {
       if (!formData[field]) {
         errors[field] = "This field is required.";
-      } else if (field === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData[field])) {
-        errors[field] = "Please enter a valid email address.";
       }
     });
 
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
-      setError("Please fill out all required fields correctly.");
+      setError("Please fill out all required fields.");
       return;
     }
 
@@ -176,45 +166,6 @@ const BusinessAssessmentV2: React.FC = () => {
       }
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleDownload = async () => {
-    if (!result) return;
-
-    setDownloadLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetch("https://beamx-scorecard-v2.onrender.com/download-report", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-        signal: AbortSignal.timeout(90000),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error ${response.status}: ${await response.text()}`);
-      }
-
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${formData.company_name}_Assessment_Report.pdf`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
-    } catch (err) {
-      const error = err as Error;
-      if (error.name === "TimeoutError") {
-        setError("Download request timed out. Please try again.");
-      } else {
-        setError(error.message || "Failed to download report.");
-      }
-    } finally {
-      setDownloadLoading(false);
     }
   };
 
@@ -251,46 +202,6 @@ const BusinessAssessmentV2: React.FC = () => {
             </option>
           ))}
         </select>
-      </div>
-      {helperText && (
-        <p id={`${name}-helper`} className="text-xs text-gray-500 mt-1">
-          {helperText}
-        </p>
-      )}
-      {formErrors[name] && (
-        <p id={`${name}-error`} className="text-red-500 text-xs mt-1">
-          {formErrors[name]}
-        </p>
-      )}
-    </div>
-  );
-
-  const renderInput = (
-    name: keyof BusinessAssessmentInput,
-    label: string,
-    type: string,
-    placeholder: string,
-    helperText?: string
-  ) => (
-    <div>
-      <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
-        {label}
-        <span className="text-red-500 ml-1">*</span>
-      </label>
-      <div className="relative">
-        <input
-          id={name}
-          name={name}
-          type={type}
-          value={formData[name]}
-          onChange={handleChange}
-          placeholder={placeholder}
-          className={`block w-full border ${
-            formErrors[name] ? 'border-red-300' : 'border-gray-300'
-          } rounded-md p-3 text-sm focus:ring-primary focus:border-primary focus:outline-none transition-colors`}
-          aria-invalid={!!formErrors[name]}
-          aria-describedby={`${name}-error ${name}-helper`}
-        />
       </div>
       {helperText && (
         <p id={`${name}-helper`} className="text-xs text-gray-500 mt-1">
@@ -347,33 +258,6 @@ const BusinessAssessmentV2: React.FC = () => {
                 </div>
               )}
               <form onSubmit={handleSubmit} className="space-y-8">
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-800 mb-4">Contact Information</h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    {renderInput(
-                      "full_name",
-                      "Full Name",
-                      "text",
-                      "Enter your full name",
-                      "Your full name for the report."
-                    )}
-                    {renderInput(
-                      "company_name",
-                      "Company Name",
-                      "text",
-                      "Enter your company name",
-                      "The name of your business."
-                    )}
-                    {renderInput(
-                      "email",
-                      "Email Address",
-                      "email",
-                      "Enter your email address",
-                      "Your email address for contact."
-                    )}
-                  </div>
-                </div>
-
                 <div>
                   <h2 className="text-xl font-semibold text-gray-800 mb-4">Financial Health</h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -729,15 +613,6 @@ const BusinessAssessmentV2: React.FC = () => {
                       .replace(/^(<li>.*<\/li>)$/, '<ul>$1</ul>')
                     }}
                   />
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    disabled={downloadLoading}
-                    onClick={handleDownload}
-                    className={`mt-4 w-full py-3 text-sm font-medium ${downloadLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
-                  >
-                    {downloadLoading ? 'Generating PDF...' : 'Download PDF Report'}
-                  </Button>
                 </div>
               )}
             </div>
