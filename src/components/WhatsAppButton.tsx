@@ -15,7 +15,7 @@ const WhatsAppButton: React.FC = () => {
   }, []);
 
   const handleWhatsAppClick = () => {
-    const phoneNumber = '2348164711076'; // Your WhatsApp number
+    const phoneNumber = '14143506035'; // Your WhatsApp number
     const message = encodeURIComponent('Hello! I\'m interested in learning more about BeamX Solutions services.');
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');

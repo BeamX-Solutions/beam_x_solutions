@@ -13,7 +13,7 @@ const ContactPage: React.FC = () => {
   const faqs = [
     {
       question: "What industries do you work with?",
-      answer: "We work with clients across various industries including retail, healthcare, financial services, manufacturing, logistics, e-commerce, and more. Our data solutions are adaptable to the specific needs and challenges of each industry."
+      answer: "We work with clients across various industries including retail, financial services, logistics, e-commerce, and more. Our data solutions are adaptable to the specific needs and challenges of each industry."
     },
     {
       question: "How long does a typical project take?",
@@ -149,7 +149,7 @@ const ContactPage: React.FC = () => {
         </div>
       </section>
       
-      {/* Map Section */}
+      {/* Map Section 
       <section className="bg-gray-50 py-16">
         <div className="container-custom">
           <SectionHeader
@@ -170,7 +170,7 @@ const ContactPage: React.FC = () => {
             ></iframe>
           </div>
         </div>
-      </section>
+      </section> */}
       
       {/* FAQ Section (Dropdown) */}
       <section className="bg-white py-16">
