@@ -87,8 +87,7 @@ const caseStudies = [
     ],
     screenshots: [
       "/Dashboard.png",
-      "/affixdot_survey.png",
-      "/affixdot_event_report.png"
+      "/affix-image-2.png",
     ],
     results: {
       metrics: [

@@ -8,29 +8,29 @@ import CTASection from '../components/CTASection';
 const ManagedIntelligencePage: React.FC = () => {
   const packages = [
     {
-      title: "Quarterly Accelerator",
+      title: "Quarterly (3-Months)",
       price: "$398",
       savings: "Save $199",
       features: [
         "First month FREE",
-        "Free data audit (worth $1,000)",
+        "Free data audit",
         "Priority setup (2-week delivery)"
       ],
-      ctaText: "Claim Your Spot Now",
+      ctaText: "Sign Up Now",
       ctaHref: "/contact?package=quarterly",
       isPopular: true
     },
     {
-      title: "Semi-Annual Dominator",
+      title: "Semi-Annual (6-Months)",
       price: "$896",
       savings: "Save $298",
       features: [
         "First month FREE",
-        "Free competitor intelligence report (worth $2,500)",
+        "Free competitor intelligence report",
         "Quarterly strategy session",
         "Custom ROI tracking dashboard"
       ],
-      ctaText: "Lock In Maximum Savings",
+      ctaText: "Sign Up Now",
       ctaHref: "/contact?package=semi-annual",
       isPopular: false
     }
@@ -38,7 +38,7 @@ const ManagedIntelligencePage: React.FC = () => {
 
   const testimonials = [
     {
-      quote: "In 60 days, we identified a $47K revenue leak and optimized our sales process for 23% faster closes.",
+      quote: "Partnering with BeamX cut our reporting time by 75%. We’re making faster decisions, with clearer data and far less confusion. It’s been a game-changer for how we operate.",
       author: "Franklin Chigozie, Co-Founder, Affixdot"
     },
     {
@@ -232,7 +232,7 @@ const ManagedIntelligencePage: React.FC = () => {
           />
           <ul className="space-y-4 mt-8 max-w-2xl mx-auto">
             {[
-              "Your competitors are making moves - Every day without data insights is market share lost",
+              "Your competitors are making moves every day",
               "Q3 planning window closing - Prepare for Q4 optimization opportunities",
               "Limited capacity - We only onboard few clients per quarter (5 spots left)",
               "Launch offer expiration - Regular price returns to $597/month on September 1st, 2025"
@@ -257,7 +257,7 @@ const ManagedIntelligencePage: React.FC = () => {
       <section className="section bg-white">
         <div className="container-custom mx-auto px-4 sm:px-6">
           <SectionHeader
-            title="Real Results from Real Clients"
+            title="Real Results from Our Clients"
             subtitle="See what our clients are saying about our Managed Intelligence Services."
             center
           />
