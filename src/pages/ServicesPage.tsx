@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async'; // Changed to react-helmet-async
+import { Helmet } from 'react-helmet-async';
 import { Globe, Database, BarChart, Brain, Bot, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import SectionHeader from '../components/SectionHeader';
 import CTASection from '../components/CTASection';
 
@@ -16,12 +17,15 @@ const ServicesPage: React.FC = () => {
         "Real-time data visualization",
         "Actionable insights delivery"
       ],
-      imageUrl: "/insights_and_dashboards.webp"
+      imageUrl: "/insights_and_dashboards.webp",
+      link: "/managed-intelligence"
     },
     {
       icon: <Globe className="h-10 w-10 text-green-500" />,
       title: "Websites & Workflow Engineering",
       description: "We build websites that actually convert and create automated workflows that save you hours every day.",
+
+
       features: [
         "High-conversion web design",
         "Automated workflow integration",
@@ -121,7 +125,13 @@ const ServicesPage: React.FC = () => {
                 <div className="flex-1">
                   <div className="flex items-center gap-4 mb-4">
                     {service.icon}
-                    <h3 className="text-2xl font-semibold text-gray-900 group-hover:text-primary transition-colors duration-300">{service.title}</h3>
+                    {service.link ? (
+                      <Link to={service.link}>
+                        <h3 className="text-2xl font-semibold text-gray-900 group-hover:text-primary transition-colors duration-300">{service.title}</h3>
+                      </Link>
+                    ) : (
+                      <h3 className="text-2xl font-semibold text-gray-900 group-hover:text-primary transition-colors duration-300">{service.title}</h3>
+                    )}
                   </div>
                   <p className="text-gray-600 text-base mb-4 leading-relaxed">{service.description}</p>
                   <ul className="space-y-2">

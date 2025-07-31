@@ -13,6 +13,7 @@ import ToolsDetailPage from './pages/ToolsDetailPage';
 import LoanApprovalPredictor from './pages/LoanApprovalPredictor';
 import BusinessAssessment from './pages/BusinessAssessment';
 import BusinessAssessmentV2 from './pages/BusinessAssessmentV2';
+import ManagedIntelligencePage from './pages/ManagedIntelligencePage';
 import ScrollToTop from './components/ScrollToTop';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 
@@ -73,6 +74,7 @@ function App() {
     '/blog': 'BeamX Solutions | Blog',
     '/contact': 'BeamX Solutions | Contact Us',
     '/privacy-policy': 'BeamX Solutions | Privacy Policy',
+    '/managed-intelligence': 'BeamX Solutions | Managed Intelligence Services',
   };
 
   useEffect(() => {
@@ -115,6 +117,7 @@ function App() {
             <Route path="blog/:slug" element={<BlogPostPage />} />
             <Route path="contact" element={<ContactPage />} />
             <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
+            <Route path="managed-intelligence" element={<ManagedIntelligencePage />} />
           </Route>
         </Routes>
       </ErrorBoundary>
