@@ -113,12 +113,6 @@ const ManagedIntelligencePage: React.FC = () => {
             <p className="text-gray-100 text-lg mb-8">
               Turn your data into a competitive advantage with clear, actionable insights that drive growth.
             </p>
-            <a
-              href="/contact"
-              className="inline-block bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors duration-300"
-            >
-              Book a Consultation
-            </a>
           </motion.div>
         </div>
       </section>
