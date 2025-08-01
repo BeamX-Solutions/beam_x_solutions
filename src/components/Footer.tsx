@@ -99,8 +99,7 @@ const Footer: React.FC = () => {
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
                 <span className="text-gray-400">
-                  Springfield Ave<br />
-                  Chicago, IL 60625
+                  Illinois, USA
                 </span>
               </li>
               <li className="flex items-center">
@@ -108,6 +107,12 @@ const Footer: React.FC = () => {
                 <a href="tel:+14146506035" className="text-gray-400 hover:text-primary transition-colors">
                   +1 414 650 6035
                 </a>
+              </li>
+              <li className="flex items-start">
+                <MapPin className="h-5 w-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
+                <span className="text-gray-400">
+                  Lagos, Nigeria
+                </span>
               </li>
               <li className="flex items-center">
                 <Phone className="h-5 w-5 text-primary mr-3 flex-shrink-0" />

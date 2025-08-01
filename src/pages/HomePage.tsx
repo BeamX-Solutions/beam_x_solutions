@@ -55,7 +55,7 @@ const HomePage: React.FC = () => {
               transition={{ duration: 0.6 }}
             >
               <h1 className="text-white font-bold mb-6">
-                Turning Data Into <span className="text-secondary">Action</span>
+                Unlock The Power Of Your <span className="text-secondary">Data</span>
               </h1>
               <p className="text-gray-100 text-lg mb-8 max-w0-lg">
                 We help businesses leverage the full potential of their data through expert data strategy, 

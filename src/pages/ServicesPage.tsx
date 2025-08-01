@@ -24,8 +24,6 @@ const ServicesPage: React.FC = () => {
       icon: <Globe className="h-10 w-10 text-green-500" />,
       title: "Websites & Workflow Engineering",
       description: "We build websites that actually convert and create automated workflows that save you hours every day.",
-
-
       features: [
         "High-conversion web design",
         "Automated workflow integration",
@@ -142,6 +140,14 @@ const ServicesPage: React.FC = () => {
                       </li>
                     ))}
                   </ul>
+                  {service.link && (
+                    <Link
+                      to={service.link}
+                      className="inline-block bg-primary text-white px-6 py-2 mt-4 rounded-lg hover:bg-primary-dark transition-colors duration-300"
+                    >
+                      Learn More
+                    </Link>
+                  )}
                   <motion.div
                     className="w-0 h-0.5 bg-primary origin-left mt-4"
                     whileInView={{ width: "50%" }}
