@@ -14,6 +14,7 @@ import LoanApprovalPredictor from './pages/LoanApprovalPredictor';
 import BusinessAssessment from './pages/BusinessAssessment';
 import BusinessAssessmentV2 from './pages/BusinessAssessmentV2';
 import ManagedIntelligencePage from './pages/ManagedIntelligencePage';
+import MarketingPlanWaitlist from './pages/MarketingPlanWaitlist';
 import ScrollToTop from './components/ScrollToTop';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 
@@ -113,6 +114,7 @@ function App() {
             <Route path="tools/loan-approval-predictor" element={<LoanApprovalPredictor />} />
             <Route path="tools/business-assessment" element={<BusinessAssessment />} />
             <Route path="tools/business-assessment-v2" element={<BusinessAssessmentV2 />} />
+            <Route path="tools/marketing-plan-generator/waitlist" element={<MarketingPlanWaitlist />} />
             <Route path="blog" element={<BlogPage />} />
             <Route path="blog/:slug" element={<BlogPostPage />} />
             <Route path="contact" element={<ContactPage />} />

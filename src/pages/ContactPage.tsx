@@ -1,13 +1,25 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async'; // Changed to react-helmet-async
+import { Helmet } from 'react-helmet-async';
 import { MapPin, Mail, Phone, Clock, ChevronDown } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
-import ContactForm from '../components/ContactForm';
 
 const ContactPage: React.FC = () => {
-  // State to track which FAQ is expanded
+  // State for FAQ expansion
   const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
+  
+  // State for form handling
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    message: '',
+    botField: '',
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   // FAQ data
   const faqs = [
@@ -37,15 +49,76 @@ const ContactPage: React.FC = () => {
     }
   ];
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const validateForm = () => {
+    if (!formData.name.trim()) return 'Name is required';
+    if (!formData.email.trim()) return 'Email is required';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) return 'Invalid email format';
+    if (!formData.message.trim()) return 'Message is required';
+    if (formData.botField) return 'Bot detected';
+    return '';
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    setErrorMessage('');
+
+    const validationError = validateForm();
+    if (validationError) {
+      setSubmitStatus('error');
+      setErrorMessage(validationError);
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      const response = await fetch('/.netlify/functions/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          company: '',
+          message: '',
+          botField: '',
+        });
+        setTimeout(() => {
+          setSubmitStatus('idle');
+        }, 5000);
+      } else {
+        setSubmitStatus('error');
+        setErrorMessage(data.error || 'Failed to send message');
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      setErrorMessage('Network error. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <>
       <Helmet>
         <title>BeamX Solutions | Contact Us</title>
       </Helmet>
+      
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-primary z-0" />
-        
         <div className="container-custom relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <motion.div
@@ -62,11 +135,11 @@ const ContactPage: React.FC = () => {
         </div>
       </section>
       
-      {/* Contact Information Section */}
+      {/* Contact Information and Form Section */}
       <section className="py-16 bg-white">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Contact Information (Now on the Left) */}
+            {/* Contact Information */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -78,7 +151,6 @@ const ContactPage: React.FC = () => {
                 subtitle="We'd love to hear from you. Contact us using the form or the information below."
               />
               
-              {/* Contact Info Card */}
               <div className="bg-gray-50 p-6 rounded-xl mb-6">
                 <h3 className="text-xl font-semibold mb-4">Contact Information</h3>
                 <ul className="space-y-4">
@@ -117,7 +189,6 @@ const ContactPage: React.FC = () => {
                 </ul>
               </div>
               
-              {/* Business Hours Card */}
               <div className="bg-gray-50 p-6 rounded-xl mb-6">
                 <div className="flex items-center gap-3 mb-4">
                   <Clock className="h-5 w-5 text-primary" />
@@ -126,10 +197,9 @@ const ContactPage: React.FC = () => {
                 <p className="text-gray-600 mb-1">Monday - Friday: 9am - 5pm</p>
                 <p className="text-gray-600">Saturday - Sunday: Closed</p>
               </div>
-              
             </motion.div>
             
-            {/* Contact Form (Now on the Right) */}
+            {/* Contact Form */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -138,36 +208,128 @@ const ContactPage: React.FC = () => {
               className="bg-white shadow-lg rounded-xl p-8"
             >
               <h3 className="text-2xl font-semibold mb-6">Send Us a Message</h3>
-              <ContactForm />
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                      Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+                      placeholder="Your name"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                      Email *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+                      placeholder="Your email address"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                      Phone
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+                      placeholder="Your phone number"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">
+                      Company
+                    </label>
+                    <input
+                      type="text"
+                      id="company"
+                      name="company"
+                      value={formData.company}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+                      placeholder="Your company name"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                    Message *
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={5}
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+                    placeholder="How can we help you?"
+                  />
+                </div>
+                <div hidden>
+                  <label htmlFor="botField">Don’t fill this out:</label>
+                  <input
+                    type="text"
+                    id="botField"
+                    name="botField"
+                    value={formData.botField}
+                    onChange={handleChange}
+                  />
+                </div>
+                {submitStatus === 'success' && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="p-4 rounded-lg bg-success bg-opacity-10 text-success"
+                  >
+                    Your message has been sent successfully. We'll get back to you soon!
+                  </motion.div>
+                )}
+                {submitStatus === 'error' && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="p-4 rounded-lg bg-error bg-opacity-10 text-error"
+                  >
+                    {errorMessage}
+                  </motion.div>
+                )}
+                <div>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className={`w-full px-8 py-3 rounded-lg text-white text-lg font-medium transition-colors ${
+                      isSubmitting ? 'bg-primary/50 cursor-not-allowed' : 'bg-primary hover:bg-primary/90'
+                    }`}
+                  >
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                  </button>
+                </div>
+              </form>
             </motion.div>
           </div>
         </div>
       </section>
       
-      {/* Map Section 
-      <section className="bg-gray-50 py-16">
-        <div className="container-custom">
-          <SectionHeader
-            title="Visit Our Office"
-            subtitle="We're located in the heart of Chicago."
-            center
-          />
-          
-          <div className="rounded-xl overflow-hidden shadow-lg h-96">
-            <iframe
-              title="BeamX Solutions Office Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d47447.68410361446!2d-87.6976355!3d41.9790229!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x880fd2e37f9b8d2d%3A0x62ad8b907dd6d4d5!2sSpringfield%20Ave%2C%20Chicago%2C%20IL%2060625!5e0!3m2!1sen!2sus!4v1697832494187!5m2!1sen!2sus"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-            ></iframe>
-          </div>
-        </div>
-      </section> */}
-      
-      {/* FAQ Section (Dropdown) */}
+      {/* FAQ Section */}
       <section className="bg-white py-16">
         <div className="container-custom">
           <SectionHeader
@@ -175,7 +337,6 @@ const ContactPage: React.FC = () => {
             subtitle="Find answers to common questions about our services and process."
             center
           />
-          
           <div className="max-w-4xl mx-auto">
             {faqs.map((faq, index) => (
               <motion.div

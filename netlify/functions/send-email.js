@@ -1,25 +1,13 @@
-const { ins } = require('framer-motion/client');
-const nodemailer = require('nodemailer');
-require('dotenv').config();
+const { Resend } = require('resend');
 
 exports.handler = async (event) => {
-  if (event.httpMethod !== 'POST') {
-    return {
-      statusCode: 405,
-      body: JSON.stringify({ error: 'Method Not Allowed' }),
-    };
-  }
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   try {
-    const { name, email, phone, company, message, botField } = JSON.parse(event.body);
+    const body = JSON.parse(event.body);
+    const { name, email, phone, company, message, botField } = body;
 
-    if (!name || !email || !message) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ error: 'Missing required fields' }),
-      };
-    }
-
+    // Check for bot field
     if (botField) {
       return {
         statusCode: 400,
@@ -27,47 +15,35 @@ exports.handler = async (event) => {
       };
     }
 
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_APP_PASSWORD,
-      },
-    });
-
-    const mailOptions = {
-      from: `"BeamX Solutions" <${process.env.GMAIL_USER}>`,
-      to: process.env.RECIPIENT_EMAILS.split(','),
-      replyTo: email,
-      subject: `New Contact Form Submission from ${name}${company ? ` (${company})` : ''}`,
-      text: `
-        Name: ${name}
-        Email: ${email}
-        Phone: ${phone || 'Not provided'}
-        Company: ${company || 'Not provided'}
-        Message: ${message}
-      `,
+    const { data, error } = await resend.emails.send({
+      from: 'admin@beamxsolutions.com',
+      to: ['info@beamxsolutions.com', 'obinna.nweke@beamxsolutions.com', 'chimaobi@beamxsolutions.com'],
+      subject: `New Contact Form Submission from ${name}`,
       html: `
         <h2>New Contact Form Submission</h2>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
-        <p><strong>Company:</strong> ${company || 'Not provided'}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Company:</strong> ${company}</p>
         <p><strong>Message:</strong> ${message}</p>
       `,
-    };
+    });
 
-    await transporter.sendMail(mailOptions);
+    if (error) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: 'Failed to send email' }),
+      };
+    }
 
     return {
       statusCode: 200,
       body: JSON.stringify({ message: 'Email sent successfully' }),
     };
   } catch (error) {
-    console.error('Error sending email:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Failed to send email' }),
+      body: JSON.stringify({ error: 'Server error' }),
     };
   }
-}; 
+};

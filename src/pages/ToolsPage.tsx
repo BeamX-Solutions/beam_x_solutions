@@ -45,13 +45,25 @@ const flagshipTools = [
     description: "Evaluate your business across six key pillars with enhanced AI-powered insights and tailored strategies.",
     image: "/ai_and_machine_learning.webp",
   },
+  {
+    id: 4,
+    slug: "marketing-plan-generator",
+    title: "AI Marketing Plan Generator",
+    description: "Generate comprehensive, data-driven marketing strategies tailored to your business goals and target audience.",
+    image: "/gen-ai-strategy.webp",
+    comingSoon: true,
+  },
 ];
 
 const ToolsPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleTryNow = (slug: string) => {
-    navigate(`/tools/${slug}`);
+    if (slug === 'marketing-plan-generator') {
+      navigate('/tools/marketing-plan-generator/waitlist');
+    } else {
+      navigate(`/tools/${slug}`);
+    }
   };
 
   return (
@@ -113,7 +125,7 @@ const ToolsPage: React.FC = () => {
                     className="text-sm"
                     onClick={() => handleTryNow(tool.slug)}
                   >
-                    Try Now
+                    {tool.comingSoon ? 'Coming Soon' : 'Try Now'}
                   </Button>
                 </div>
               </motion.article>

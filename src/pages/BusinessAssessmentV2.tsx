@@ -5,6 +5,9 @@ import Button from '../components/Button';
 import CTASection from '../components/CTASection';
 
 interface BusinessAssessmentInput {
+  full_name: string;
+  company_name: string;
+  email: string;
   revenue: string;
   revenue_trend: string;
   profit_margin_known: string;
@@ -62,6 +65,9 @@ interface BusinessAssessmentResult {
 
 const BusinessAssessmentV2: React.FC = () => {
   const [formData, setFormData] = useState<BusinessAssessmentInput>({
+    full_name: "",
+    company_name: "",
+    email: "",
     revenue: "",
     revenue_trend: "",
     profit_margin_known: "",
@@ -105,6 +111,7 @@ const BusinessAssessmentV2: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [formErrors, setFormErrors] = useState<Partial<Record<keyof BusinessAssessmentInput, string>>>({});
+  const [privacyAgreed, setPrivacyAgreed] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -114,16 +121,59 @@ const BusinessAssessmentV2: React.FC = () => {
     }
   };
 
+  const handlePrivacyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPrivacyAgreed(e.target.checked);
+  };
+
+  const validateEmail = (email: string) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const requiredFields: (keyof BusinessAssessmentInput)[] = [
-      "revenue", "revenue_trend", "profit_margin_known", "profit_margin", "cash_flow", "financial_planning",
-      "customer_acquisition", "customer_cost_awareness", "customer_retention", "repeat_business", "marketing_budget",
-      "online_presence", "customer_feedback", "record_keeping", "inventory_management", "scheduling_systems",
-      "quality_control", "supplier_relationships", "team_size", "hiring_process", "employee_training", "delegation",
-      "performance_tracking", "payment_systems", "data_backup", "communication_tools", "website_functionality",
-      "social_media_use", "market_knowledge", "competitive_advantage", "customer_segments", "pricing_strategy",
-      "growth_planning", "business_type", "business_age", "primary_challenge", "main_goal", "location_importance"
+      "full_name",
+      "company_name",
+      "email",
+      "revenue",
+      "revenue_trend",
+      "profit_margin_known",
+      "profit_margin",
+      "cash_flow",
+      "financial_planning",
+      "customer_acquisition",
+      "customer_cost_awareness",
+      "customer_retention",
+      "repeat_business",
+      "marketing_budget",
+      "online_presence",
+      "customer_feedback",
+      "record_keeping",
+      "inventory_management",
+      "scheduling_systems",
+      "quality_control",
+      "supplier_relationships",
+      "team_size",
+      "hiring_process",
+      "employee_training",
+      "delegation",
+      "performance_tracking",
+      "payment_systems",
+      "data_backup",
+      "communication_tools",
+      "website_functionality",
+      "social_media_use",
+      "market_knowledge",
+      "competitive_advantage",
+      "customer_segments",
+      "pricing_strategy",
+      "growth_planning",
+      "business_type",
+      "business_age",
+      "primary_challenge",
+      "main_goal",
+      "location_importance"
     ];
     const errors: Partial<Record<keyof BusinessAssessmentInput, string>> = {};
     requiredFields.forEach((field) => {
@@ -132,9 +182,18 @@ const BusinessAssessmentV2: React.FC = () => {
       }
     });
 
+    if (formData.email && !validateEmail(formData.email)) {
+      errors.email = "Please enter a valid email address.";
+    }
+
+    if (!privacyAgreed) {
+      setError("You must agree to the Privacy Policy to submit the assessment.");
+      return;
+    }
+
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
-      setError("Please fill out all required fields.");
+      setError("Please fill out all required fields correctly.");
       return;
     }
 
@@ -168,6 +227,46 @@ const BusinessAssessmentV2: React.FC = () => {
       setLoading(false);
     }
   };
+
+  const renderInput = (
+    name: keyof BusinessAssessmentInput,
+    label: string,
+    type: string,
+    placeholder: string,
+    helperText?: string
+  ) => (
+    <div>
+      <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
+        {label}
+        <span className="text-red-500 ml-1">*</span>
+      </label>
+      <div className="relative">
+        <input
+          id={name}
+          name={name}
+          type={type}
+          value={formData[name]}
+          onChange={handleChange}
+          placeholder={placeholder}
+          className={`block w-full border ${
+            formErrors[name] ? 'border-red-300' : 'border-gray-300'
+          } rounded-md p-3 text-sm focus:ring-primary focus:border-primary focus:outline-none transition-colors`}
+          aria-invalid={!!formErrors[name]}
+          aria-describedby={`${name}-error ${name}-helper`}
+        />
+      </div>
+      {helperText && (
+        <p id={`${name}-helper`} className="text-xs text-gray-500 mt-1">
+          {helperText}
+        </p>
+      )}
+      {formErrors[name] && (
+        <p id={`${name}-error`} className="text-red-500 text-xs mt-1">
+          {formErrors[name]}
+        </p>
+      )}
+    </div>
+  );
 
   const renderSelect = (
     name: keyof BusinessAssessmentInput,
@@ -258,6 +357,33 @@ const BusinessAssessmentV2: React.FC = () => {
                 </div>
               )}
               <form onSubmit={handleSubmit} className="space-y-8">
+                <div>
+                  <h2 className="text-xl font-semibold text-gray-800 mb-4">Contact Information</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {renderInput(
+                      "full_name",
+                      "Full Name",
+                      "text",
+                      "Enter your full name",
+                      "Your full name for follow-up contact."
+                    )}
+                    {renderInput(
+                      "company_name",
+                      "Company Name",
+                      "text",
+                      "Enter your company name",
+                      "The name of your business or organization."
+                    )}
+                    {renderInput(
+                      "email",
+                      "Email Address",
+                      "email",
+                      "Enter your email address",
+                      "Your email for assessment results and follow-up."
+                    )}
+                  </div>
+                </div>
+
                 <div>
                   <h2 className="text-xl font-semibold text-gray-800 mb-4">Financial Health</h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -578,11 +704,29 @@ const BusinessAssessmentV2: React.FC = () => {
                   </div>
                 </div>
 
+                <div className="mt-6">
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={privacyAgreed}
+                      onChange={handlePrivacyChange}
+                      className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+                    />
+                    <span className="ml-2 text-sm text-gray-600">
+                      I agree to the{' '}
+                      <a href="/privacy-policy" className="text-primary hover:underline" target="_blank">
+                        Privacy Policy
+                      </a>{' '}
+                      and consent to being contacted regarding my assessment results.
+                    </span>
+                  </label>
+                </div>
+
                 <Button
                   type="submit"
                   variant="primary"
-                  disabled={loading}
-                  className={`w-full py-3 text-sm font-medium ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  disabled={loading || !privacyAgreed}
+                  className={`w-full py-3 text-sm font-medium ${loading || !privacyAgreed ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   {loading ? 'Processing...' : 'Generate Assessment V2'}
                 </Button>
