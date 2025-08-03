@@ -19,7 +19,7 @@ const MarketingPlanWaitlist: React.FC = () => {
     setError('');
 
     try {
-      const response = await fetch('/.netlify/functions/subscribe', {
+      const response = await fetch('/.netlify/functions/join-waitlist', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
