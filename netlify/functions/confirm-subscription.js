@@ -83,7 +83,7 @@ exports.handler = async (event) => {
     // Send welcome email
     const emailResponse = await retryOnRateLimit(() =>
       resend.emails.send({
-        from: 'info@beamxsolutions.com',
+        from: 'BeamX Solutions Team <info@beamxsolutions.com>',
         to: pendingSubscription.email,
         subject: 'Welcome to BeamX Solutions Newsletter!',
         headers: {

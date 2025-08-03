@@ -71,7 +71,7 @@ exports.handler = async (event) => {
 
       const emailResponse = await retryOnRateLimit(() =>
         resend.emails.send({
-          from: 'info@beamxsolutions.com',
+          from: 'BeamX Solutions Team <info@beamxsolutions.com>',
           to: email,
           subject: 'You’ve Unsubscribed from BeamX Solutions Newsletter',
           html: `
