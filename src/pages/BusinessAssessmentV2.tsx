@@ -110,6 +110,7 @@ const BusinessAssessmentV2: React.FC = () => {
   const [result, setResult] = useState<BusinessAssessmentResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [pdfLoading, setPdfLoading] = useState(false);
   const [formErrors, setFormErrors] = useState<Partial<Record<keyof BusinessAssessmentInput, string>>>({});
   const [privacyAgreed, setPrivacyAgreed] = useState(false);
 
@@ -225,6 +226,44 @@ const BusinessAssessmentV2: React.FC = () => {
       }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const downloadPDF = async () => {
+    setPdfLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("https://beamx-scorecard-v2.onrender.com/generate_pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+        signal: AbortSignal.timeout(90000),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${await response.text()}`);
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      const companyName = formData.company_name ? formData.company_name.replace(/\s+/g, '_') : 'business';
+      a.download = `${companyName}_assessment_report.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      const error = err as Error;
+      if (error.name === "TimeoutError") {
+        setError("PDF generation timed out. Please try again.");
+      } else {
+        setError(error.message || "Failed to generate PDF. Check your connection or server status.");
+      }
+    } finally {
+      setPdfLoading(false);
     }
   };
 
@@ -757,6 +796,15 @@ const BusinessAssessmentV2: React.FC = () => {
                       .replace(/^(<li>.*<\/li>)$/, '<ul>$1</ul>')
                     }}
                   />
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    onClick={downloadPDF}
+                    disabled={pdfLoading}
+                    className={`mt-4 w-full py-3 text-sm font-medium ${pdfLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                    {pdfLoading ? 'Generating PDF...' : 'Download PDF Report'}
+                  </Button>
                 </div>
               )}
             </div>
