@@ -30,7 +30,7 @@ exports.handler = async function (event, context) {
   }
 
   const supabaseUrl = process.env.SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_ANON_KEY;
+  const supabaseKey = process.env.SUPABASE_KEY;
   const supabase = createClient(supabaseUrl, supabaseKey);
   const resend = new Resend(process.env.RESEND_API_KEY);
 
