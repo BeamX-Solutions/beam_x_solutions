@@ -1,7 +1,7 @@
 const { createClient } = require('@supabase/supabase-js');
+const { Resend } = require('resend');
 
 exports.handler = async function (event, context) {
-  // Parse the incoming request body
   let body;
   try {
     body = JSON.parse(event.body);
@@ -14,7 +14,6 @@ exports.handler = async function (event, context) {
 
   const { firstName, lastName, email } = body;
 
-  // Validate input
   if (!email || !firstName || !lastName) {
     return {
       statusCode: 400,
@@ -30,14 +29,13 @@ exports.handler = async function (event, context) {
     };
   }
 
-  // Initialize Supabase client
   const supabaseUrl = process.env.SUPABASE_URL;
   const supabaseKey = process.env.SUPABASE_ANON_KEY;
   const supabase = createClient(supabaseUrl, supabaseKey);
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
-  // Insert into marketing_waitlist table
   try {
-    const { error } = await supabase
+    const { error: dbError } = await supabase
       .from('marketing_waitlist')
       .insert({
         first_name: firstName,
@@ -46,12 +44,30 @@ exports.handler = async function (event, context) {
         created_at: new Date().toISOString(),
       });
 
-    if (error) {
-      console.error('Supabase error:', error);
+    if (dbError) {
+      console.error('Supabase error:', dbError);
       return {
         statusCode: 500,
         body: JSON.stringify({ message: 'Error saving to database' }),
       };
+    }
+
+    // Send confirmation email
+    const emailResponse = await resend.emails.send({
+      from: 'BeamX Solutions Team <info@beamxsolutions.com>',
+      to: email,
+      subject: 'Welcome to the AI Marketing Plan Generator Waitlist',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <h1 style="color: #333; text-align: center;">You're on the Waitlist!</h1>
+          <p style="color: #555; line-height: 1.6;">Hello ${firstName} ${lastName}, thank you for joining the waitlist for our AI Marketing Plan Generator. We'll notify you when it launches.</p>
+        </div>
+      `,
+    });
+
+    if (!emailResponse.data) {
+      console.error('Email error:', emailResponse.error);
+      // Optionally, proceed even if email fails, or handle as needed
     }
 
     return {

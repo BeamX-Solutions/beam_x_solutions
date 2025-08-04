@@ -117,7 +117,7 @@ exports.handler = async (event) => {
     const confirmationUrl = `https://${event.headers.host}/.netlify/functions/confirm-subscription?token=${token}&email=${encodeURIComponent(email)}`;
     const emailResponse = await retryOnRateLimit(() =>
       resend.emails.send({
-        from: 'info@beamxsolutions.com',
+        from: 'BeamX Solutions Team <info@beamxsolutions.com>',
         to: email,
         subject: 'Confirm Your Subscription to BeamX Solutions Newsletter',
         html: `
