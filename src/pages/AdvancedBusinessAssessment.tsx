@@ -66,7 +66,7 @@ interface BusinessAssessmentResult {
   assessment_data: BusinessAssessmentInput;
 }
 
-const BusinessAssessmentV2: React.FC = () => {
+const AdvancedBusinessAssessment: React.FC = () => {
   const [formData, setFormData] = useState<BusinessAssessmentInput>({
     full_name: "",
     company_name: "",
@@ -444,10 +444,10 @@ const BusinessAssessmentV2: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>BeamX Solutions | Business Assessment V2</title>
+        <title>BeamX Solutions | Advanced Business Assessment</title>
         <meta
           name="description"
-          content="Evaluate your business readiness with BeamX Solutions' Universal Business Assessment Version 2, providing enhanced insights and tailored growth strategies powered by AI."
+          content="Evaluate your business readiness with BeamX Solutions' Advanced Business Assessment, providing enhanced insights and tailored growth strategies powered by AI."
         />
       </Helmet>
       <section className="relative pt-32 pb-20 md:pt-36 md:pb-12 overflow-hidden">
@@ -459,7 +459,7 @@ const BusinessAssessmentV2: React.FC = () => {
             transition={{ duration: 0.6 }}
             className="max-w-3xl mx-auto text-center"
           >
-            <h1 className="text-white text-4xl md:text-5xl font-bold mb-6">Universal Business Assessment V2</h1>
+            <h1 className="text-white text-4xl md:text-5xl font-bold mb-6">Advanced Business Assessment</h1>
             <p className="text-gray-100 text-lg md:text-xl mb-8">
               Evaluate your business across six key pillars with enhanced insights and tailored growth strategies powered by AI.
             </p>
@@ -860,7 +860,7 @@ const BusinessAssessmentV2: React.FC = () => {
 
               {result && (
                 <div className="mt-8 p-6 rounded-md bg-green-50">
-                  <h2 className="text-lg font-semibold text-green-800">Assessment Results V2</h2>
+                  <h2 className="text-lg font-semibold text-green-800">Advanced Assessment Results</h2>
                   <p className="text-gray-700">Total Score: {result.total_score}/{result.max_score}</p>
                   <ul className="list-disc pl-5 mt-2 text-gray-700">
                     <li>Financial Health: {result.scores.financial}/25</li>
@@ -917,4 +917,4 @@ const BusinessAssessmentV2: React.FC = () => {
   );
 };
 
-export default BusinessAssessmentV2;
+export default AdvancedBusinessAssessment;

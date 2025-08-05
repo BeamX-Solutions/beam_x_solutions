@@ -12,11 +12,11 @@ import ToolsPage from './pages/ToolsPage';
 import ToolsDetailPage from './pages/ToolsDetailPage';
 import LoanApprovalPredictor from './pages/LoanApprovalPredictor';
 import BusinessAssessment from './pages/BusinessAssessment';
-import BusinessAssessmentV2 from './pages/BusinessAssessmentV2';
 import ManagedIntelligencePage from './pages/ManagedIntelligencePage';
 import MarketingPlanWaitlist from './pages/MarketingPlanWaitlist';
 import ScrollToTop from './components/ScrollToTop';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import AdvancedBusinessAssessment from './pages/AdvancedBusinessAssessment';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -71,7 +71,7 @@ function App() {
     '/tools': 'BeamX Solutions | Tools',
     '/tools/loan-approval-predictor': 'BeamX Solutions | Loan Approval Predictor',
     '/tools/business-assessment': 'BeamX Solutions | Business Assessment',
-    '/tools/business-assessment-v2': 'BeamX Solutions | Business Assessment V2',
+    '/tools/advanced-business-assessment': 'BeamX Solutions | Advanced Business Assessment',
     '/blog': 'BeamX Solutions | Blog',
     '/contact': 'BeamX Solutions | Contact Us',
     '/privacy-policy': 'BeamX Solutions | Privacy Policy',
@@ -113,7 +113,7 @@ function App() {
             <Route path="tools/:slug" element={<ToolsDetailPage />} />
             <Route path="tools/loan-approval-predictor" element={<LoanApprovalPredictor />} />
             <Route path="tools/business-assessment" element={<BusinessAssessment />} />
-            <Route path="tools/business-assessment-v2" element={<BusinessAssessmentV2 />} />
+            <Route path="tools/advanced-business-assessment" element={<AdvancedBusinessAssessment />} />
             <Route path="tools/marketing-plan-generator/waitlist" element={<MarketingPlanWaitlist />} />
             <Route path="blog" element={<BlogPage />} />
             <Route path="blog/:slug" element={<BlogPostPage />} />
