@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
+import { Download } from 'lucide-react';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import Button from '../components/Button';
 import CTASection from '../components/CTASection';
 
@@ -110,9 +113,9 @@ const BusinessAssessmentV2: React.FC = () => {
   const [result, setResult] = useState<BusinessAssessmentResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [pdfLoading, setPdfLoading] = useState(false);
   const [formErrors, setFormErrors] = useState<Partial<Record<keyof BusinessAssessmentInput, string>>>({});
   const [privacyAgreed, setPrivacyAgreed] = useState(false);
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -229,41 +232,125 @@ const BusinessAssessmentV2: React.FC = () => {
     }
   };
 
-  const downloadPDF = async () => {
-    setPdfLoading(true);
-    setError(null);
-
+  const generatePDF = async () => {
+    if (!result) return;
+    
+    setIsGeneratingPDF(true);
+    
     try {
-      const response = await fetch("https://beamx-scorecard-v2.onrender.com/generate_pdf", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-        signal: AbortSignal.timeout(90000),
+      // Create a temporary container for the PDF content
+      const pdfContent = document.createElement('div');
+      pdfContent.style.position = 'absolute';
+      pdfContent.style.left = '-9999px';
+      pdfContent.style.width = '800px';
+      pdfContent.style.padding = '40px';
+      pdfContent.style.backgroundColor = 'white';
+      pdfContent.style.fontFamily = 'Arial, sans-serif';
+      
+      // Get current date
+      const currentDate = new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
       });
-
-      if (!response.ok) {
-        throw new Error(`Error ${response.status}: ${await response.text()}`);
+      
+      pdfContent.innerHTML = `
+        <div style="text-align: center; margin-bottom: 40px;">
+          <h1 style="color: #0F5AE0; font-size: 28px; margin-bottom: 10px;">Business Assessment Report V2</h1>
+          <p style="color: #666; font-size: 16px; margin: 0;">Generated on ${currentDate}</p>
+          <hr style="border: none; border-top: 2px solid #0F5AE0; margin: 20px 0;">
+        </div>
+        
+        <div style="margin-bottom: 30px;">
+          <h2 style="color: #333; font-size: 20px; margin-bottom: 15px;">Contact Information</h2>
+          <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+            <p style="margin: 5px 0;"><strong>Name:</strong> ${formData.full_name}</p>
+            <p style="margin: 5px 0;"><strong>Company:</strong> ${formData.company_name}</p>
+            <p style="margin: 5px 0;"><strong>Email:</strong> ${formData.email}</p>
+          </div>
+        </div>
+        
+        <div style="margin-bottom: 30px;">
+          <h2 style="color: #333; font-size: 20px; margin-bottom: 15px;">Assessment Results</h2>
+          <div style="background: #e8f5e8; padding: 20px; border-radius: 8px; border-left: 4px solid #10B981;">
+            <p style="font-size: 18px; font-weight: bold; margin-bottom: 15px;">Total Score: ${result.total_score}/${result.max_score}</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+              <div>
+                <p style="margin: 8px 0;"><strong>Financial Health:</strong> ${result.scores.financial}/25</p>
+                <p style="margin: 8px 0;"><strong>Growth & Marketing:</strong> ${result.scores.growth}/25</p>
+                <p style="margin: 8px 0;"><strong>Operations & Systems:</strong> ${result.scores.operations}/25</p>
+              </div>
+              <div>
+                <p style="margin: 8px 0;"><strong>Team & Management:</strong> ${result.scores.team}/25</p>
+                <p style="margin: 8px 0;"><strong>Digital Adoption:</strong> ${result.scores.digital}/25</p>
+                <p style="margin: 8px 0;"><strong>Strategic Position:</strong> ${result.scores.strategic}/25</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div style="margin-bottom: 30px;">
+          <h2 style="color: #333; font-size: 20px; margin-bottom: 15px;">Key Insights & Recommendations</h2>
+          <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; line-height: 1.6;">
+            ${result.insight
+              .replace(/\n/g, '<br>')
+              .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+              .replace(/(\d+\.\s)/g, '<br><strong>$1</strong>')
+              .replace(/- ([^*]+)/g, '<li style="margin: 5px 0;">$1</li>')
+            }
+          </div>
+        </div>
+        
+        <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; text-align: center;">
+          <p style="color: #666; font-size: 14px; margin: 0;">
+            This report was generated by BeamX Solutions Business Assessment V2<br>
+            For more information, visit <strong>beamxsolutions.com</strong>
+          </p>
+        </div>
+      `;
+      
+      document.body.appendChild(pdfContent);
+      
+      // Generate canvas from the content
+      const canvas = await html2canvas(pdfContent, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff'
+      });
+      
+      // Remove the temporary element
+      document.body.removeChild(pdfContent);
+      
+      // Create PDF
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const imgWidth = 210; // A4 width in mm
+      const pageHeight = 295; // A4 height in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
+      
+      // Add first page
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+      
+      // Add additional pages if needed
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
       }
-
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      const companyName = formData.company_name ? formData.company_name.replace(/\s+/g, '_') : 'business';
-      a.download = `${companyName}_assessment_report.pdf`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
-    } catch (err) {
-      const error = err as Error;
-      if (error.name === "TimeoutError") {
-        setError("PDF generation timed out. Please try again.");
-      } else {
-        setError(error.message || "Failed to generate PDF. Check your connection or server status.");
-      }
+      
+      // Download the PDF
+      const fileName = `Business_Assessment_${formData.company_name.replace(/[^a-zA-Z0-9]/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
+      pdf.save(fileName);
+      
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      setError('Failed to generate PDF. Please try again.');
     } finally {
-      setPdfLoading(false);
+      setIsGeneratingPDF(false);
     }
   };
 
@@ -796,15 +883,21 @@ const BusinessAssessmentV2: React.FC = () => {
                       .replace(/^(<li>.*<\/li>)$/, '<ul>$1</ul>')
                     }}
                   />
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    onClick={downloadPDF}
-                    disabled={pdfLoading}
-                    className={`mt-4 w-full py-3 text-sm font-medium ${pdfLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
-                  >
-                    {pdfLoading ? 'Generating PDF...' : 'Download PDF Report'}
-                  </Button>
+                  
+                  <div className="mt-6 pt-4 border-t border-gray-200">
+                    <Button
+                      onClick={generatePDF}
+                      variant="primary"
+                      disabled={isGeneratingPDF}
+                      className="inline-flex items-center gap-2"
+                    >
+                      <Download className="h-4 w-4" />
+                      {isGeneratingPDF ? 'Generating PDF...' : 'Download Report as PDF'}
+                    </Button>
+                    <p className="text-xs text-gray-500 mt-2">
+                      Download your complete assessment report for your records
+                    </p>
+                  </div>
                 </div>
               )}
             </div>
