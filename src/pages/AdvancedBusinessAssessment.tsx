@@ -854,7 +854,7 @@ const AdvancedBusinessAssessment: React.FC = () => {
                   disabled={loading || !privacyAgreed}
                   className={`w-full py-3 text-sm font-medium ${loading || !privacyAgreed ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                  {loading ? 'Processing...' : 'Generate Assessment V2'}
+                  {loading ? 'Processing...' : 'Generate Advanced Assessment'}
                 </Button>
               </form>
 
