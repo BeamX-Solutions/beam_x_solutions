@@ -728,13 +728,13 @@ const AdvancedBusinessAssessment: React.FC = () => {
                   disabled={loading || !privacyAgreed}
                   className={`w-full py-3 text-sm font-medium ${loading || !privacyAgreed ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                  {loading ? 'Processing...' : 'Generate Assessment'}
+                  {loading ? 'Processing...' : 'Generate Advanced Assessment'}
                 </Button>
               </form>
 
               {result && (
                 <div className="mt-8 p-6 rounded-md bg-green-50">
-                  <h2 className="text-lg font-semibold text-green-800">Assessment Results</h2>
+                  <h2 className="text-lg font-semibold text-green-800">Advanced Assessment Results</h2>
                   <p className="text-gray-700">Total Score: {result.total_score}/{result.max_score}</p>
                   <ul className="list-disc pl-5 mt-2 text-gray-700">
                     <li>Financial Health: {result.scores.financial}/25</li>
