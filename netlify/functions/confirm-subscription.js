@@ -30,7 +30,15 @@ exports.handler = async (event) => {
   if (!token || !email) {
     return {
       statusCode: 400,
-      body: JSON.stringify({ message: 'Missing token or email' }),
+      headers: { 'Content-Type': 'text/html' },
+      body: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; text-align: center;">
+          <img src="https://beamxsolutions.com/Beamx-Logo-Colour3.jpg" alt="BeamX Solutions Logo" style="max-width: 200px; display: block; margin: 0 auto 20px;">
+          <h1 style="color: #333;">Error</h1>
+          <p style="color: #555; line-height: 1.6;">Missing token or email. Please check the confirmation link and try again.</p>
+          <p style="color: #555; line-height: 1.6;">You can close this page.</p>
+        </div>
+      `,
     };
   }
 
@@ -47,7 +55,15 @@ exports.handler = async (event) => {
       console.error('Supabase query error:', dbError);
       return {
         statusCode: 400,
-        body: JSON.stringify({ message: 'Invalid or expired confirmation link' }),
+        headers: { 'Content-Type': 'text/html' },
+        body: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; text-align: center;">
+            <img src="https://beamxsolutions.com/Beamx-Logo-Colour3.jpg" alt="BeamX Solutions Logo" style="max-width: 200px; display: block; margin: 0 auto 20px;">
+            <h1 style="color: #333;">Invalid Link</h1>
+            <p style="color: #555; line-height: 1.6;">The confirmation link is invalid or expired. Please try subscribing again.</p>
+            <p style="color: #555; line-height: 1.6;">You can close this page.</p>
+          </div>
+        `,
       };
     }
 
@@ -57,7 +73,15 @@ exports.handler = async (event) => {
     if (now > expiresAt) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ message: 'Confirmation link has expired' }),
+        headers: { 'Content-Type': 'text/html' },
+        body: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; text-align: center;">
+            <img src="https://beamxsolutions.com/Beamx-Logo-Colour3.jpg" alt="BeamX Solutions Logo" style="max-width: 200px; display: block; margin: 0 auto 20px;">
+            <h1 style="color: #333;">Link Expired</h1>
+            <p style="color: #555; line-height: 1.6;">The confirmation link has expired. Please try subscribing again.</p>
+            <p style="color: #555; line-height: 1.6;">You can close this page.</p>
+          </div>
+        `,
       };
     }
 
@@ -106,7 +130,6 @@ exports.handler = async (event) => {
               <a href="mailto:unsubscribe-${audienceResponse.data.id}@beamxsolutions.com?subject=unsubscribe" style="display: inline-block; background-color: #0066cc; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold;">Unsubscribe</a>
             </p>
           </div>
-          
         `,
       })
     );
@@ -121,13 +144,29 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: 'Subscription confirmed! Welcome aboard.' }),
+      headers: { 'Content-Type': 'text/html' },
+      body: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; text-align: center;">
+          <img src="https://beamxsolutions.com/Beamx-Logo-Colour3.jpg" alt="BeamX Solutions Logo" style="max-width: 200px; display: block; margin: 0 auto 20px;">
+          <h1 style="color: #333;">Subscription Confirmed!</h1>
+          <p style="color: #555; line-height: 1.6;">Welcome to the BeamX Solutions community, ${pendingSubscription.first_name} ${pendingSubscription.last_name}! Your subscription is now active, and you'll soon receive our newsletter with the latest insights and updates.</p>
+          <p style="color: #555; line-height: 1.6;">This page is no longer needed. Please close it to continue.</p>
+        </div>
+      `,
     };
   } catch (error) {
     console.error('Error:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: `Error: Could not confirm subscription. ${error.message}` }),
+      headers: { 'Content-Type': 'text/html' },
+      body: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; text-align: center;">
+          <img src="https://beamxsolutions.com/Beamx-Logo-Colour3.jpg" alt="BeamX Solutions Logo" style="max-width: 200px; display: block; margin: 0 auto 20px;">
+          <h1 style="color: #333;">Subscription Error</h1>
+          <p style="color: #555; line-height: 1.6;">Could not confirm subscription: ${error.message}. Please try again or contact support.</p>
+          <p style="color: #555; line-height: 1.6;">You can close this page.</p>
+        </div>
+      `,
     };
   }
 };
