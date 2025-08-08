@@ -144,14 +144,14 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
-      headers: { 'Content-Type': 'text/html' },
+      headers: { 
+        'Content-Type': 'text/html',
+        'Location': `/?confirmed=true&name=${encodeURIComponent(pendingSubscription.first_name + ' ' + pendingSubscription.last_name)}`
+      },
       body: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; text-align: center;">
-          <img src="https://beamxsolutions.com/Beamx-Logo-Colour3.jpg" alt="BeamX Solutions Logo" style="max-width: 200px; display: block; margin: 0 auto 20px;">
-          <h1 style="color: #333;">Subscription Confirmed!</h1>
-          <p style="color: #555; line-height: 1.6;">Welcome to the BeamX Solutions community, ${pendingSubscription.first_name} ${pendingSubscription.last_name}! Your subscription is now active, and you'll soon receive our newsletter with the latest insights and updates.</p>
-          <p style="color: #555; line-height: 1.6;">This page is no longer needed. Please close it to continue.</p>
-        </div>
+        <script>
+          window.location.href = '/?confirmed=true&name=${encodeURIComponent(pendingSubscription.first_name + ' ' + pendingSubscription.last_name)}';
+        </script>
       `,
     };
   } catch (error) {

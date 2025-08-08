@@ -5,9 +5,10 @@ import { Menu, X, Mail } from 'lucide-react';
 
 interface NavbarProps {
   isScrolled: boolean;
+  hasNotification?: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
+const Navbar: React.FC<NavbarProps> = ({ isScrolled, hasNotification = false }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const isBlogPostPage = location.pathname.startsWith('/blog/') && location.pathname !== '/blog';
@@ -69,7 +70,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
         `}
       </style>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed ${hasNotification ? 'top-16' : 'top-0'} left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled || isBlogPostPage
             ? 'bg-white shadow-md py-3'
             : 'bg-transparent backdrop-blur-sm py-5'

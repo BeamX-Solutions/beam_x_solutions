@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async'; // Changed to react-helmet-async
 import { motion } from 'framer-motion';
 import { BarChart3, BrainCircuit, Database, LineChart, Server} from 'lucide-react';
@@ -7,9 +8,29 @@ import SectionHeader from '../components/SectionHeader';
 import TestimonialCard from '../components/TestimonialCard';
 import CTASection from '../components/CTASection';
 import LogoScroller from '../components/LogoScroller';
+import NotificationBanner from '../components/NotificationBanner';
 
 const HomePage: React.FC = () => {
   const [currentTestimonial, setCurrentTestimonial] = React.useState(0);
+  const [showNotification, setShowNotification] = React.useState(false);
+  const [notificationMessage, setNotificationMessage] = React.useState('');
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Check for subscription confirmation
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const confirmed = urlParams.get('confirmed');
+    const name = urlParams.get('name');
+    
+    if (confirmed === 'true' && name) {
+      setNotificationMessage(`Welcome to BeamX Solutions, ${decodeURIComponent(name)}! Your subscription is confirmed and you'll receive our latest insights and updates.`);
+      setShowNotification(true);
+      
+      // Clean up URL parameters
+      navigate('/', { replace: true });
+    }
+  }, [location.search, navigate]);
 
   const testimonials = [
     {
@@ -42,8 +63,18 @@ const HomePage: React.FC = () => {
         <title>BeamX Solutions | Home</title>
       </Helmet>
 
+      {/* Notification Banner */}
+      {showNotification && (
+        <NotificationBanner
+          message={notificationMessage}
+          type="success"
+          duration={8000}
+          onClose={() => setShowNotification(false)}
+        />
+      )}
+
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 lg:pt-56 lg:pb-32 overflow-hidden">
+      <section className={`relative ${showNotification ? 'pt-44' : 'pt-32'} pb-20 md:${showNotification ? 'pt-52' : 'pt-40'} md:pb-28 lg:${showNotification ? 'pt-68' : 'pt-56'} lg:pb-32 overflow-hidden transition-all duration-300`}>
         <div className="absolute inset-0 bg-gradient-primary bg-opacity-75 z-0" />
         <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/7988079/pexels-photo-7988079.jpeg?auto=compress&cs=tinysrgb&w=1920')] bg-cover bg-center opacity-20 z-10" />
         
