@@ -26,24 +26,24 @@ const caseStudies = [
 const flagshipTools = [
   {
     id: 1,
-    slug: "loan-approval-predictor",
-    title: "Loan Approval Predictor",
-    description: "Automated lending decisions that are faster, smarter, and more accurate than manual reviews.",
-    image: "/loan_approval.jpg",
-  },
-  {
-    id: 2,
     slug: "business-assessment",
     title: "Business Assessment",
     description: "Evaluate your business readiness with detailed insights and tailored growth strategies.",
     image: "/web_and_workflow.jpeg",
   },
   {
-    id: 3,
+    id: 2,
     slug: "advanced-business-assessment",
     title: "Advanced Business Assessment",
     description: "Evaluate your business across six key pillars with enhanced AI-powered insights and tailored strategies.",
     image: "/ai_and_machine_learning.webp",
+  },
+  {
+    id: 3,
+    slug: "loan-approval-predictor",
+    title: "Loan Approval Predictor",
+    description: "Automated lending decisions that are faster, smarter, and more accurate than manual reviews.",
+    image: "/loan_approval.jpg",
   },
   {
     id: 4,
