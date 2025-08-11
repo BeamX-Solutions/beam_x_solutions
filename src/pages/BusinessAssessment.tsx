@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import Button from '../components/Button';
 import { Helmet } from 'react-helmet-async'; // Changed to react-helmet-async
 import CTASection from '../components/CTASection';
+import ReactMarkdown from 'react-markdown';
 
 interface ScorecardInput {
   revenue: string;
@@ -347,16 +348,9 @@ const BusinessAssessment: React.FC = () => {
                   <p className="mt-4 text-gray-700">
                     <strong>Advisory:</strong>
                   </p>
-                  <div
-                    className="mt-2 p-4 bg-white border border-gray-200 rounded-md"
-                    dangerouslySetInnerHTML={{ __html: result.advisory
-                      .replace(/\n/g, '<br>')
-                      .replace(/- ([^*]+):/g, '<strong>$1:</strong><br>')
-                      .replace(/- /g, '<li>')
-                      .replace(/<\/li>\n- /g, '</li><li>')
-                      .replace(/<\/ul>/g, '</li></ul>')
-                      .replace(/<ul>/g, '<ul><li>') }}
-                  />
+                  <div className="mt-2 p-4 bg-white border border-gray-200 rounded-md">
+                    <ReactMarkdown>{result.advisory}</ReactMarkdown>
+                  </div>
                 </div>
               )}
             </div>
