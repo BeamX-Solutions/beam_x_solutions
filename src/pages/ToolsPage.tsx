@@ -114,11 +114,19 @@ const ToolsPage: React.FC = () => {
                   />
                 </div>
                 <div className="p-4">
-                  <NavLink to={`/tools/${tool.slug}`}>
-                    <h2 className="text-lg font-semibold mb-2 hover:text-primary transition-colors line-clamp-2">
-                      {tool.title}
-                    </h2>
-                  </NavLink>
+                  {tool.comingSoon ? (
+                    <div onClick={() => handleTryNow(tool.slug)} className="cursor-pointer">
+                      <h2 className="text-lg font-semibold mb-2 hover:text-primary transition-colors line-clamp-2">
+                        {tool.title}
+                      </h2>
+                    </div>
+                  ) : (
+                    <NavLink to={`/tools/${tool.slug}`}>
+                      <h2 className="text-lg font-semibold mb-2 hover:text-primary transition-colors line-clamp-2">
+                        {tool.title}
+                      </h2>
+                    </NavLink>
+                  )}
                   <p className="text-gray-600 text-sm mb-3 line-clamp-3">{tool.description}</p>
                   <Button
                     variant="primary"
