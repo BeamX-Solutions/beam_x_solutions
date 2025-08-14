@@ -1,8 +1,8 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async'; // Changed to react-helmet-async
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
-import { BarChart3, BrainCircuit, Database, LineChart, Server} from 'lucide-react';
+import { BarChart3, BrainCircuit, Database, LineChart, Server } from 'lucide-react';
 import Button from '../components/Button';
 import SectionHeader from '../components/SectionHeader';
 import TestimonialCard from '../components/TestimonialCard';
@@ -88,9 +88,13 @@ const HomePage: React.FC = () => {
               <h1 className="text-white font-bold mb-6">
                 Unlock The Power Of Your <span className="text-secondary">Data</span>
               </h1>
-              <p className="text-gray-100 text-lg mb-8 max-w0-lg">
+              <p className="text-gray-100 text-lg mb-8 max-w-lg">
                 We help businesses leverage the full potential of their data through expert data strategy, 
-                business intelligence, and AI solutions.
+                business intelligence, and AI solutions. Our team of data scientists and AI specialists brings 
+                years of experience in transforming raw data into strategic insights. From predictive analytics 
+                to custom dashboards, we tailor solutions to meet your unique business needs. Whether you're 
+                looking to optimize operations, enhance customer experiences, or drive revenue growth, BeamX 
+                Solutions is your trusted partner in the data-driven world.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button href="https://calendly.com/beamxsolutions" variant="white" icon>
@@ -109,7 +113,6 @@ const HomePage: React.FC = () => {
               className="hidden lg:block"
             >
               <div className="relative bg-white p-6 rounded-xl shadow-xl">
-                {/* Header with Metric */}
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <LineChart className="h-6 w-6 text-primary" />
@@ -120,13 +123,12 @@ const HomePage: React.FC = () => {
                   </span>
                 </div>
 
-                {/* Simple Bar Chart */}
                 <div className="mb-6">
                   <div className="flex items-end gap-2 h-32">
-                    <div className="flex-1 bg-primary bg-opacity-20 rounded-t-md transition-all duration-300 hover:bg-opacity-30" style={{ height: '60%' }} />
-                    <div className="flex-1 bg-secondary bg-opacity-20 rounded-t-md transition-all duration-300 hover:bg-opacity-30" style={{ height: '80%' }} />
-                    <div className="flex-1 bg-accent bg-opacity-20 rounded-t-md transition-all duration-300 hover:bg-opacity-30" style={{ height: '40%' }} />
-                    <div className="flex-1 bg-primary bg-opacity-20 rounded-t-md transition-all duration-300 hover:bg-opacity-30" style={{ height: '70%' }} />
+                    <div className="flex-1 bg-primary bg-opacity-20 rounded-t-md" style={{ height: '60%' }} />
+                    <div className="flex-1 bg-secondary bg-opacity-20 rounded-t-md" style={{ height: '80%' }} />
+                    <div className="flex-1 bg-accent bg-opacity-20 rounded-t-md" style={{ height: '40%' }} />
+                    <div className="flex-1 bg-primary bg-opacity-20 rounded-t-md" style={{ height: '70%' }} />
                   </div>
                   <div className="flex justify-between text-xs text-gray-500 mt-2">
                     <span>Q1</span>
@@ -136,7 +138,6 @@ const HomePage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Supporting Stats */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="flex items-center gap-3 bg-gray-50 p-4 rounded-lg">
                     <Database className="h-6 w-6 text-accent" />
@@ -175,22 +176,22 @@ const HomePage: React.FC = () => {
               {
                 icon: <BrainCircuit className="h-8 w-8 text-blue-500" />,
                 title: "Strategy First",
-                description: "We start with your business goals, not the latest tech trends. Every solution is built to move your specific metrics."
+                description: "We start with your business goals, not the latest tech trends. Every solution is built to move your specific metrics. Our process begins with a thorough analysis of your current data landscape, ensuring alignment with your long-term objectives."
               },
               {
                 icon: <Server className="h-8 w-8 text-blue-500" />,
                 title: "Built to Scale",
-                description: "Our systems grow with you. No expensive rebuilds when you hit your next milestone."
+                description: "Our systems grow with you. No expensive rebuilds when you hit your next milestone. We design scalable architectures that adapt to your evolving needs, from startups to enterprise-level operations."
               },
               {
                 icon: <BarChart3 className="h-8 w-8 text-blue-500" />,
                 title: "Value-Led",
-                description: "We care about ROI, not buzzwords. If it doesn’t make you money or save you time, we don’t build it."
+                description: "We care about ROI, not buzzwords. If it doesn’t make you money or save you time, we don’t build it. Our solutions are rigorously tested to deliver measurable financial and operational benefits."
               },
               {
                 icon: <Database className="h-8 w-8 text-blue-500" />,
                 title: "Insight + Action",
-                description: "Pretty dashboards are useless without smart automation. We give you both the data and the systems that act on it."
+                description: "Pretty dashboards are useless without smart automation. We give you both the data and the systems that act on it. Our AI-driven tools provide real-time decision-making support tailored to your industry."
               }
             ].map((item, index) => (
               <motion.div
