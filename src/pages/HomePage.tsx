@@ -88,14 +88,6 @@ const HomePage: React.FC = () => {
               <h1 className="text-white font-bold mb-6">
                 Unlock The Power Of Your <span className="text-secondary">Data</span>
               </h1>
-              <p className="text-gray-100 text-lg mb-8 max-w-lg">
-                We help businesses leverage the full potential of their data through expert data strategy, 
-                business intelligence, and AI solutions. Our team of data scientists and AI specialists brings 
-                years of experience in transforming raw data into strategic insights. From predictive analytics 
-                to custom dashboards, we tailor solutions to meet your unique business needs. Whether you're 
-                looking to optimize operations, enhance customer experiences, or drive revenue growth, BeamX 
-                Solutions is your trusted partner in the data-driven world.
-              </p>
               <div className="flex flex-wrap gap-4">
                 <Button href="https://calendly.com/beamxsolutions" variant="white" icon>
                   Book Free Consultation
