@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /api/
+Disallow: /tools/loan-approval-predictor/results/
+Disallow: /tools/business-assessment/results/
+Disallow: /tools/advanced-business-assessment/results/
+Allow: /
+Sitemap: https://www.beamxsolutions.com/sitemap.xml
