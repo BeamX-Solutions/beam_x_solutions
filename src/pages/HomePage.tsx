@@ -85,9 +85,12 @@ const HomePage: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h1 className="text-white font-bold mb-6">
-                Unlock The Power Of Your <span className="text-secondary">Data</span>
+              <h1 className="text-white font-bold mb-4 text-4xl md:text-5xl">
+                There is gold in your <span className="text-secondary">Data</span>, we help you unlock it.
               </h1>
+              <p className="text-white text-base md:text-lg mb-6">
+                Leverage BeamX Solutions expertise in business intelligence and AI to uncover hidden opportunities, optimize operations, increase revenue, and fuel long-term innovation.
+              </p>
               <div className="flex flex-wrap gap-4">
                 <Button href="https://calendly.com/beamxsolutions" variant="white" icon>
                   Book Free Consultation
@@ -168,22 +171,22 @@ const HomePage: React.FC = () => {
               {
                 icon: <BrainCircuit className="h-8 w-8 text-blue-500" />,
                 title: "Strategy First",
-                description: "We start with your business goals, not the latest tech trends. Every solution is built to move your specific metrics. Our process begins with a thorough analysis of your current data landscape, ensuring alignment with your long-term objectives."
+                description: "We align solutions with your business goals, using data analytics to drive measurable results."
               },
               {
                 icon: <Server className="h-8 w-8 text-blue-500" />,
                 title: "Built to Scale",
-                description: "Our systems grow with you. No expensive rebuilds when you hit your next milestone. We design scalable architectures that adapt to your evolving needs, from startups to enterprise-level operations."
+                description: "Our scalable AI solutions grow with your business, from startup to enterprise."
               },
               {
                 icon: <BarChart3 className="h-8 w-8 text-blue-500" />,
                 title: "Value-Led",
-                description: "We care about ROI, not buzzwords. If it doesn’t make you money or save you time, we don’t build it. Our solutions are rigorously tested to deliver measurable financial and operational benefits."
+                description: "We focus on ROI, delivering business intelligence that saves time and boosts profits."
               },
               {
                 icon: <Database className="h-8 w-8 text-blue-500" />,
                 title: "Insight + Action",
-                description: "Pretty dashboards are useless without smart automation. We give you both the data and the systems that act on it. Our AI-driven tools provide real-time decision-making support tailored to your industry."
+                description: "Our AI-driven tools provide real-time insights and automation for smarter decisions."
               }
             ].map((item, index) => (
               <motion.div
@@ -197,7 +200,7 @@ const HomePage: React.FC = () => {
                 <div className="bg-blue-50 p-3 rounded-lg w-fit mb-4">
                   {item.icon}
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">{item.title}</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb- 3">{item.title}</h3>
                 <p className="text-gray-600 text-base">{item.description}</p>
               </motion.div>
             ))}
