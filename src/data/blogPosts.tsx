@@ -6,8 +6,8 @@ export const blogPosts = [
     excerpt: "Operational overload slows growth and buries insights. Learn BeamX’s 90-day roadmap to transform your back office into a growth engine with AI-driven automation and intelligent operations.",
     image: "/clutter-to-ai.jpg",
     author: "Christiana Kuku",
-    date: "August 18, 2025",
-    readTime: "10 min read",
+    date: "August 19, 2025",
+    readTime: "5 min read",
     category: "AI & Automation",
     fullContent: (
       <>
@@ -123,8 +123,8 @@ export const blogPosts = [
     excerpt: "Analytics dashboards often mislead due to data inconsistencies and poor governance. Learn why insights fail to reflect reality and follow our five-step guide to build trust and drive better decisions.",
     image: "/dashboard-analytics.avif",
     author: "Christiana Kuku",
-    date: "August 18, 2025",
-    readTime: "8 min read",
+    date: "August 12, 2025",
+    readTime: "4 min read",
     category: "Analytics Strategy",
     fullContent: (
       <>
@@ -237,8 +237,8 @@ export const blogPosts = [
     excerpt: "Agentic AI, capable of autonomous planning and action, is transforming operations. Discover its potential, risks, and a practical framework to prepare your organization for 2025.",
     image: "/control-room.jpg",
     author: "Christiana Kuku",
-    date: "August 18, 2025",
-    readTime: "9 min read",
+    date: "August 5, 2025",
+    readTime: "5 min read",
     category: "AI & Automation",
     fullContent: (
       <>
@@ -364,7 +364,7 @@ export const blogPosts = [
     image: "/gen-ai-strategy.webp",
     author: "Christiana Kuku",
     date: "July 29, 2025",
-    readTime: "10 min read",
+    readTime: "6 min read",
     category: "AI & Data Culture",
     fullContent: (
       <>
@@ -473,7 +473,7 @@ export const blogPosts = [
     image: "/eliminate-data.webp",
     author: "Christiana Kuku",
     date: "July 22, 2025",
-    readTime: "9 min read",
+    readTime: "4 min read",
     category: "Data & Integration",
     fullContent: (
       <>
@@ -580,7 +580,7 @@ export const blogPosts = [
     image: "/deploy-custom-ai.webp",
     author: "Christiana Kuku",
     date: "July 15, 2025",
-    readTime: "8 min read",
+    readTime: "4 min read",
     category: "AI & Automation",
     fullContent: (
       <>
@@ -705,7 +705,7 @@ export const blogPosts = [
     image: "/resilient-data-ai.webp",
     author: "Christiana Kuku",
     date: "July 8, 2025",
-    readTime: "10 min read",
+    readTime: "5 min read",
     category: "AI & Infrastructure",
     fullContent: (
       <>
@@ -821,7 +821,7 @@ export const blogPosts = [
     image: "/ai_and_machine_learning.webp",
     author: "Christiana Kuku",
     date: "June 27, 2025",
-    readTime: "12 min read",
+    readTime: "7 min read",
     category: "AI & Automation",
     fullContent: (
       <>
@@ -1128,7 +1128,7 @@ export const blogPosts = [
     image: "/predictive_analysis.webp",
     author: "Christiana Kuku",
     date: "January 22, 2025",
-    readTime: "15 min read",
+    readTime: "8 min read",
     category: "Predictive Analytics",
     fullContent: (
       <>
@@ -1416,7 +1416,7 @@ export const blogPosts = [
     image: "/data_quality.webp",
     author: "Christiana Kuku",
     date: "August 17, 2024",
-    readTime: "14 min read",
+    readTime: "7 min read",
     category: "Data Quality",
     fullContent: (
       <>
@@ -1747,7 +1747,7 @@ export const blogPosts = [
     image: "/data_gaps.webp",
     author: "Obinna Nweke",
     date: "March 12, 2024",
-    readTime: "8 min read",
+    readTime: "4 min read",
     category: "Analytics Strategy",
     fullContent: (
       <>
