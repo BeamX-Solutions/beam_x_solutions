@@ -164,7 +164,7 @@ const AboutPage: React.FC = () => {
                   )}
                   {activeTab === 'goal' && (
                     <p className="text-lg">
-                      To empower 500+ growth-focused businesses with intelligent systems that save 10,000+ hours through automation while delivering measurable ROI across operations, finance, and customer retention.
+                      BeamX Solutions' goal is to support 10,000 SMEs with data-driven insights and advanced tech solutions to close operational gaps, boost profitability, and overcome adoption barriers for sustainable growth.
                     </p>
                   )}
                 </motion.div>
