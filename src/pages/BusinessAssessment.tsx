@@ -345,7 +345,7 @@ const BusinessAssessment: React.FC = () => {
                     {renderSelect(
                       "team_size",
                       "Team Size",
-                      ["0 (solo)", "1–3", "4–10", "11–50", "50+"],
+                      ["1 (solo)", "1–3", "4–10", "11–50", "50+"],
                       "Select team size",
                       "Number of employees or team members."
                     )}
