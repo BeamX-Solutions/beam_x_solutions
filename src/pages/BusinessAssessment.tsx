@@ -310,6 +310,7 @@ const BusinessAssessment: React.FC = () => {
                         "Systems are chaotic",
                         "Don't know what to optimize",
                         "Need funding",
+                        "Need more clients/customers",
                         "Growing fast, need structure"
                       ],
                       "Select primary pain point",
