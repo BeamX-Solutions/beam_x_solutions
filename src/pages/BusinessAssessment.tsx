@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Button from '../components/Button';
-import { Helmet } from 'react-helmet-async'; // Changed to react-helmet-async
+import { Helmet } from 'react-helmet-async';
 import CTASection from '../components/CTASection';
 import ReactMarkdown from 'react-markdown';
 
+// TypeScript interface defining the structure of scorecard input data
 interface ScorecardInput {
   revenue: string;
   profit_margin_known: string;
-  monthly_burn: string;
+  monthly_expenses: string; // Changed from monthly_burn for better user understanding
   cac_tracked: string;
   retention_rate: string;
   digital_campaigns: string;
@@ -21,6 +22,7 @@ interface ScorecardInput {
   industry: string;
 }
 
+// TypeScript interface for the API response structure
 interface ScorecardResult {
   total_score: number;
   label: string;
@@ -33,16 +35,18 @@ interface ScorecardResult {
   advisory: string;
 }
 
+// Predefined list of business industry options for the dropdown
 const industries = [
   "Technology", "Healthcare", "Retail", "Finance", "Manufacturing",
-  "Education", "Hospitality", "Real Estate", "Non-Profit", "Other"
+  "Education", "E-commerce", "Hospitality", "Real Estate", "Non-Profit", "Other"
 ];
 
 const BusinessAssessment: React.FC = () => {
+  // State to store form input values
   const [formData, setFormData] = useState<ScorecardInput>({
     revenue: "",
     profit_margin_known: "",
-    monthly_burn: "",
+    monthly_expenses: "", // Updated field name
     cac_tracked: "",
     retention_rate: "",
     digital_campaigns: "",
@@ -54,26 +58,42 @@ const BusinessAssessment: React.FC = () => {
     pain_point: "",
     industry: "",
   });
+  
+  // State to store the scorecard results from API
   const [result, setResult] = useState<ScorecardResult | null>(null);
+  
+  // State to handle and display error messages
   const [error, setError] = useState<string | null>(null);
+  
+  // State to manage loading state during API calls
   const [loading, setLoading] = useState(false);
+  
+  // State to track field-specific validation errors
   const [formErrors, setFormErrors] = useState<Partial<Record<keyof ScorecardInput, string>>>({});
 
+  // Handler function for form input changes
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    
+    // Clear field-specific error when user starts typing/selecting
     if (formErrors[name as keyof ScorecardInput]) {
       setFormErrors({ ...formErrors, [name]: undefined });
     }
   };
 
+  // Form submission handler with validation and API call
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // List of all required fields for validation
     const requiredFields: (keyof ScorecardInput)[] = [
-      "revenue", "profit_margin_known", "monthly_burn", "cac_tracked", "retention_rate",
+      "revenue", "profit_margin_known", "monthly_expenses", "cac_tracked", "retention_rate",
       "digital_campaigns", "analytics_tools", "crm_used", "data_mgmt", "sops_doc",
       "team_size", "pain_point", "industry"
     ];
+    
+    // Check for empty required fields and build error object
     const errors: Partial<Record<keyof ScorecardInput, string>> = {};
     requiredFields.forEach((field) => {
       if (!formData[field]) {
@@ -81,43 +101,51 @@ const BusinessAssessment: React.FC = () => {
       }
     });
 
+    // Display validation errors and stop submission if any exist
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
       setError("Please fill out all required fields.");
       return;
     }
 
+    // Set loading state and clear previous results/errors
     setLoading(true);
     setError(null);
     setResult(null);
     setFormErrors({});
 
     try {
+      // Make API call to generate business scorecard
       const response = await fetch("https://beamx-scorecard.onrender.com/generate-report", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
-        signal: AbortSignal.timeout(90000),
+        signal: AbortSignal.timeout(90000), // 90 second timeout
       });
 
+      // Handle non-200 HTTP responses
       if (!response.ok) {
         throw new Error(`Error ${response.status}: ${await response.text()}`);
       }
 
+      // Parse successful response and update state
       const data: ScorecardResult = await response.json();
       setResult(data);
     } catch (err) {
       const error = err as Error;
+      
+      // Handle timeout errors with user-friendly message
       if (error.name === "TimeoutError") {
         setError("Request timed out. The server may be starting up. Please try again.");
       } else {
         setError(error.message || "Request failed. Check your connection or server status.");
       }
     } finally {
-      setLoading(false);
+      setLoading(false); // Always reset loading state
     }
   };
 
+  // Reusable component for rendering select dropdowns with validation
   const renderSelect = (
     name: keyof ScorecardInput,
     label: string,
@@ -126,10 +154,13 @@ const BusinessAssessment: React.FC = () => {
     helperText?: string
   ) => (
     <div>
+      {/* Field label with required indicator */}
       <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
         {label}
         <span className="text-red-500 ml-1">*</span>
       </label>
+      
+      {/* Select dropdown with error styling */}
       <div className="relative">
         <select
           id={name}
@@ -145,6 +176,7 @@ const BusinessAssessment: React.FC = () => {
           <option value="" disabled>
             {placeholder}
           </option>
+          {/* Render all options from the passed array */}
           {options.map((option) => (
             <option key={option} value={option}>
               {option}
@@ -152,11 +184,15 @@ const BusinessAssessment: React.FC = () => {
           ))}
         </select>
       </div>
+      
+      {/* Helper text for field explanation */}
       {helperText && (
         <p id={`${name}-helper`} className="text-xs text-gray-500 mt-1">
           {helperText}
         </p>
       )}
+      
+      {/* Field-specific error message */}
       {formErrors[name] && (
         <p id={`${name}-error`} className="text-red-500 text-xs mt-1">
           {formErrors[name]}
@@ -167,10 +203,13 @@ const BusinessAssessment: React.FC = () => {
 
   return (
     <>
+      {/* SEO metadata for the page */}
       <Helmet>
         <title>BeamX Solutions | Business Assessment</title>
         <meta name="description" content="Evaluate your business readiness with BeamX Solutions' Business Assessment tool, providing detailed insights and tailored growth strategies." />
       </Helmet>
+      
+      {/* Hero section with gradient background */}
       <section className="relative pt-32 pb-20 md:pt-36 md:pb-12 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-primary bg-opacity-75 z-0"/>
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
@@ -188,6 +227,7 @@ const BusinessAssessment: React.FC = () => {
         </div>
       </section>
 
+      {/* Main form section */}
       <section className="section bg-gray-50 relative z-10 pt-12 pb-16">
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div
@@ -197,13 +237,17 @@ const BusinessAssessment: React.FC = () => {
             className="max-w-4xl mx-auto"
           >
             <div className="bg-white p-8 rounded-lg shadow-lg border border-gray-100">
+              {/* Error message display */}
               {error && (
                 <div className="mb-6 p-4 bg-red-100 rounded-md">
                   <h2 className="text-lg font-semibold text-red-800">Error</h2>
                   <p className="text-red-700">{error}</p>
                 </div>
               )}
+              
+              {/* Main assessment form */}
               <form onSubmit={handleSubmit} className="space-y-8">
+                {/* Financial Details Section */}
                 <div>
                   <h2 className="text-xl font-semibold text-gray-800 mb-4">Financial Details</h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -222,15 +266,16 @@ const BusinessAssessment: React.FC = () => {
                       "Indicate if you track profit margins."
                     )}
                     {renderSelect(
-                      "monthly_burn",
-                      "Monthly Burn Rate",
+                      "monthly_expenses",
+                      "Monthly Expenses",
                       ["Unknown", "≤$1K", "$1K–$5K", "$5K–$20K", "$20K+"],
-                      "Select monthly burn rate",
-                      "How much cash your business spends monthly."
+                      "Select monthly expense range",
+                      "Your business's total monthly operating expenses."
                     )}
                   </div>
                 </div>
 
+                {/* Growth Metrics Section */}
                 <div>
                   <h2 className="text-xl font-semibold text-gray-800 mb-4">Growth Metrics</h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -258,6 +303,7 @@ const BusinessAssessment: React.FC = () => {
                   </div>
                 </div>
 
+                {/* Digital Maturity Section */}
                 <div>
                   <h2 className="text-xl font-semibold text-gray-800 mb-4">Digital Maturity</h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -285,6 +331,7 @@ const BusinessAssessment: React.FC = () => {
                   </div>
                 </div>
 
+                {/* Operational Details Section */}
                 <div>
                   <h2 className="text-xl font-semibold text-gray-800 mb-4">Operational Details</h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -327,6 +374,7 @@ const BusinessAssessment: React.FC = () => {
                   </div>
                 </div>
 
+                {/* Form submission button */}
                 <Button
                   type="submit"
                   variant="primary"
@@ -337,16 +385,21 @@ const BusinessAssessment: React.FC = () => {
                 </Button>
               </form>
 
+              {/* Results display section */}
               {result && (
                 <div className="mt-8 p-6 rounded-md bg-green-50">
                   <h2 className="text-lg font-semibold text-green-800">Scorecard Results</h2>
                   <p className="text-gray-700">Total Score: {result.total_score}/100 ({result.label})</p>
+                  
+                  {/* Score breakdown display */}
                   <ul className="list-disc pl-5 mt-2 text-gray-700">
                     <li>Financial Health: {result.breakdown.financial}/25</li>
                     <li>Growth Readiness: {result.breakdown.growth}/25</li>
                     <li>Digital Maturity: {result.breakdown.digital}/25</li>
                     <li>Operational Efficiency: {result.breakdown.operations}/25</li>
                   </ul>
+                  
+                  {/* AI-generated advisory section */}
                   <p className="mt-4 text-gray-700">
                     <strong>Advisory:</strong>
                   </p>
@@ -360,6 +413,7 @@ const BusinessAssessment: React.FC = () => {
         </div>
       </section>
 
+      {/* Call-to-action section at bottom of page */}
       <CTASection
         title="Ready to Transform Your Business?"
         subtitle="Let's discuss how we can tailor a solution for your needs."
