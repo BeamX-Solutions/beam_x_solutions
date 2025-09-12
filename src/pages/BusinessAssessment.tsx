@@ -433,7 +433,7 @@ const BusinessAssessment: React.FC = () => {
                       "CRM Usage",
                       ["Yes", "No"],
                       "Do you use a CRM?",
-                      "Customer Relationship Management system usage."
+                      "CDo you track the cost of acquiring each customer?"
                     )}
                     {renderSelect(
                       "data_mgmt",
@@ -504,7 +504,7 @@ const BusinessAssessment: React.FC = () => {
                 <div className="mt-8 space-y-6">
                   {/* Main Results */}
                   <div className="p-6 rounded-md bg-green-50 border border-green-200">
-                    <h2 className="text-lg font-semibold text-green-800 mb-4">Scorecard Results</h2>
+                    <h2 className="text-lg font-semibold text-green-800 mb-4">Scorecard</h2>
                     <p className="text-gray-700 mb-4">Total Score: {result.total_score}/100 ({result.label})</p>
                     
                     {/* Score breakdown display */}
