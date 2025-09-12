@@ -398,7 +398,7 @@ const BusinessAssessment: React.FC = () => {
                       "CAC Tracked",
                       ["Yes", "No"],
                       "Do you track CAC?",
-                      "Customer Acquisition Cost tracking status."
+                      "Do you track the cost of acquiring each customer?"
                     )}
                     {renderSelect(
                       "retention_rate",
