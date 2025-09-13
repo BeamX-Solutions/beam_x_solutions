@@ -433,7 +433,7 @@ const BusinessAssessment: React.FC = () => {
                       "CRM Usage",
                       ["Yes", "No"],
                       "Do you use a CRM?",
-                      "CDo you track the cost of acquiring each customer?"
+                      "Customer Relationship Management system usage."
                     )}
                     {renderSelect(
                       "data_mgmt",
