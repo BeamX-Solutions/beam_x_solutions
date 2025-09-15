@@ -395,7 +395,7 @@ const BusinessAssessment: React.FC = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {renderSelect(
                       "cac_tracked",
-                      "CAC Tracked",
+                      "Customer Acquisition Cost (CAC) Tracked",
                       ["Yes", "No"],
                       "Do you track CAC?",
                       "Do you track the cost of acquiring each customer?"
@@ -430,7 +430,7 @@ const BusinessAssessment: React.FC = () => {
                     )}
                     {renderSelect(
                       "crm_used",
-                      "CRM Usage",
+                      "Customer Relationship Management (CRM) Usage",
                       ["Yes", "No"],
                       "Do you use a CRM?",
                       "Customer Relationship Management system usage."
