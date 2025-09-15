@@ -1,123 +1,6 @@
 export const blogPosts = [
   {
     id: 1,
-    title: "From Overloaded IT to Intelligent Ops: How AI Is Fixing the Back Office",
-    slug: "overloaded-it-to-intelligent-ops-ai-back-office",
-    excerpt: "Operational overload slows growth and buries insights. Learn BeamX’s 90-day roadmap to transform your back office into a growth engine with AI-driven automation and intelligent operations.",
-    image: "/clutter-to-ai.jpg",
-    author: "Christiana Kuku",
-    date: "August 19, 2025",
-    readTime: "5 min read",
-    category: "AI & Automation",
-    fullContent: (
-      <>
-        <h3 className="text-xl font-semibold mb-3">Introduction</h3>
-        <p className="mb-4">
-          Operational overload is the silent killer of business agility. While leaders focus on growth, AI adoption, or product launches, a hidden drain is expanding: fragmented operations and endless manual tasks. According to Gartner, 30% of enterprises will automate more than half of their network activities by 2026, up from under 10% in 2023, yet most organizations still struggle to integrate systems and eliminate repetitive work.
-        </p>
-        <p className="mb-4">
-          This isn’t just an IT headache. It’s a growth constraint. Manual workflows slow decision-making. Siloed tools bury insights. Compliance gaps invite risk. At BeamX Solutions, we see it every day: teams firefighting operational chaos instead of innovating.
-        </p>
-        <p className="mb-4">
-          The answer? Managed Intelligent Services. AI-driven systems that automate, orchestrate, and anticipate, turning your back office into a growth engine. This 90-day roadmap shows how BeamX clients transform overload into acceleration.
-        </p>
-
-        <h3 className="text-xl font-semibold mb-3">Phase 1: Operational Audit & Bottleneck Mapping (Weeks 1–3)</h3>
-        <p className="mb-4">
-          <strong>Objective:</strong> Identify where time, money, and focus are lost.
-        </p>
-        <p className="mb-4">Actions:</p>
-        <ul className="list-disc pl-5 mb-4">
-          <li>Conduct a full inventory of workflows, platforms, and dependencies.</li>
-          <li>Track incident frequency, ticket volume, and downtime by category.</li>
-          <li>Interview department leads to capture pain points and delays.</li>
-          <li>Rank bottlenecks by business impact and resolution complexity.</li>
-        </ul>
-        <p className="mb-4">
-          <strong>Outcome:</strong> A clear map of operational friction points that slow decisions and increase costs.
-        </p>
-        <p className="mb-4">
-          See also: <a href="https://beamxsolutions.com" className="text-blue-600 hover:underline">BeamX Automation Audit Service</a>
-        </p>
-
-        <h3 className="text-xl font-semibold mb-3">Phase 2: Integrate, Standardize & Design for Flow (Weeks 4–6)</h3>
-        <p className="mb-4">
-          <strong>Objective:</strong> Connect systems so AI acts, not just alerts.
-        </p>
-        <p className="mb-4">Actions:</p>
-        <ul className="list-disc pl-5 mb-4">
-          <li>Consolidate redundant tools and standardize processes.</li>
-          <li>Deploy AI orchestration to automate high-impact workflows.</li>
-          <li>Apply governance controls to ensure safe, compliant automation.</li>
-          <li>Integrate monitoring to visualize workflows end-to-end.</li>
-        </ul>
-        <p className="mb-4">
-          <strong>Outcome:</strong> A simplified, future-proofed operational ecosystem that supports scale.
-        </p>
-        <p className="mb-4">
-          Learn more: <a href="https://beamxsolutions.com" className="text-blue-600 hover:underline">Managed Intelligent Services</a>
-        </p>
-
-        <h3 className="text-xl font-semibold mb-3">Phase 3: Automate Monitoring & Prevent Failures (Weeks 7–9)</h3>
-        <p className="mb-4">
-          <strong>Objective:</strong> Detect and resolve issues before they impact business.
-        </p>
-        <p className="mb-4">Actions:</p>
-        <ul className="list-disc pl-5 mb-4">
-          <li>Implement real-time workflow monitoring.</li>
-          <li>Automate incident response for common failures.</li>
-          <li>Build retry logic and fallback processes.</li>
-          <li>Push alerts into business communication tools like Slack or Teams.</li>
-        </ul>
-        <p className="mb-4">
-          <strong>Outcome:</strong> A proactive operations layer that reduces downtime and manual intervention.
-        </p>
-
-        <h3 className="text-xl font-semibold mb-3">Phase 4: Enable Visibility & Governance (Weeks 10–12)</h3>
-        <p className="mb-4">
-          <strong>Objective:</strong> Give leadership and teams a single source of truth.
-        </p>
-        <p className="mb-4">Actions:</p>
-        <ul className="list-disc pl-5 mb-4">
-          <li>Launch dashboards showing operational KPIs: resolution time, backlog trends, system uptime.</li>
-          <li>Document processes, ownership, and change controls.</li>
-          <li>Review quarterly to refine automation and retire unused workflows.</li>
-        </ul>
-        <p className="mb-4">
-          <strong>Outcome:</strong> A governance framework that keeps operations lean, transparent, and measurable.
-        </p>
-
-        <h3 className="text-xl font-semibold mb-3">The BeamX Advantage</h3>
-        <p className="mb-4">
-          What makes this plan executable is BeamX’s expertise in building intelligent, automation-first infrastructure. We deliver:
-        </p>
-        <ul className="list-disc pl-5 mb-4">
-          <li>Unified operational layers to eliminate silos.</li>
-          <li>Automated quality checks to ensure reliable execution.</li>
-          <li>Custom dashboards to connect ops performance directly to business outcomes.</li>
-        </ul>
-        <p className="mb-4">
-          Most importantly, we align systems to decision-making velocity, not just system uptime.
-        </p>
-        <p className="mb-4">
-          See how: <a href="https://beamxsolutions.com" className="text-blue-600 hover:underline">BeamX Case Studies</a>
-        </p>
-
-        <h3 className="text-xl font-semibold mb-3">Conclusion: The Cost of Doing Nothing</h3>
-        <p className="mb-4">
-          Operational chaos compounds. Bottlenecks grow. Trust erodes. Just when your team should be accelerating into new markets or scaling AI initiatives, they’re buried in process debt.
-        </p>
-        <p className="mb-4">
-          In just 90 days, BeamX can help you turn your back office into a growth lever. Start with an audit. We’ll map your fastest path to Intelligent Ops.
-        </p>
-        <p className="mb-4">
-          <strong>Next Step:</strong> <a href="https://beamxsolutions.com" className="text-blue-600 hover:underline">Schedule your free ops audit</a> or <a href="https://beamxsolutions.com" className="text-blue-600 hover:underline">book a session directly</a>.
-        </p>
-      </>
-    ),
-  },
-  {
-    id: 2,
     title: "Why Your Analytics Insights Don’t Match Reality and How Leaders Close the Gap",
     slug: "analytics-insights-dont-match-reality",
     excerpt: "Analytics dashboards often mislead due to data inconsistencies and poor governance. Learn why insights fail to reflect reality and follow our five-step guide to build trust and drive better decisions.",
@@ -231,7 +114,7 @@ export const blogPosts = [
     ),
   },
   {
-    id: 3,
+    id: 2,
     title: "Agentic AI: What It Means for Your Organization in 2025 (and How to Prepare)",
     slug: "agentic-ai-organization-2025-preparation",
     excerpt: "Agentic AI, capable of autonomous planning and action, is transforming operations. Discover its potential, risks, and a practical framework to prepare your organization for 2025.",
@@ -357,7 +240,7 @@ export const blogPosts = [
     ),
   },
   {
-    id: 4,
+    id: 3,
     title: "Why Your GenAI Strategy Will Fail Without a Real Data Culture",
     slug: "genai-strategy-fails-without-data-culture",
     excerpt: "Generative AI promises smarter decisions and automation, but without a strong data culture, it’s doomed to fail. Learn BeamX’s framework to build trust, fluency, and systems for AI success.",
@@ -466,7 +349,7 @@ export const blogPosts = [
     ),
   },
   {
-    id: 5,
+    id: 4,
     title: "How to Eliminate Data Integration Chaos Before It Derails Your Growth",
     slug: "eliminate-data-integration-chaos-2025",
     excerpt: "Fragmented data systems slow growth and bury opportunities. Learn BeamX’s 8-week roadmap to streamline integrations, boost visibility, and build resilient systems for scale.",
@@ -573,7 +456,7 @@ export const blogPosts = [
     ),
   },
   {
-    id: 6,
+    id: 5,
     title: "How to Deploy Custom AI Agents Without Risking Reputation or ROI",
     slug: "deploy-custom-ai-agents-without-risking-reputation-roi",
     excerpt: "Custom AI agents are transforming workflows, but rushed deployments can lead to costly failures. Learn BeamX’s 5-phase evaluation blueprint to deploy reliable, high-performing AI agents safely.",
@@ -698,7 +581,7 @@ export const blogPosts = [
     ),
   },
   {
-    id: 7,
+    id: 6,
     title: "Building Resilient Data & AI Infrastructure in 2025: Trends, Risks & Strategic Playbook",
     slug: "resilient-data-ai-infrastructure-2025-trends-risks-playbook",
     excerpt: "AI is pushing data infrastructure to its limits. Discover 2025 trends, risks, and a strategic playbook to build scalable, observable, AI-ready systems that drive growth without bottlenecks.",
@@ -814,7 +697,7 @@ export const blogPosts = [
     ),
   },
   {
-    id: 8,
+    id: 7,
     title: "AI Agents in Business: The Complete Guide to Understanding, Implementing, and Scaling with AI in 2025",
     slug: "ai-agents-business-complete-guide-2025",
     excerpt: "AI agents are intelligent software systems that can perceive their environment, make decisions, and take actions to achieve specific goals. Learn how they're transforming business operations and how to implement them effectively.",
@@ -1121,7 +1004,7 @@ export const blogPosts = [
     ),
   },
   {
-    id: 9,
+    id: 8,
     title: "How Predictive Analytics Can Shape Your 2025 Growth Strategy: A Complete Guide",
     slug: "predictive-analytics-2025-growth-strategy-guide",
     excerpt: "Discover how predictive analytics can transform your business strategy in 2025. Learn to identify patterns, predict future outcomes, and make data-driven decisions that drive growth.",
@@ -1409,7 +1292,7 @@ export const blogPosts = [
     ),
   },
   {
-    id: 10,
+    id: 9,
     title: "The Hidden Cost of Poor Data Quality — And How to Fix It: A Complete Guide",
     slug: "hidden-cost-poor-data-quality-complete-guide",
     excerpt: "Discover the real impact of poor data quality on your business and learn practical strategies to transform data chaos into competitive advantage.",
@@ -1740,7 +1623,7 @@ export const blogPosts = [
     ),
   },
   {
-    id: 11,
+    id: 10,
     title: "Is Your Data Working for You? How to Spot the Hidden Gaps in Your Analytics Ecosystem",
     slug: "spot-hidden-gaps-analytics-ecosystem",
     excerpt: "In the age of digital acceleration, data is currency. But too often, businesses are sitting on mountains of data that offer little insight.",
