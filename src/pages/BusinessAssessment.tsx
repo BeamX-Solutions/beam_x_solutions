@@ -546,19 +546,19 @@ const BusinessAssessment: React.FC = () => {
                     {/* Score breakdown display */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                       <div className="bg-white p-4 rounded border">
-                      <span className="block text-gray-700 font-semibold mb-1">Financial</span>
+                      <span className="block text-gray-700 font-semibold mb-1">Financial Health:</span>
                       <span className="text-lg text-blue-700">{result.breakdown.financial}/25</span>
                       </div>
                       <div className="bg-white p-4 rounded border">
-                      <span className="block text-gray-700 font-semibold mb-1">Growth</span>
+                      <span className="block text-gray-700 font-semibold mb-1">Growth Readiness:</span>
                       <span className="text-lg text-green-700">{result.breakdown.growth}/25</span>
                       </div>
                       <div className="bg-white p-4 rounded border">
-                      <span className="block text-gray-700 font-semibold mb-1">Digital</span>
+                      <span className="block text-gray-700 font-semibold mb-1">Digital Maturity:</span>
                       <span className="text-lg text-purple-700">{result.breakdown.digital}/25</span>
                       </div>
                       <div className="bg-white p-4 rounded border">
-                      <span className="block text-gray-700 font-semibold mb-1">Operations</span>
+                      <span className="block text-gray-700 font-semibold mb-1">Operations Efficiency:</span>
                       <span className="text-lg text-orange-700">{result.breakdown.operations}/25</span>
                       </div>
                     </div>
