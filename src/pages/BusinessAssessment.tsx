@@ -567,7 +567,7 @@ const BusinessAssessment: React.FC = () => {
                     {result.advisory && result.advisory.trim() && (
                       <div className="mt-6">
                         <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                          🎯 Personalized Growth Advisory
+                          Advisory
                         </h3>
                         <div className="p-6 bg-white border border-gray-200 rounded-md prose prose-sm max-w-none">
                           <ReactMarkdown>{result.advisory}</ReactMarkdown>
