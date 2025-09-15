@@ -545,21 +545,21 @@ const BusinessAssessment: React.FC = () => {
                     
                     {/* Score breakdown display */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                      <div className="bg-white p-4 rounded-md border">
-                        <h4 className="font-medium text-gray-800">💰 Financial Health</h4>
-                        <p className="text-2xl font-bold text-blue-600">{result.breakdown.financial}/25</p>
+                      <div className="bg-white p-4 rounded border">
+                      <span className="block text-gray-700 font-semibold mb-1">Financial</span>
+                      <span className="text-lg text-blue-700">{result.breakdown.financial}/25</span>
                       </div>
-                      <div className="bg-white p-4 rounded-md border">
-                        <h4 className="font-medium text-gray-800">📈 Growth Readiness</h4>
-                        <p className="text-2xl font-bold text-green-600">{result.breakdown.growth}/25</p>
+                      <div className="bg-white p-4 rounded border">
+                      <span className="block text-gray-700 font-semibold mb-1">Growth</span>
+                      <span className="text-lg text-green-700">{result.breakdown.growth}/25</span>
                       </div>
-                      <div className="bg-white p-4 rounded-md border">
-                        <h4 className="font-medium text-gray-800">💻 Digital Maturity</h4>
-                        <p className="text-2xl font-bold text-purple-600">{result.breakdown.digital}/25</p>
+                      <div className="bg-white p-4 rounded border">
+                      <span className="block text-gray-700 font-semibold mb-1">Digital</span>
+                      <span className="text-lg text-purple-700">{result.breakdown.digital}/25</span>
                       </div>
-                      <div className="bg-white p-4 rounded-md border">
-                        <h4 className="font-medium text-gray-800">⚙️ Operational Efficiency</h4>
-                        <p className="text-2xl font-bold text-orange-600">{result.breakdown.operations}/25</p>
+                      <div className="bg-white p-4 rounded border">
+                      <span className="block text-gray-700 font-semibold mb-1">Operations</span>
+                      <span className="text-lg text-orange-700">{result.breakdown.operations}/25</span>
                       </div>
                     </div>
                     
