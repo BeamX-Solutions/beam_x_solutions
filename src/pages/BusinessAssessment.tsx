@@ -537,7 +537,7 @@ const BusinessAssessment: React.FC = () => {
                   {/* Main Results */}
                   <div className="p-6 rounded-md bg-green-50 border border-green-200">
                     <h2 className="text-lg font-semibold text-green-800 mb-4">
-                      📊 Your Business Scorecard Results
+                      📊 Your Business Scorecard
                     </h2>
                     <p className="text-gray-700 mb-4 text-lg font-medium">
                       Total Score: <span className="text-green-600">{result.total_score}/100</span> ({result.label})
