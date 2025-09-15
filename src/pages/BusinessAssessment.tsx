@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Button from '../components/Button';
 import { Helmet } from 'react-helmet-async';
@@ -112,6 +112,11 @@ const BusinessAssessment: React.FC = () => {
   // State for sharing
   const [shareMessage, setShareMessage] = useState('');
 
+  // Debug effect to track result state changes
+  useEffect(() => {
+    console.log('Result state changed:', result);
+  }, [result]);
+
   // Handler function for form input changes
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -223,12 +228,14 @@ const BusinessAssessment: React.FC = () => {
     // Set loading state and clear previous results/errors
     setLoading(true);
     setError(null);
-    setResult(null);
+    setResult(null); // Clear previous result immediately
     setFormErrors({});
     setEmailSent(false);
     setEmailError('');
 
     try {
+      console.log('Making API call with data:', formData); // Debug log
+      
       // Make API call to generate business scorecard
       const response = await fetch("https://beamx-scorecard.onrender.com/generate-report", {
         method: "POST",
@@ -239,14 +246,36 @@ const BusinessAssessment: React.FC = () => {
 
       // Handle non-200 HTTP responses
       if (!response.ok) {
-        throw new Error(`Error ${response.status}: ${await response.text()}`);
+        const errorText = await response.text();
+        console.error('API Error Response:', errorText); // Debug log
+        throw new Error(`Error ${response.status}: ${errorText}`);
       }
 
-      // Parse successful response and update state
+      // Parse successful response
       const data: ScorecardResult = await response.json();
+      console.log('Received API response:', data); // Debug log
+      
+      // Validate that we have all expected data
+      if (!data || typeof data.total_score !== 'number' || !data.advisory) {
+        console.error('Invalid API response structure:', data);
+        throw new Error("Invalid response from server. Missing required data.");
+      }
+      
+      // Update state with complete result
       setResult(data);
+      console.log('Result state updated:', data); // Debug log
+      
+      // Scroll to results section after successful submission
+      setTimeout(() => {
+        const resultsSection = document.querySelector('.results-section');
+        if (resultsSection) {
+          resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+      
     } catch (err) {
       const error = err as Error;
+      console.error('Form submission error:', error); // Debug log
       
       // Handle timeout errors with user-friendly message
       if (error.name === "TimeoutError") {
@@ -254,6 +283,9 @@ const BusinessAssessment: React.FC = () => {
       } else {
         setError(error.message || "Request failed. Check your connection or server status.");
       }
+      
+      // Clear any partial results on error
+      setResult(null);
     } finally {
       setLoading(false); // Always reset loading state
     }
@@ -501,27 +533,63 @@ const BusinessAssessment: React.FC = () => {
 
               {/* Results display section */}
               {result && (
-                <div className="mt-8 space-y-6">
+                <div className="results-section mt-8 space-y-6">
                   {/* Main Results */}
                   <div className="p-6 rounded-md bg-green-50 border border-green-200">
-                    <h2 className="text-lg font-semibold text-green-800 mb-4">Scorecard</h2>
-                    <p className="text-gray-700 mb-4">Total Score: {result.total_score}/100 ({result.label})</p>
+                    <h2 className="text-lg font-semibold text-green-800 mb-4">
+                      📊 Your Business Scorecard Results
+                    </h2>
+                    <p className="text-gray-700 mb-4 text-lg font-medium">
+                      Total Score: <span className="text-green-600">{result.total_score}/100</span> ({result.label})
+                    </p>
                     
                     {/* Score breakdown display */}
-                    <ul className="list-disc pl-5 mt-2 text-gray-700 space-y-1">
-                      <li>Financial Health: {result.breakdown.financial}/25</li>
-                      <li>Growth Readiness: {result.breakdown.growth}/25</li>
-                      <li>Digital Maturity: {result.breakdown.digital}/25</li>
-                      <li>Operational Efficiency: {result.breakdown.operations}/25</li>
-                    </ul>
-                    
-                    {/* AI-generated advisory section */}
-                    <div className="mt-4">
-                      <p className="font-medium text-gray-700 mb-2">Advisory:</p>
-                      <div className="p-4 bg-white border border-gray-200 rounded-md prose prose-sm max-w-none">
-                        <ReactMarkdown>{result.advisory}</ReactMarkdown>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                      <div className="bg-white p-4 rounded-md border">
+                        <h4 className="font-medium text-gray-800">💰 Financial Health</h4>
+                        <p className="text-2xl font-bold text-blue-600">{result.breakdown.financial}/25</p>
+                      </div>
+                      <div className="bg-white p-4 rounded-md border">
+                        <h4 className="font-medium text-gray-800">📈 Growth Readiness</h4>
+                        <p className="text-2xl font-bold text-green-600">{result.breakdown.growth}/25</p>
+                      </div>
+                      <div className="bg-white p-4 rounded-md border">
+                        <h4 className="font-medium text-gray-800">💻 Digital Maturity</h4>
+                        <p className="text-2xl font-bold text-purple-600">{result.breakdown.digital}/25</p>
+                      </div>
+                      <div className="bg-white p-4 rounded-md border">
+                        <h4 className="font-medium text-gray-800">⚙️ Operational Efficiency</h4>
+                        <p className="text-2xl font-bold text-orange-600">{result.breakdown.operations}/25</p>
                       </div>
                     </div>
+                    
+                    {/* AI-generated advisory section - Always show if we have advisory */}
+                    {result.advisory && result.advisory.trim() && (
+                      <div className="mt-6">
+                        <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                          🎯 Personalized Growth Advisory
+                        </h3>
+                        <div className="p-6 bg-white border border-gray-200 rounded-md prose prose-sm max-w-none">
+                          <ReactMarkdown>{result.advisory}</ReactMarkdown>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Show loading state if advisory is missing */}
+                    {(!result.advisory || !result.advisory.trim()) && (
+                      <div className="mt-6">
+                        <h3 className="text-lg font-semibold text-gray-800 mb-3">
+                          🎯 Generating Your Personalized Advisory...
+                        </h3>
+                        <div className="p-6 bg-gray-100 border border-gray-200 rounded-md">
+                          <div className="animate-pulse">
+                            <div className="h-4 bg-gray-300 rounded mb-2"></div>
+                            <div className="h-4 bg-gray-300 rounded mb-2 w-3/4"></div>
+                            <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Email Results Section */}
