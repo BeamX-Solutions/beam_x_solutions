@@ -414,7 +414,7 @@ const BusinessAssessment: React.FC = () => {
                     {renderSelect(
                       "monthly_expenses",
                       "Monthly Expenses",
-                      ["Unknown", "≤$1K", "$1K–$5K", "$5K–$20K", "$20K+"],
+                      ["Unknown", "≤$500", "$500–$1K", "$1K–$5K", "$5K–$20K", "$20K+"],
                       "Select monthly expense range",
                       "Your business's total monthly operating expenses."
                     )}
