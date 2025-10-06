@@ -4,7 +4,7 @@ export const blogPosts = [
     "title": "Data Clarity Is the New Competitive Edge for Modern Businesses",
     "slug": "data-clarity-new-competitive-edge-modern-businesses",
     "excerpt": "Businesses today don’t lack data. But too often, organizations mistake having data for understanding data. This is where clarity comes in.",
-    "image": "data_clarity.jpeg",
+    "image": "/data_clarity.jpeg",
     "author": "Ujunwa Osigwe",
     "date": "October 1, 2025",
     "readTime": "4 min read",
