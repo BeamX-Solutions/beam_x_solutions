@@ -1,5 +1,98 @@
 export const blogPosts = [
   {
+    "id": 12,
+    "title": "Beyond the Dashboard: Why Your Strategy Needs an Active Check-up",
+    "slug": "beyond-the-dashboard-why-your-strategy-needs-an-active-check-up",
+    "excerpt": "In today’s fast-moving market, simply having a business dashboard is like having a car speedometer: it tells you how fast you’ve been going, but it doesn’t tell you if you’re about to run out of gas or if the road ahead is closed. To truly steer your business, you need to do more than just monitor past results.",
+    "image": "/beyond-the-dashboard.JPG",
+    "author": "Christiana Kuku",
+    "date": "October 16, 2025",
+    "readTime": "5 min read",
+    "category": "Analytics Strategy",
+    "fullContent": (
+      <>
+        <h3 className="text-xl font-semibold mb-3">Introduction</h3>
+        <p className="mb-4">
+          In today’s fast-moving market, simply having a business dashboard is like having a car speedometer: it tells you how fast you’ve been going, but it doesn’t tell you if you’re about to run out of gas or if the road ahead is closed. To truly steer your business, you need to do more than just monitor past results. You need to test the road ahead.
+        </p>
+        <p className="mb-4">
+          This is the difference between passive business assessment and active strategic assessment, and understanding it is crucial for driving growth instead of just reacting to it.
+        </p>
+
+        <h3 className="text-xl font-semibold mb-3">Passive vs. Active: The Business Assessment Analogy</h3>
+        <p className="mb-4">
+          Here's how the concept translates for business strategy:
+        </p>
+        <h4 className="text-lg font-semibold mb-2">1. Passive Business Assessment (The Scorekeeper)</h4>
+        <p className="mb-2">
+          Passive assessment focuses on looking backward at results that have already happened.
+        </p>
+        <ul className="list-disc pl-5 mb-4">
+          <li><strong>What it does:</strong> It measures key performance indicators (KPIs) such as quarterly revenue, website traffic, cost-per-lead and employee turnover.</li>
+          <li><strong>What it misses:</strong> It can only tell you what went wrong or what went right last month. It can't tell you why a new strategy will or won't work in the future or what the company's biggest untapped opportunities are.</li>
+        </ul>
+        <p className="mb-4">
+          Passive assessment is reactive: It provides a historical grade.
+        </p>
+
+        <h4 className="text-lg font-semibold mb-2">2. Active Business Assessment (The Strategy Simulator)</h4>
+        <p className="mb-2">
+          Active assessment focuses on looking forward by stress-testing potential decisions and identifying hidden risks or opportunities.
+        </p>
+        <ul className="list-disc pl-5 mb-4">
+          <li><strong>What it does:</strong> It proactively simulates different scenarios. For example, it might model what happens to profit margins if a supplier's price increases by 15%, or what market share you could gain if you double your ad spend in a specific region.</li>
+          <li><strong>What it finds:</strong> It finds critical decision points and hidden leverage points before you commit resources. It can flag that a planned product launch in a certain area is likely to fail due to local competition or reveal that a small increase in a specific operational efficiency metric will have a massive ROI.</li>
+        </ul>
+        <p className="mb-4">
+          Active assessment is proactive: It helps you make the best decisions before executing the plan.
+        </p>
+
+        <h3 className="text-xl font-semibold mb-3">How an Active Business Assessment Tool Works</h3>
+        <p className="mb-4">
+          A business tool using this methodology doesn't just display historical data; it asks "What If?" questions and calculates the outcomes.
+        </p>
+        <div className="overflow-x-auto mb-4">
+          <table className="w-full border-collapse border border-gray-300">
+            <thead>
+              <tr className="bg-gray-100">
+                <th className="border border-gray-300 p-3 text-left">Step</th>
+                <th className="border border-gray-300 p-3 text-left">Action by the Active Business Tool</th>
+                <th className="border border-gray-300 p-3 text-left">Strategic Benefit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-gray-300 p-3">1. Dynamic Modeling</td>
+                <td className="border border-gray-300 p-3">It takes your core business data (costs, customer lifetime value, market size) and builds a digital simulation of your business.</td>
+                <td className="border border-gray-300 p-3">Moves planning from static spreadsheets to a dynamic, interconnected environment.</td>
+              </tr>
+              <tr>
+                <td className="border border-gray-300 p-3">2. Scenario Testing</td>
+                <td className="border border-gray-300 p-3">The user inputs a potential strategy (e.g., "Increase Product A price by 10%" or "Hire 5 more salespeople").</td>
+                <td className="border border-gray-300 p-3">Allows users to safely test high-stakes decisions without real-world risk.</td>
+              </tr>
+              <tr>
+                <td className="border border-gray-300 p-3">3. Impact Forecasting</td>
+                <td className="border border-gray-300 p-3">The tool calculates the domino effect across the entire model: What is the new projected revenue? What is the revised break-even point? What is the risk of alienating existing customers?</td>
+                <td className="border border-gray-300 p-3">Provides data-backed forecasts instead of gut feelings, improving decision quality.</td>
+              </tr>
+              <tr>
+                <td className="border border-gray-300 p-3">4. Constraint Identification</td>
+                <td className="border border-gray-300 p-3">It flags the single biggest bottleneck to achieving a goal (e.g., "Your current manufacturing capacity will limit this strategy to only 50% success").</td>
+                <td className="border border-gray-300 p-3">Identifies hidden operational risks that could derail a successful-looking plan.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 className="text-xl font-semibold mb-3">Conclusion</h3>
+        <p className="mb-4">
+          By actively assessing your business options, you move from simply reporting performance to engineering successful outcomes.
+        </p>
+      </>
+    )
+  },
+  {
     "id": 11,
     "title": "Data Clarity Is the New Competitive Edge for Modern Businesses",
     "slug": "data-clarity-new-competitive-edge-modern-businesses",
@@ -1109,7 +1202,8 @@ export const blogPosts = [
           <p className="mb-3">Based on identified patterns, the system generates probabilistic forecasts about future outcomes under different conditions.</p>
           
           <h4 className="text-lg font-semibold mb-2">4. Actionable Recommendations</h4>
-          <p className="mb-3">The best predictive analytics don't just show you what might happen, they suggest what you should do about it.</p>
+          <p className="mb-3">The best predictive analytics don't just show you what might happen, they suggest what you should do about it.
+        </p>
         </div>
 
         <h3 className="text-xl font-semibold mb-3">Why Are Businesses Turning to Predictive Analytics in 2025?</h3>
@@ -1758,5 +1852,5 @@ export const blogPosts = [
         </p>
       </>
     ),
-  },
+  }
 ];
