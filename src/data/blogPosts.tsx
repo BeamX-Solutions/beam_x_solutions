@@ -4,7 +4,7 @@ export const blogPosts = [
     "title": "Beyond the Dashboard: Why Your Strategy Needs an Active Check-up",
     "slug": "beyond-the-dashboard-why-your-strategy-needs-an-active-check-up",
     "excerpt": "In today’s fast-moving market, simply having a business dashboard is like having a car speedometer: it tells you how fast you’ve been going, but it doesn’t tell you if you’re about to run out of gas or if the road ahead is closed. To truly steer your business, you need to do more than just monitor past results.",
-    "image": "/beyond-the-dashboard.JPG",
+    "image": "/dashboard-blog.JPG",
     "author": "Christiana Kuku",
     "date": "October 16, 2025",
     "readTime": "5 min read",
