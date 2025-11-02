@@ -6,7 +6,7 @@ export const blogPosts = [
     excerpt: "Running a business today feels like playing chess in real time. Every move matters, and the wrong one can cost you the game. But what if you could see your next few moves before they happen? That's what Business Intelligence offers—your business's sixth sense.",
     image: "/sixth-sense.png",
     author: "Ujunwa Osigwe",
-    date: "July 29, 2025",
+    date: "November 1, 2025",
     readTime: "6 min read",
     category: "AI & Data Culture",
     fullContent: (
