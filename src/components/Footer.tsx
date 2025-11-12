@@ -96,16 +96,16 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-semibold text-white mb-6">Contact Us</h3>
             <ul className="space-y-4">
-              <li className="flex items-start">
-                <MapPin className="h-5 w-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-400">
-                  Illinois, USA
-                </span>
+              <li className="flex items-center">
+                <Phone className="h-5 w-5 text-primary mr-3 flex-shrink-0" />
+                <a href="tel:+2348164711076" className="text-gray-400 hover:text-primary transition-colors">
+                  +234 706 805 1221
+                </a>
               </li>
               <li className="flex items-center">
                 <Phone className="h-5 w-5 text-primary mr-3 flex-shrink-0" />
-                <a href="tel:+14146506035" className="text-gray-400 hover:text-primary transition-colors">
-                  +1 414 650 6035
+                <a href="tel:+2348164711076" className="text-gray-400 hover:text-primary transition-colors">
+                  +234 816 471 1076
                 </a>
               </li>
               <li className="flex items-start">
@@ -113,12 +113,6 @@ const Footer: React.FC = () => {
                 <span className="text-gray-400">
                   Lagos, Nigeria
                 </span>
-              </li>
-              <li className="flex items-center">
-                <Phone className="h-5 w-5 text-primary mr-3 flex-shrink-0" />
-                <a href="tel:+2348164711076" className="text-gray-400 hover:text-primary transition-colors">
-                  +234 816 471 1076
-                </a>
               </li>
               <li className="flex items-center">
                 <Mail className="h-5 w-5 text-primary mr-3 flex-shrink-0" />

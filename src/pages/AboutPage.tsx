@@ -164,7 +164,7 @@ const AboutPage: React.FC = () => {
                   )}
                   {activeTab === 'goal' && (
                     <p className="text-lg">
-                      BeamX Solutions' goal is to support 10,000 SMEs with data-driven insights and advanced tech solutions to close operational gaps, boost profitability, and overcome adoption barriers for sustainable growth.
+                      BeamX Solutions' goal is to support 10,000 SMEs by 2030 with data-driven insights and advanced tech solutions to close operational gaps, boost profitability, and overcome adoption barriers for sustainable growth.
                     </p>
                   )}
                 </motion.div>
@@ -189,7 +189,7 @@ const AboutPage: React.FC = () => {
                   },
                   {
                     step: 2,
-                    title: "Connectivity",
+                    title: "Context",
                     description: "Insights in isolation might point to a faster horse, not a car. We stay connected to the latest technology and AI solutions to best help your business achieve their goals.",
                   },
                   {

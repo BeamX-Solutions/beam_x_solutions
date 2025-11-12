@@ -233,7 +233,7 @@ const ManagedIntelligencePage: React.FC = () => {
       <section className="section bg-gray-50">
         <div className="container-custom mx-auto px-4 sm:px-6">
           <SectionHeader
-            title="Common Questions"
+            title="frequently Asked Questions"
             subtitle="Get answers to help you make an informed decision."
             center
           />

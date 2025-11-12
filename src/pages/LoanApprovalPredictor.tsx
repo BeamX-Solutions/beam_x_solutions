@@ -145,9 +145,9 @@ const LoanApprovalPredictor: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h1 className="text-white text-4xl font-bold mb-6">Loan Approval Predictor</h1>
+              <h1 className="text-white text-4xl font-bold mb-6">Sample Loan Approval Model</h1>
               <p className="text-gray-100 text-lg mb-8">
-                Automated lending decisions that are faster, smarter, and more accurate than manual reviews.
+                This sample model streamlines loan approvals, making lending decisions faster, more efficient, and highly accurate. BeamX Solutions can customize and deploy a tailored solution for your business to reduce manual reviews and boost operational effectiveness.
               </p>
             </motion.div>
           </div>
@@ -267,7 +267,7 @@ const LoanApprovalPredictor: React.FC = () => {
                         value={formData.ApplicantIncome ?? ''}
                         onChange={handleChange}
                         min="0"
-                        step="0. 01"
+                        step="0.01"
                         placeholder="Enter monthly income"
                         className={`block w-full border ${formErrors.ApplicantIncome ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-primary focus:border-primary placeholder-gray-400`}
                         required
