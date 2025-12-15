@@ -31,14 +31,14 @@ const Footer: React.FC = () => {
               business intelligence, and AI solutions.
             </p>
             <div className="flex space-x-4">
+              <a href="https://linkedin.com/company/beamxsolutions" className="text-gray-400 hover:text-primary transition-colors" aria-label="LinkedIn">
+                <Linkedin className="h-5 w-5" />
+              </a>
               <a href="https://facebook.com/beamxsolutions" className="text-gray-400 hover:text-primary transition-colors" aria-label="Facebook">
                 <Facebook className="h-5 w-5" />
               </a>
               <a href="https://x.com/beamxsolutions" className="text-gray-400 hover:text-primary transition-colors" aria-label="X (formerly Twitter)">
                 <XIcon className="h-5 w-5" />
-              </a>
-              <a href="https://linkedin.com/company/beamxsolutions" className="text-gray-400 hover:text-primary transition-colors" aria-label="LinkedIn">
-                <Linkedin className="h-5 w-5" />
               </a>
               <a href="https://instagram.com/beamxsolutions" className="text-gray-400 hover:text-primary transition-colors" aria-label="Instagram">
                 <Instagram className="h-5 w-5" />
