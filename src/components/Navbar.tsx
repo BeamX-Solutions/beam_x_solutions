@@ -98,7 +98,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled, hasNotification = false }) 
           <nav className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => {
               if (item.external) {
-                // External link opens in new tab
+                // External link opens in new tab; intercept click to prevent GTM link decoration (_gl params)
                 const baseClass = `relative font-medium transition-all duration-300 hover:scale-105 ${
                   isScrolled || isBlogPostPage ? 'text-gray-700 hover:text-primary' : 'text-gray-200 hover:text-white'
                 }`;
@@ -109,6 +109,15 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled, hasNotification = false }) 
                     target="_blank"
                     rel="noopener noreferrer"
                     className={baseClass}
+                    onClick={(e) => {
+                      // Prevent GTM or other handlers from decorating the URL
+                      e.preventDefault();
+                      e.stopPropagation();
+                      if (e.nativeEvent && typeof (e.nativeEvent as any).stopImmediatePropagation === 'function') {
+                        (e.nativeEvent as any).stopImmediatePropagation();
+                      }
+                      window.open(item.path, '_blank', 'noopener,noreferrer');
+                    }}
                   >
                     {item.name}
                   </a>
@@ -204,7 +213,15 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled, hasNotification = false }) 
                       href={item.path}
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={() => setIsMobileMenuOpen(false)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (e.nativeEvent && typeof (e.nativeEvent as any).stopImmediatePropagation === 'function') {
+                          (e.nativeEvent as any).stopImmediatePropagation();
+                        }
+                        setIsMobileMenuOpen(false);
+                        window.open(item.path, '_blank', 'noopener,noreferrer');
+                      }}
                       className="block text-lg font-medium px-4 py-3 transition-all text-gray-800 hover:text-primary hover:bg-primary/5"
                     >
                       {item.name}
