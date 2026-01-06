@@ -27,6 +27,15 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled, hasNotification = false }) 
     }),
   };
 
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about' },
+    { name: 'Services', path: '/services' },
+    { name: 'Tools', path: '/tools' },
+    { name: 'Blog', path: 'https://blog.beamxsolutions.com/', external: true },
+    { name: 'Contact Us', path: '/contact' },
+  ];
+
   return (
     <>
       <style>
@@ -87,64 +96,77 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled, hasNotification = false }) 
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            {[
-              { name: 'Home', path: '/' },
-              { name: 'About', path: '/about' },
-              { name: 'Services', path: '/services' },
-              { name: 'Tools', path: '/tools' },
-              { name: 'Blog', path: '/blog' },
-              { name: 'Contact Us', path: '/contact' },
-            ].map((item) => (
-              <NavLink
-                key={item.name}
-                to={item.path}
-                end
-                className={({ isActive }) =>
-                  item.name === 'Contact Us'
-                    ? `relative font-semibold transition-all duration-300 contact-glow contact-border flex items-center gap-1.5 px-2 py-1 rounded-md ${
-                        isScrolled || isBlogPostPage
-                          ? isActive
-                            ? 'text-secondary'
-                            : 'text-gray-700 hover:text-secondary'
-                          : isActive
-                            ? 'text-white'
-                            : 'text-gray-200 hover:text-white'
-                      }`
-                    : `relative font-medium transition-all duration-300 hover:scale-105 ${
-                        isScrolled || isBlogPostPage
-                          ? isActive
-                            ? 'text-primary'
-                            : 'text-gray-700 hover:text-primary'
-                          : isActive
-                            ? 'text-white'
-                            : 'text-gray-200 hover:text-white'
-                      }`
-                }
-                aria-label={item.name === 'Contact Us' ? 'Contact Us' : undefined}
-              >
-                {({ isActive }) => (
-                  <>
-                    {item.name === 'Contact Us' ? (
-                      <span className="contact-link flex items-center gap-1.5">
-                        {item.name}
-                        <Mail className="contact-icon" size={16} />
-                      </span>
-                    ) : (
-                      item.name
-                    )}
-                    {isActive && (
-                      <motion.span
-                        className="absolute -bottom-1 left-0 w-full h-0.5 bg-current"
-                        layoutId="navbar-indicator"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    )}
-                  </>
-                )}
-              </NavLink>
-            ))}
+            {navItems.map((item) => {
+              if (item.external) {
+                // External link opens in new tab
+                const baseClass = `relative font-medium transition-all duration-300 hover:scale-105 ${
+                  isScrolled || isBlogPostPage ? 'text-gray-700 hover:text-primary' : 'text-gray-200 hover:text-white'
+                }`;
+                return (
+                  <a
+                    key={item.name}
+                    href={item.path}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={baseClass}
+                  >
+                    {item.name}
+                  </a>
+                );
+              }
+
+              return (
+                <NavLink
+                  key={item.name}
+                  to={item.path}
+                  end
+                  className={({ isActive }) =>
+                    item.name === 'Contact Us'
+                      ? `relative font-semibold transition-all duration-300 contact-glow contact-border flex items-center gap-1.5 px-2 py-1 rounded-md ${
+                          isScrolled || isBlogPostPage
+                            ? isActive
+                              ? 'text-secondary'
+                              : 'text-gray-700 hover:text-secondary'
+                            : isActive
+                              ? 'text-white'
+                              : 'text-gray-200 hover:text-white'
+                        }`
+                      : `relative font-medium transition-all duration-300 hover:scale-105 ${
+                          isScrolled || isBlogPostPage
+                            ? isActive
+                              ? 'text-primary'
+                              : 'text-gray-700 hover:text-primary'
+                            : isActive
+                              ? 'text-white'
+                              : 'text-gray-200 hover:text-white'
+                        }`
+                  }
+                  aria-label={item.name === 'Contact Us' ? 'Contact Us' : undefined}
+                >
+                  {({ isActive }) => (
+                    <>
+                      {item.name === 'Contact Us' ? (
+                        <span className="contact-link flex items-center gap-1.5">
+                          {item.name}
+                          <Mail className="contact-icon" size={16} />
+                        </span>
+                      ) : (
+                        item.name
+                      )}
+                      {isActive && (
+                        <motion.span
+                          className="absolute -bottom-1 left-0 w-full h-0.5 bg-current"
+                          layoutId="navbar-indicator"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 0.3 }}
+                        />
+                      )}
+                    </>
+                  )}
+                </NavLink>
+              );
+            })}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -168,14 +190,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled, hasNotification = false }) 
             variants={menuVariants}
           >
             <nav className="flex flex-col items-center py-4">
-              {[
-                { name: 'Home', path: '/' },
-                { name: 'About', path: '/about' },
-                { name: 'Services', path: '/services' },
-                { name: 'Tools', path: '/tools' },
-                { name: 'Blog', path: '/blog' },
-                { name: 'Contact Us', path: '/contact' },
-              ].map((item, index) => (
+              {navItems.map((item, index) => (
                 <motion.div
                   key={item.name}
                   custom={index}
@@ -184,34 +199,46 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled, hasNotification = false }) 
                   variants={menuItemVariants}
                   className="w-full text-center"
                 >
-                  <NavLink
-                    to={item.path}
-                    end
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={({ isActive }) =>
-                      item.name === 'Contact Us'
-                        ? `text-lg font-semibold px-6 py-4 contact-glow contact-border flex items-center justify-center gap-2 transition-all mx-4 my-1 rounded-md ${
-                            isActive
-                              ? 'text-secondary bg-secondary/10'
-                              : 'text-gray-800 hover:text-secondary hover:bg-secondary/5'
-                          }`
-                        : `block text-lg font-medium px-4 py-3 transition-all ${
-                            isActive
-                              ? 'text-primary bg-primary/10'
-                              : 'text-gray-800 hover:text-primary hover:bg-primary/5'
-                          }`
-                    }
-                    aria-label={item.name === 'Contact Us' ? 'Contact Us' : undefined}
-                  >
-                    {item.name === 'Contact Us' ? (
-                      <span className="contact-link flex items-center gap-2">
-                        {item.name}
-                        <Mail className="contact-icon" size={20} />
-                      </span>
-                    ) : (
-                      item.name
-                    )}
-                  </NavLink>
+                  {item.external ? (
+                    <a
+                      href={item.path}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="block text-lg font-medium px-4 py-3 transition-all text-gray-800 hover:text-primary hover:bg-primary/5"
+                    >
+                      {item.name}
+                    </a>
+                  ) : (
+                    <NavLink
+                      to={item.path}
+                      end
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={({ isActive }) =>
+                        item.name === 'Contact Us'
+                          ? `text-lg font-semibold px-6 py-4 contact-glow contact-border flex items-center justify-center gap-2 transition-all mx-4 my-1 rounded-md ${
+                              isActive
+                                ? 'text-secondary bg-secondary/10'
+                                : 'text-gray-800 hover:text-secondary hover:bg-secondary/5'
+                            }`
+                          : `block text-lg font-medium px-4 py-3 transition-all ${
+                              isActive
+                                ? 'text-primary bg-primary/10'
+                                : 'text-gray-800 hover:text-primary hover:bg-primary/5'
+                            }`
+                      }
+                      aria-label={item.name === 'Contact Us' ? 'Contact Us' : undefined}
+                    >
+                      {item.name === 'Contact Us' ? (
+                        <span className="contact-link flex items-center gap-2">
+                          {item.name}
+                          <Mail className="contact-icon" size={20} />
+                        </span>
+                      ) : (
+                        item.name
+                      )}
+                    </NavLink>
+                  )}
                 </motion.div>
               ))}
             </nav>
