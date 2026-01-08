@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Component, ReactNode } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
@@ -15,6 +15,22 @@ import MarketingPlanWaitlist from './pages/MarketingPlanWaitlist';
 import ScrollToTop from './components/ScrollToTop';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import AdvancedBusinessAssessment from './pages/AdvancedBusinessAssessment';
+
+// Component to handle external redirects
+const ExternalRedirect: React.FC<{ url: string }> = ({ url }) => {
+  useEffect(() => {
+    window.location.href = url;
+  }, [url]);
+  
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-white">
+      <div className="text-center">
+        <h2 className="text-2xl font-semibold mb-4">Redirecting to blog...</h2>
+        <p className="text-gray-600 mb-6">If you are not redirected automatically, <a href={url} className="text-blue-600 hover:underline">click here</a>.</p>
+      </div>
+    </div>
+  );
+};
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -115,6 +131,9 @@ function App() {
             <Route path="contact" element={<ContactPage />} />
             <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
             <Route path="managed-intelligence" element={<ManagedIntelligencePage />} />
+            {/* Redirect old blog URLs to external blog */}
+            <Route path="blog" element={<ExternalRedirect url="https://blog.beamxsolutions.com/" />} />
+            <Route path="blog/*" element={<ExternalRedirect url="https://blog.beamxsolutions.com/" />} />
           </Route>
         </Routes>
       </ErrorBoundary>
