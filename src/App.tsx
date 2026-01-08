@@ -5,8 +5,6 @@ import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ServicesPage from './pages/ServicesPage';
-import BlogPage from './pages/BlogPage';
-import BlogPostPage from './pages/BlogPostPage';
 import ContactPage from './pages/ContactPage';
 import ToolsPage from './pages/ToolsPage';
 import ToolsDetailPage from './pages/ToolsDetailPage';
@@ -41,9 +39,9 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
         <div className="min-h-screen flex items-center justify-center bg-white">
           <div className="text-center">
             <h2 className="text-2xl font-semibold mb-4">Something went wrong.</h2>
-            <p className="text-gray-600 mb-6">Please try refreshing the page or return to the blog.</p>
-            <a href="/blog" className="text-blue-600 hover:underline">
-              Back to Blog
+            <p className="text-gray-600 mb-6">Please try refreshing the page.</p>
+            <a href="/" className="text-blue-600 hover:underline">
+              Back to Home
             </a>
           </div>
         </div>
@@ -72,7 +70,6 @@ function App() {
     '/tools/loan-approval-predictor': 'BeamX Solutions | Loan Approval Predictor',
     '/tools/business-assessment': 'BeamX Solutions | Business Assessment',
     '/tools/advanced-business-assessment': 'BeamX Solutions | Advanced Business Assessment',
-    '/blog': 'BeamX Solutions | Blog',
     '/contact': 'BeamX Solutions | Contact Us',
     '/privacy-policy': 'BeamX Solutions | Privacy Policy',
     '/managed-intelligence': 'BeamX Solutions | Managed Intelligence Services',
@@ -115,8 +112,6 @@ function App() {
             <Route path="tools/business-assessment" element={<BusinessAssessment />} />
             <Route path="tools/advanced-business-assessment" element={<AdvancedBusinessAssessment />} />
             <Route path="tools/marketing-plan-generator/waitlist" element={<MarketingPlanWaitlist />} />
-            <Route path="blog" element={<BlogPage />} />
-            <Route path="blog/:slug" element={<BlogPostPage />} />
             <Route path="contact" element={<ContactPage />} />
             <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
             <Route path="managed-intelligence" element={<ManagedIntelligencePage />} />
