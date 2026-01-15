@@ -113,12 +113,6 @@ const BusinessAssessment: React.FC = () => {
   // State to track field-specific validation errors
   const [formErrors, setFormErrors] = useState<Partial<Record<keyof ScorecardInput, string>>>({});
 
-  // State for email functionality
-  const [email, setEmail] = useState('');
-  const [emailSending, setEmailSending] = useState(false);
-  const [emailSent, setEmailSent] = useState(false);
-  const [emailError, setEmailError] = useState('');
-
   // State for sharing
   const [shareMessage, setShareMessage] = useState('');
 
@@ -135,38 +129,6 @@ const BusinessAssessment: React.FC = () => {
     // Clear field-specific error when user starts typing/selecting
     if (formErrors[name as keyof ScorecardInput]) {
       setFormErrors({ ...formErrors, [name]: undefined });
-    }
-  };
-
-  // Email results handler
-  const handleEmailResults = async () => {
-    if (!email.trim() || !result) return;
-
-    setEmailSending(true);
-    setEmailError('');
-
-    try {
-      const response = await fetch("https://beamx-scorecard.onrender.com/email-results", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: email.trim(),
-          result: result,
-          formData: formData
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to send email: ${response.status}`);
-      }
-
-      setEmailSent(true);
-      setEmail('');
-      setTimeout(() => setEmailSent(false), 5000); // Hide success message after 5 seconds
-    } catch (err) {
-      setEmailError('Failed to send email. Please try again.');
-    } finally {
-      setEmailSending(false);
     }
   };
 
@@ -252,8 +214,6 @@ const BusinessAssessment: React.FC = () => {
     setError(null);
     setResult(null); // Clear previous result immediately
     setFormErrors({});
-    setEmailSent(false);
-    setEmailError('');
 
     try {
       console.log('Making API call with data:', formData); // Debug log
@@ -471,6 +431,17 @@ const BusinessAssessment: React.FC = () => {
                       )}
                     </div>
                   </div>
+
+                  {/* Email Notice */}
+                  <p className="text-sm text-blue-600 bg-blue-50 p-3 rounded-md border border-blue-200 mt-4 flex items-start gap-2">
+                    <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                      <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                    </svg>
+                    <span>
+                      <strong>Note:</strong> Your assessment results will be automatically sent to the email address provided above.
+                    </span>
+                  </p>
                 </div>
 
                 {/* Financial Details Section */}
@@ -614,6 +585,18 @@ const BusinessAssessment: React.FC = () => {
               {/* Results display section */}
               {result && (
                 <div className="results-section mt-8 space-y-6">
+                  {/* Email Confirmation Message */}
+                  <div className="p-4 bg-green-50 border border-green-200 rounded-md">
+                    <p className="text-green-800 text-sm flex items-center gap-2">
+                      <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span>
+                        <strong>Results generated!</strong> A detailed PDF report has been sent to <strong>{formData.email}</strong>
+                      </span>
+                    </p>
+                  </div>
+
                   {/* Main Results */}
                   <div className="p-6 rounded-md bg-green-50 border border-green-200">
                     <h2 className="text-lg font-semibold text-green-800 mb-4">
@@ -677,48 +660,6 @@ const BusinessAssessment: React.FC = () => {
                             <div className="h-4 bg-gray-300 rounded w-1/2"></div>
                           </div>
                         </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Email Results Section */}
-                  <div className="p-6 rounded-md bg-blue-50 border border-blue-200">
-                    <h3 className="text-lg font-semibold text-blue-800 mb-4 flex items-center gap-2">
-                      <EmailIcon />
-                      Email Your Results
-                    </h3>
-                    
-                    {emailSent ? (
-                      <div className="p-3 bg-green-100 text-green-800 rounded-md">
-                        ✅ Results sent successfully! Check your email inbox.
-                      </div>
-                    ) : (
-                      <div className="space-y-4">
-                        <p className="text-blue-700 text-sm">
-                          Get a detailed PDF report sent directly to your email for future reference.
-                        </p>
-                        
-                        <div className="flex flex-col sm:flex-row gap-3">
-                          <input
-                            type="email"
-                            placeholder="Enter your email address"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm"
-                          />
-                          <Button
-                            onClick={handleEmailResults}
-                            disabled={!email.trim() || emailSending}
-                            variant="secondary"
-                            className="sm:w-auto"
-                          >
-                            {emailSending ? 'Sending...' : 'Send Results'}
-                          </Button>
-                        </div>
-                        
-                        {emailError && (
-                          <p className="text-red-600 text-sm">{emailError}</p>
-                        )}
                       </div>
                     )}
                   </div>
