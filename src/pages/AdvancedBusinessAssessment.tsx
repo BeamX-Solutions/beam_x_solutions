@@ -11,13 +11,6 @@ const ShareIcon = () => (
   </svg>
 );
 
-const EmailIcon = () => (
-  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-    <path d="M3 4a2 2 0 00-2 2v1.161l8.441 4.221a1.25 1.25 0 001.118 0L19 7.162V6a2 2 0 00-2-2H3z" />
-    <path d="M19 8.839l-7.77 3.885a2.75 2.75 0 01-2.46 0L1 8.839V14a2 2 0 002 2h14a2 2 0 002-2V8.839z" />
-  </svg>
-);
-
 const XIcon = () => (
   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
     <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
@@ -150,9 +143,6 @@ const AdvancedBusinessAssessment: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [formErrors, setFormErrors] = useState<Partial<Record<keyof BusinessAssessmentInput, string>>>({});
   const [privacyAgreed, setPrivacyAgreed] = useState(false);
-  const [emailSending, setEmailSending] = useState(false);
-  const [emailSent, setEmailSent] = useState(false);
-  const [emailError, setEmailError] = useState('');
   const [shareMessage, setShareMessage] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
@@ -170,36 +160,6 @@ const AdvancedBusinessAssessment: React.FC = () => {
   const validateEmail = (email: string) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
-  };
-
-  const handleEmailResults = async () => {
-    if (!formData.email.trim() || !result) return;
-
-    setEmailSending(true);
-    setEmailError('');
-
-    try {
-      const response = await fetch("https://beamx-scorecard-v2.onrender.com/email-results", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: formData.email.trim(),
-          result: result,
-          formData: formData
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to send email: ${response.status}`);
-      }
-
-      setEmailSent(true);
-      setTimeout(() => setEmailSent(false), 5000);
-    } catch (err) {
-      setEmailError('Failed to send email. Please try again.');
-    } finally {
-      setEmailSending(false);
-    }
   };
 
   const handleShare = (platform: string) => {
@@ -317,8 +277,6 @@ const AdvancedBusinessAssessment: React.FC = () => {
     setError(null);
     setResult(null);
     setFormErrors({});
-    setEmailSent(false);
-    setEmailError('');
 
     try {
       const response = await fetch("https://beamx-scorecard-v2.onrender.com/assess", {
@@ -500,6 +458,17 @@ const AdvancedBusinessAssessment: React.FC = () => {
                       "Your email for assessment results and follow-up."
                     )}
                   </div>
+
+                  {/* Email Notice */}
+                  <p className="text-sm text-blue-600 bg-blue-50 p-3 rounded-md border border-blue-200 mt-4 flex items-start gap-2">
+                    <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                      <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                    </svg>
+                    <span>
+                      <strong>Note:</strong> Your advanced assessment results will be automatically sent to the email address provided above.
+                    </span>
+                  </p>
                 </div>
 
                 <div>
@@ -852,6 +821,18 @@ const AdvancedBusinessAssessment: React.FC = () => {
 
               {result && (
                 <div className="mt-8 space-y-6">
+                  {/* Email Confirmation Message */}
+                  <div className="p-4 bg-green-50 border border-green-200 rounded-md">
+                    <p className="text-green-800 text-sm flex items-center gap-2">
+                      <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span>
+                        <strong>Results generated!</strong> A detailed PDF report has been sent to <strong>{formData.email}</strong>
+                      </span>
+                    </p>
+                  </div>
+
                   <div className="p-6 rounded-md bg-green-50 border border-green-200">
                     <h2 className="text-lg font-semibold text-green-800">Advanced Assessment Results</h2>
                     <p className="text-gray-700">Total Score: {result.total_score}/{result.max_score}</p>
@@ -876,45 +857,6 @@ const AdvancedBusinessAssessment: React.FC = () => {
                         .replace(/^(<li>.*<\/li>)$/, '<ul>$1</ul>')
                       }}
                     />
-                  </div>
-
-                  <div className="p-6 rounded-md bg-blue-50 border border-blue-200">
-                    <h3 className="text-lg font-semibold text-blue-800 mb-4 flex items-center gap-2">
-                      <EmailIcon />
-                      Email Your Results
-                    </h3>
-                    {emailSent ? (
-                      <div className="p-3 bg-green-100 text-green-800 rounded-md">
-                        ✅ Results sent successfully! Check your email inbox.
-                      </div>
-                    ) : (
-                      <div className="space-y-4">
-                        <p className="text-blue-700 text-sm">
-                          Get a detailed PDF report sent directly to your email for future reference.
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-3">
-                          <input
-                            type="email"
-                            placeholder="Enter your email address"
-                            value={formData.email}
-                            onChange={handleChange}
-                            name="email"
-                            className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm"
-                          />
-                          <Button
-                            onClick={handleEmailResults}
-                            disabled={!formData.email.trim() || emailSending}
-                            variant="secondary"
-                            className="sm:w-auto"
-                          >
-                            {emailSending ? 'Sending...' : 'Send Results'}
-                          </Button>
-                        </div>
-                        {emailError && (
-                          <p className="text-red-600 text-sm">{emailError}</p>
-                        )}
-                      </div>
-                    )}
                   </div>
 
                   <div className="p-6 rounded-md bg-purple-50 border border-purple-200">
