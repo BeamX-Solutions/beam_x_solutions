@@ -45,6 +45,8 @@ const FacebookIcon = () => (
 
 // TypeScript interface defining the structure of scorecard input data
 interface ScorecardInput {
+  fullName: string;
+  email: string;
   revenue: string;
   profit_margin_known: string;
   monthly_expenses: string;
@@ -82,6 +84,8 @@ const industries = [
 const BusinessAssessment: React.FC = () => {
   // State to store form input values
   const [formData, setFormData] = useState<ScorecardInput>({
+    fullName: "",
+    email: "",
     revenue: "",
     profit_margin_known: "",
     monthly_expenses: "",
@@ -218,7 +222,7 @@ const BusinessAssessment: React.FC = () => {
     
     // List of all required fields for validation
     const requiredFields: (keyof ScorecardInput)[] = [
-      "revenue", "profit_margin_known", "monthly_expenses", "cac_tracked", "retention_rate",
+      "fullName", "email", "revenue", "profit_margin_known", "monthly_expenses", "cac_tracked", "retention_rate",
       "digital_campaigns", "analytics_tools", "crm_used", "data_mgmt", "sops_doc",
       "team_size", "pain_point", "industry"
     ];
@@ -230,6 +234,11 @@ const BusinessAssessment: React.FC = () => {
         errors[field] = "This field is required.";
       }
     });
+
+    // Validate email format
+    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      errors.email = "Please enter a valid email address.";
+    }
 
     // Display validation errors and stop submission if any exist
     if (Object.keys(errors).length > 0) {
@@ -406,6 +415,64 @@ const BusinessAssessment: React.FC = () => {
               
               {/* Main assessment form */}
               <form onSubmit={handleSubmit} className="space-y-8">
+                {/* Contact Information Section */}
+                <div>
+                  <h2 className="text-xl font-semibold text-gray-800 mb-4">Contact Information</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {/* Full Name Input */}
+                    <div>
+                      <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
+                        Full Name
+                        <span className="text-red-500 ml-1">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        value={formData.fullName}
+                        onChange={handleChange}
+                        className={`block w-full border ${
+                          formErrors.fullName ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary focus:outline-none transition-colors`}
+                        placeholder="Enter your full name"
+                        aria-invalid={!!formErrors.fullName}
+                        aria-describedby="fullName-error"
+                      />
+                      {formErrors.fullName && (
+                        <p id="fullName-error" className="text-red-500 text-xs mt-1">
+                          {formErrors.fullName}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Email Input */}
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                        Email Address
+                        <span className="text-red-500 ml-1">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className={`block w-full border ${
+                          formErrors.email ? 'border-red-300' : 'border-gray-300'
+                        } rounded-md p-3 text-sm focus:ring-primary focus:border-primary focus:outline-none transition-colors`}
+                        placeholder="Enter your email address"
+                        aria-invalid={!!formErrors.email}
+                        aria-describedby="email-error"
+                      />
+                      {formErrors.email && (
+                        <p id="email-error" className="text-red-500 text-xs mt-1">
+                          {formErrors.email}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
                 {/* Financial Details Section */}
                 <div>
                   <h2 className="text-xl font-semibold text-gray-800 mb-4">Financial Details</h2>
