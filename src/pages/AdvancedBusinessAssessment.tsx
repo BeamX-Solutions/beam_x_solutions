@@ -460,15 +460,21 @@ const AdvancedBusinessAssessment: React.FC = () => {
                   </div>
 
                   {/* Email Notice */}
-                  <p className="text-sm text-blue-600 bg-blue-50 p-3 rounded-md border border-blue-200 mt-4 flex items-start gap-2">
-                    <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                      <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                    </svg>
-                    <span>
-                      <strong>Note:</strong> Your advanced assessment results will be automatically sent to the email address provided above.
-                    </span>
-                  </p>
+                  <div className="mt-4 p-4 bg-blue-50 border-l-4 border-blue-500 rounded-md">
+                    <div className="flex items-start gap-3">
+                      <svg className="w-6 h-6 flex-shrink-0 text-blue-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                      </svg>
+                      <div>
+                        <p className="text-sm font-semibold text-blue-900 mb-1">Important Notice</p>
+                        <p className="text-sm text-blue-800">
+                          <strong>Please note:</strong> Your advanced assessment results will be automatically sent to the email address provided above.
+                          Please ensure you enter the correct email address to receive your detailed PDF report and personalized recommendations.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div>
