@@ -116,6 +116,9 @@ const BusinessAssessment: React.FC = () => {
   // State for sharing
   const [shareMessage, setShareMessage] = useState('');
 
+  // State for email consent checkbox
+  const [emailConsent, setEmailConsent] = useState(false);
+
   // Debug effect to track result state changes
   useEffect(() => {
     console.log('Result state changed:', result);
@@ -433,21 +436,9 @@ const BusinessAssessment: React.FC = () => {
                   </div>
 
                   {/* Email Notice */}
-                  <div className="mt-4 p-4 bg-blue-50 border-l-4 border-blue-500 rounded-md">
-                    <div className="flex items-start gap-3">
-                      <svg className="w-6 h-6 flex-shrink-0 text-blue-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                      </svg>
-                      <div>
-                        <p className="text-sm font-semibold text-blue-900 mb-1">Important Notice</p>
-                        <p className="text-sm text-blue-800">
-                          <strong>Please note:</strong> Your assessment results will be automatically sent to the email address provided above.
-                          Please ensure you enter the correct email address to receive your detailed PDF report and personalized recommendations.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                  <p className="text-sm text-blue-700 mt-2">
+                    <strong>Kindly note:</strong> Your assessment results will be automatically sent to the email address provided above. Please ensure you enter the correct email address to receive your detailed PDF report and personalized recommendations.
+                  </p>
                 </div>
 
                 {/* Financial Details Section */}
@@ -577,12 +568,26 @@ const BusinessAssessment: React.FC = () => {
                   </div>
                 </div>
 
+                {/* Email Consent Checkbox */}
+                <div className="flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    id="emailConsent"
+                    checked={emailConsent}
+                    onChange={(e) => setEmailConsent(e.target.checked)}
+                    className="mt-1 h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary"
+                  />
+                  <label htmlFor="emailConsent" className="text-sm text-gray-700">
+                    I consent to receive the results of this assessment via email.
+                  </label>
+                </div>
+
                 {/* Form submission button */}
                 <Button
                   type="submit"
                   variant="primary"
-                  disabled={loading}
-                  className={`w-full py-3 text-sm font-medium ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  disabled={loading || !emailConsent}
+                  className={`w-full py-3 text-sm font-medium ${loading || !emailConsent ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   {loading ? 'Processing...' : 'Generate Scorecard'}
                 </Button>
