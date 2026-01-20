@@ -643,16 +643,23 @@ const BusinessAssessment: React.FC = () => {
                         <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
                           Advisory
                         </h3>
-                        <div className="p-6 bg-white border border-gray-200 rounded-md prose prose-sm max-w-none prose-ul:list-disc prose-ul:pl-5 prose-ul:space-y-2 prose-li:mt-2 prose-strong:font-bold prose-strong:text-gray-900 prose-p:my-3">
+                        <div className="p-6 bg-white border border-gray-200 rounded-md prose prose-sm max-w-none">
                           <ReactMarkdown
                             components={{
-                              p: ({children}) => <p className="mb-4 leading-relaxed">{children}</p>,
-                              ul: ({children}) => <ul className="list-disc pl-6 space-y-2 my-4">{children}</ul>,
-                              li: ({children}) => <li className="leading-relaxed">{children}</li>,
-                              strong: ({children}) => <strong className="font-bold text-gray-900">{children}</strong>
+                              p: ({children}) => <p className="mb-4 leading-relaxed text-gray-700">{children}</p>,
+                              ul: ({children}) => <ul className="list-disc pl-6 space-y-3 my-4">{children}</ul>,
+                              ol: ({children}) => <ol className="list-decimal pl-6 space-y-3 my-4">{children}</ol>,
+                              li: ({children}) => <li className="leading-relaxed text-gray-700 pl-2">{children}</li>,
+                              strong: ({children}) => <strong className="font-bold text-gray-900">{children}</strong>,
+                              h3: ({children}) => <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">{children}</h3>,
+                              h4: ({children}) => <h4 className="text-base font-semibold text-gray-800 mt-4 mb-2">{children}</h4>,
                             }}
                           >
-                            {result.advisory}
+                            {result.advisory
+                              .replace(/•\s*/g, '\n- ')
+                              .replace(/\*\s+\*\*/g, '\n- **')
+                              .replace(/(\d+)\.\s+\*\*/g, '\n$1. **')
+                            }
                           </ReactMarkdown>
                         </div>
                       </div>

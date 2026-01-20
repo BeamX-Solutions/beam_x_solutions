@@ -838,13 +838,15 @@ const AdvancedBusinessAssessment: React.FC = () => {
                       <strong>Insights:</strong>
                     </p>
                     <div
-                      className="mt-2 p-4 bg-white border border-gray-200 rounded-md"
+                      className="mt-2 p-4 bg-white border border-gray-200 rounded-md prose prose-sm max-w-none"
                       dangerouslySetInnerHTML={{ __html: result.insight
-                        .replace(/\n/g, '<br>')
-                        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-                        .replace(/(\d+\.\s)/g, '<br>$1')
-                        .replace(/- ([^*]+)/g, '<li>$1</li>')
-                        .replace(/^(<li>.*<\/li>)$/, '<ul>$1</ul>')
+                        .replace(/•\s*/g, '</p><p style="margin: 12px 0; padding-left: 20px;">• ')
+                        .replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold text-gray-900">$1</strong>')
+                        .replace(/(\d+)\.\s+\*\*/g, '</p><p style="margin: 16px 0;"><strong>$1. </strong><strong>')
+                        .replace(/\n\n/g, '</p><p style="margin: 16px 0;">')
+                        .replace(/\n/g, '</p><p style="margin: 12px 0;">')
+                        .replace(/^/, '<p style="margin: 12px 0;">')
+                        .replace(/$/, '</p>')
                       }}
                     />
                   </div>

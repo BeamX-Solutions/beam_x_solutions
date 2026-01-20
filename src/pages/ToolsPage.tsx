@@ -27,7 +27,6 @@ const caseStudies = [
     title: "Perficient Logistics",
     description: "Created a seamless bookings landing page and executed targeted ad campaigns to drive customer acquisition and streamline logistics operations.",
     image: "/perficient_logistics.jpg",
-    externalLink: "https://bookings.perficientlogisticsltd.com",
   },
 ];
 
@@ -189,20 +188,11 @@ const ToolsPage: React.FC = () => {
                     </h2>
                   </NavLink>
                   <p className="text-gray-600 text-sm mb-3 line-clamp-3">{study.description}</p>
-                  <div className="flex gap-2">
-                    <NavLink to={`/tools/${study.slug}`}>
-                      <Button variant="primary" className="text-sm">
-                        Read More
-                      </Button>
-                    </NavLink>
-                    {study.externalLink && (
-                      <a href={study.externalLink} target="_blank" rel="noopener noreferrer">
-                        <Button variant="secondary" className="text-sm">
-                          View Site
-                        </Button>
-                      </a>
-                    )}
-                  </div>
+                  <NavLink to={`/tools/${study.slug}`}>
+                    <Button variant="primary" className="text-sm">
+                      Read More
+                    </Button>
+                  </NavLink>
                 </div>
               </motion.article>
             ))}
