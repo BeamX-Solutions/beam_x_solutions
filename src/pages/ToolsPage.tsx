@@ -21,6 +21,14 @@ const caseStudies = [
     description: "Built a comprehensive insights and reporting infrastructure to transform Affixdot into a data-driven event platform.",
     image: "/affix.PNG",
   },
+  {
+    id: 3,
+    slug: "perficient-logistics",
+    title: "Perficient Logistics",
+    description: "Created a seamless bookings landing page and executed targeted ad campaigns to drive customer acquisition and streamline logistics operations.",
+    image: "/perficient_logistics.jpg",
+    externalLink: "https://bookings.perficientlogisticsltd.com",
+  },
 ];
 
 const flagshipTools = [
@@ -40,8 +48,8 @@ const flagshipTools = [
   },
   {
     id: 3,
-    slug: "loan-approval-predictor",
-    title: "Loan Approval Predictor",
+    slug: "loan-approval-model",
+    title: "Loan Approval Model",
     description: "Automated lending decisions that are faster, smarter, and more accurate than manual reviews.",
     image: "/loan_approval.jpg",
   },
@@ -51,16 +59,24 @@ const flagshipTools = [
     title: "AI Marketing Plan Generator",
     description: "Generate comprehensive, data-driven marketing strategies tailored to your business goals and target audience.",
     image: "/gen-ai-strategy.webp",
-    comingSoon: true,
+    externalLink: "https://marketingplan.beamxsolutions.com",
+  },
+  {
+    id: 5,
+    slug: "stellar",
+    title: "Stellar - Business Idea Validator",
+    description: "Validate your business ideas with AI-powered analysis, market insights, and feasibility assessments before you invest.",
+    image: "/stellar_validator.jpg",
+    externalLink: "https://stellar.beamxsolutions.com",
   },
 ];
 
 const ToolsPage: React.FC = () => {
   const navigate = useNavigate();
 
-  const handleTryNow = (slug: string) => {
-    if (slug === 'marketing-plan-generator') {
-      navigate('/tools/marketing-plan-generator/waitlist');
+  const handleTryNow = (slug: string, externalLink?: string) => {
+    if (externalLink) {
+      window.open(externalLink, '_blank', 'noopener,noreferrer');
     } else {
       navigate(`/tools/${slug}`);
     }
@@ -114,12 +130,12 @@ const ToolsPage: React.FC = () => {
                   />
                 </div>
                 <div className="p-4">
-                  {tool.comingSoon ? (
-                    <div onClick={() => handleTryNow(tool.slug)} className="cursor-pointer">
+                  {tool.externalLink ? (
+                    <a href={tool.externalLink} target="_blank" rel="noopener noreferrer">
                       <h2 className="text-lg font-semibold mb-2 hover:text-primary transition-colors line-clamp-2">
                         {tool.title}
                       </h2>
-                    </div>
+                    </a>
                   ) : (
                     <NavLink to={`/tools/${tool.slug}`}>
                       <h2 className="text-lg font-semibold mb-2 hover:text-primary transition-colors line-clamp-2">
@@ -131,9 +147,9 @@ const ToolsPage: React.FC = () => {
                   <Button
                     variant="primary"
                     className="text-sm"
-                    onClick={() => handleTryNow(tool.slug)}
+                    onClick={() => handleTryNow(tool.slug, tool.externalLink)}
                   >
-                    {tool.comingSoon ? 'Coming Soon' : 'Try Now'}
+                    Try Now
                   </Button>
                 </div>
               </motion.article>
@@ -173,11 +189,20 @@ const ToolsPage: React.FC = () => {
                     </h2>
                   </NavLink>
                   <p className="text-gray-600 text-sm mb-3 line-clamp-3">{study.description}</p>
-                  <NavLink to={`/tools/${study.slug}`}>
-                    <Button variant="primary" className="text-sm">
-                      Read More
-                    </Button>
-                  </NavLink>
+                  <div className="flex gap-2">
+                    <NavLink to={`/tools/${study.slug}`}>
+                      <Button variant="primary" className="text-sm">
+                        Read More
+                      </Button>
+                    </NavLink>
+                    {study.externalLink && (
+                      <a href={study.externalLink} target="_blank" rel="noopener noreferrer">
+                        <Button variant="secondary" className="text-sm">
+                          View Site
+                        </Button>
+                      </a>
+                    )}
+                  </div>
                 </div>
               </motion.article>
             ))}

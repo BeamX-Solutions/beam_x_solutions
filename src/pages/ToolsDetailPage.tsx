@@ -108,6 +108,61 @@ const caseStudies = [
     },
     websiteUrl: "https://affixdot.com/",
   },
+  {
+    id: 3,
+    slug: "perficient-logistics",
+    title: "Perficient Logistics",
+    logo: "/perficient_logistics.jpg",
+    description: "Designed and developed a high-converting bookings landing page paired with targeted digital advertising campaigns to drive customer acquisition and streamline logistics bookings.",
+    companyDescription: "Perficient Logistics Ltd is a professional logistics and freight forwarding company providing reliable shipping, courier, and cargo services. They specialize in seamless delivery solutions for businesses and individuals, ensuring goods reach their destinations safely and on time.",
+    issue: "Perficient Logistics needed a dedicated online presence to capture booking requests and generate leads. Their existing process relied heavily on manual inquiries through phone calls and emails, leading to missed opportunities and inefficient customer onboarding. They lacked a streamlined digital booking system, had no targeted advertising strategy to reach potential customers, experienced difficulty tracking lead sources and conversion rates, and had limited online visibility in a competitive logistics market.",
+    solution: [
+      {
+        title: "Custom Bookings Landing Page",
+        description: "Designed and developed a professional, mobile-responsive landing page at bookings.perficientlogisticsltd.com with clear service offerings, instant quote request forms, and compelling calls-to-action optimized for conversions."
+      },
+      {
+        title: "Lead Capture & Management System",
+        description: "Implemented an integrated form submission system that captures customer details, service requirements, and delivery specifications, with automated email notifications to the sales team for immediate follow-up."
+      },
+      {
+        title: "Targeted Digital Advertising",
+        description: "Launched and managed paid advertising campaigns across Google Ads and social media platforms, targeting businesses and individuals seeking logistics services with geo-targeted ads and compelling ad copy."
+      },
+      {
+        title: "Conversion Rate Optimization",
+        description: "Applied UX best practices to the landing page design, including trust signals, customer testimonials, service guarantees, and streamlined booking flows to maximize visitor-to-lead conversion rates."
+      },
+      {
+        title: "Analytics & Performance Tracking",
+        description: "Set up comprehensive tracking for ad performance, landing page metrics, and conversion funnels, enabling data-driven optimization of campaigns and continuous improvement of ROI."
+      },
+      {
+        title: "Brand Consistency & Messaging",
+        description: "Ensured cohesive brand presentation across the landing page and ad creatives, establishing Perficient Logistics as a trustworthy and professional logistics partner."
+      }
+    ],
+    screenshots: [
+      "/perficient_landing_1.png",
+      "/perficient_landing_2.png",
+      "/perficient_landing_3.png"
+    ],
+    results: {
+      metrics: [
+        { metric: "Online Booking Requests", before: "0 (manual only)", after: "50+ monthly", impact: "New revenue channel" },
+        { metric: "Lead Response Time", before: "24-48 hours", after: "<2 hours", impact: "95% faster response" },
+        { metric: "Ad Click-Through Rate", before: "N/A", after: "4.2%", impact: "Above industry average" },
+        { metric: "Cost Per Lead", before: "N/A", after: "Optimized targeting", impact: "Efficient spend" },
+        { metric: "Online Visibility", before: "Minimal", after: "Significant presence", impact: "Brand awareness boost" },
+        { metric: "Conversion Rate", before: "N/A", after: "12%", impact: "High-intent traffic" }
+      ],
+      quote: {
+        text: "BeamX Solutions transformed how we acquire customers. The bookings page has become our primary lead generation tool, and the ad campaigns consistently bring in quality inquiries. We're now competing effectively in the digital space.",
+        author: "Management Team, Perficient Logistics Ltd"
+      }
+    },
+    websiteUrl: "https://bookings.perficientlogisticsltd.com",
+  },
 ];
 
 const ToolsDetailPage: React.FC = () => {
