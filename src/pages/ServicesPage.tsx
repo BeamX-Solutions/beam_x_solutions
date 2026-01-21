@@ -166,8 +166,8 @@ const ServicesPage: React.FC = () => {
         subtitle="Let's discuss how we can tailor a solution for your needs."
         primaryButtonText="Get Started"
         primaryButtonHref="/contact"
-        secondaryButtonText="Explore Our Tools"
-        secondaryButtonHref="/tools"
+        secondaryButtonText="Explore Our Products"
+        secondaryButtonHref="/products"
       />
     </>
   );

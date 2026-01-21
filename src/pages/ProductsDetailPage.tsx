@@ -112,7 +112,7 @@ const caseStudies = [
     id: 3,
     slug: "perficient-logistics",
     title: "Perficient Logistics",
-    logo: "/perficient_logistics.jpg",
+    logo: "/logo--2--2.png",
     description: "Designed and developed a high-converting bookings landing page paired with targeted digital advertising campaigns to drive customer acquisition and streamline logistics bookings.",
     companyDescription: "Perficient Logistics Ltd is a professional logistics and freight forwarding company providing reliable shipping, courier, and cargo services. They specialize in seamless delivery solutions for businesses and individuals, ensuring goods reach their destinations safely and on time.",
     issue: "Perficient Logistics needed a dedicated online presence to capture booking requests and generate leads. Their existing process relied heavily on manual inquiries through phone calls and emails, leading to missed opportunities and inefficient customer onboarding. They lacked a streamlined digital booking system, had no targeted advertising strategy to reach potential customers, experienced difficulty tracking lead sources and conversion rates, and had limited online visibility in a competitive logistics market.",
@@ -143,9 +143,9 @@ const caseStudies = [
       }
     ],
     screenshots: [
-      "/perficient_landing_1.png",
-      "/perficient_landing_2.png",
-      "/perficient_landing_3.png"
+      "/perficient-1.PNG",
+      "/perficient-2.PNG",
+      "/perficient-3.PNG"
     ],
     results: {
       metrics: [
@@ -165,7 +165,7 @@ const caseStudies = [
   },
 ];
 
-const ToolsDetailPage: React.FC = () => {
+const ProductsDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const caseStudy = caseStudies.find((study) => study.slug === slug);
 
@@ -173,10 +173,10 @@ const ToolsDetailPage: React.FC = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center">
-          <h2 className="text-2xl font-semibold mb-4">Case Study Not Found</h2>
-          <p className="text-gray-600 mb-6">The case study you're looking for does not exist.</p>
-          <NavLink to="/tools" className="text-blue-600 hover:underline">
-            Back to Tools & Case Studies
+          <h2 className="text-2xl font-semibold mb-4">Not Found</h2>
+          <p className="text-gray-600 mb-6">The page you're looking for does not exist.</p>
+          <NavLink to="/products" className="text-blue-600 hover:underline">
+            Back to Products & Success Stories
           </NavLink>
         </div>
       </div>
@@ -191,7 +191,7 @@ const ToolsDetailPage: React.FC = () => {
         <meta property="og:title" content={`BeamX Solutions | ${caseStudy.title}`} />
         <meta property="og:description" content={caseStudy.description} />
         <meta property="og:image" content={caseStudy.logo} />
-        <meta property="og:url" content={`https://beamxsolutions.com/tools/${caseStudy.slug}`} />
+        <meta property="og:url" content={`https://beamxsolutions.com/products/${caseStudy.slug}`} />
         <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
       {/* Hero Section */}
@@ -372,4 +372,4 @@ const ToolsDetailPage: React.FC = () => {
   );
 };
 
-export default ToolsDetailPage;
+export default ProductsDetailPage;

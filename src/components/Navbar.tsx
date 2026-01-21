@@ -31,7 +31,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled, hasNotification = false }) 
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
     { name: 'Services', path: '/services' },
-    { name: 'Tools', path: '/tools' },
+    { name: 'Products', path: '/products' },
     { name: 'Blog', path: 'https://blog.beamxsolutions.com/', external: true },
     { name: 'Contact Us', path: '/contact' },
   ];

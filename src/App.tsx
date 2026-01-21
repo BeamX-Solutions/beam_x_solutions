@@ -6,8 +6,8 @@ import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ServicesPage from './pages/ServicesPage';
 import ContactPage from './pages/ContactPage';
-import ToolsPage from './pages/ToolsPage';
-import ToolsDetailPage from './pages/ToolsDetailPage';
+import ProductsPage from './pages/ProductsPage';
+import ProductsDetailPage from './pages/ProductsDetailPage';
 import LoanApprovalPredictor from './pages/LoanApprovalPredictor';
 import BusinessAssessment from './pages/BusinessAssessment';
 import ManagedIntelligencePage from './pages/ManagedIntelligencePage';
@@ -82,10 +82,10 @@ function App() {
     '/': 'BeamX Solutions | Home',
     '/about': 'BeamX Solutions | About Us',
     '/services': 'BeamX Solutions | Services',
-    '/tools': 'BeamX Solutions | Tools',
-    '/tools/loan-approval-predictor': 'BeamX Solutions | Loan Approval Predictor',
-    '/tools/business-assessment': 'BeamX Solutions | Business Assessment',
-    '/tools/advanced-business-assessment': 'BeamX Solutions | Advanced Business Assessment',
+    '/products': 'BeamX Solutions | Products',
+    '/products/loan-approval-model': 'BeamX Solutions | Loan Approval Model',
+    '/products/business-assessment': 'BeamX Solutions | Business Assessment',
+    '/products/advanced-business-assessment': 'BeamX Solutions | Advanced Business Assessment',
     '/contact': 'BeamX Solutions | Contact Us',
     '/privacy-policy': 'BeamX Solutions | Privacy Policy',
     '/managed-intelligence': 'BeamX Solutions | Managed Intelligence Services',
@@ -122,12 +122,15 @@ function App() {
             <Route index element={<HomePage />} />
             <Route path="about" element={<AboutPage />} />
             <Route path="services" element={<ServicesPage />} />
-            <Route path="tools" element={<ToolsPage />} />
-            <Route path="tools/:slug" element={<ToolsDetailPage />} />
-            <Route path="tools/loan-approval-predictor" element={<LoanApprovalPredictor />} />
-            <Route path="tools/business-assessment" element={<BusinessAssessment />} />
-            <Route path="tools/advanced-business-assessment" element={<AdvancedBusinessAssessment />} />
-            <Route path="tools/marketing-plan-generator/waitlist" element={<MarketingPlanWaitlist />} />
+            <Route path="products" element={<ProductsPage />} />
+            <Route path="products/:slug" element={<ProductsDetailPage />} />
+            <Route path="products/loan-approval-model" element={<LoanApprovalPredictor />} />
+            <Route path="products/business-assessment" element={<BusinessAssessment />} />
+            <Route path="products/advanced-business-assessment" element={<AdvancedBusinessAssessment />} />
+            <Route path="products/marketing-plan-generator/waitlist" element={<MarketingPlanWaitlist />} />
+            {/* Redirects from old /tools routes to /products */}
+            <Route path="tools" element={<Navigate to="/products" replace />} />
+            <Route path="tools/*" element={<Navigate to="/products" replace />} />
             <Route path="contact" element={<ContactPage />} />
             <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
             <Route path="managed-intelligence" element={<ManagedIntelligencePage />} />
