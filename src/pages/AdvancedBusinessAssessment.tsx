@@ -394,10 +394,10 @@ const AdvancedBusinessAssessment: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>BeamX Solutions | Advanced Business Assessment</title>
+        <title>BeamX Solutions | Beacon Pro - Advanced Business Assessment</title>
         <meta
           name="description"
-          content="Evaluate your business readiness with BeamX Solutions' Advanced Business Assessment, providing enhanced insights and tailored growth strategies powered by AI."
+          content="Evaluate your business readiness with BeamX Solutions' Advanced Business Assessment, Beacon Pro, providing enhanced insights and tailored growth strategies powered by AI."
         />
       </Helmet>
       <section className="relative pt-32 pb-20 md:pt-36 md:pb-12 overflow-hidden">
@@ -409,7 +409,7 @@ const AdvancedBusinessAssessment: React.FC = () => {
             transition={{ duration: 0.6 }}
             className="max-w-3xl mx-auto text-center"
           >
-            <h1 className="text-white text-4xl md:text-5xl font-bold mb-6">Advanced Business Assessment</h1>
+            <h1 className="text-white text-4xl md:text-5xl font-bold mb-6">Beacon Pro - Advanced Business Assessment</h1>
             <p className="text-gray-100 text-lg md:text-xl mb-8">
               Evaluate your business across six key pillars with enhanced insights and tailored growth strategies powered by AI.
             </p>

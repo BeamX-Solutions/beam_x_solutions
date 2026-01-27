@@ -125,9 +125,9 @@ function App() {
             <Route path="products" element={<ProductsPage />} />
             <Route path="products/:slug" element={<ProductsDetailPage />} />
             <Route path="products/loan-approval-model" element={<LoanApprovalPredictor />} />
-            <Route path="products/business-assessment" element={<BusinessAssessment />} />
-            <Route path="products/advanced-business-assessment" element={<AdvancedBusinessAssessment />} />
-            <Route path="products/marketing-plan-generator/waitlist" element={<MarketingPlanWaitlist />} />
+            <Route path="products/beacon" element={<BusinessAssessment />} />
+            <Route path="products/beacon-pro" element={<AdvancedBusinessAssessment />} />
+            <Route path="products/luna/waitlist" element={<MarketingPlanWaitlist />} />
             {/* Redirects from old /tools routes to /products */}
             <Route path="tools" element={<Navigate to="/products" replace />} />
             <Route path="tools/*" element={<Navigate to="/products" replace />} />

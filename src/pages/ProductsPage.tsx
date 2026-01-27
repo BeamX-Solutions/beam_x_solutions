@@ -33,25 +33,25 @@ const successStories = [
 const products = [
   {
     id: 1,
-    slug: "business-assessment",
-    title: "Business Assessment",
+    slug: "beacon",
+    title: "Beacon - Business Assessment",
     description: "Evaluate your business readiness with detailed insights and tailored growth strategies.",
     image: "/web_and_workflow.jpeg",
   },
   {
     id: 2,
-    slug: "advanced-business-assessment",
-    title: "Advanced Business Assessment",
+    slug: "beacon-pro",
+    title: "Beacon Pro - Advanced Business Assessment",
     description: "Evaluate your business across six key pillars with enhanced AI-powered insights and tailored strategies.",
     image: "/ai_and_machine_learning.webp",
   },
   {
     id: 3,
-    slug: "marketing-plan-generator",
-    title: "AI Marketing Plan Generator",
+    slug: "luna",
+    title: "Luna - AI Marketing Plan Generator",
     description: "Generate comprehensive, data-driven marketing strategies tailored to your business goals and target audience.",
     image: "/gen-ai-strategy.webp",
-    externalLink: "https://marketingplan.beamxsolutions.com",
+    externalLink: "https://luna.beamxsolutions.com",
   },
   {
     id: 4,

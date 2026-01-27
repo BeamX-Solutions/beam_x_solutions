@@ -336,8 +336,8 @@ const BusinessAssessment: React.FC = () => {
     <>
       {/* SEO metadata for the page */}
       <Helmet>
-        <title>BeamX Solutions | Business Assessment</title>
-        <meta name="description" content="Evaluate your business readiness with BeamX Solutions' Business Assessment tool, providing detailed insights and tailored growth strategies." />
+        <title>BeamX Solutions | Beacon - Business Assessment</title>
+        <meta name="description" content="Evaluate your business readiness with BeamX Solutions' Business Assessment tool, Beacon, providing detailed insights and tailored growth strategies." />
       </Helmet>
       
       {/* Hero section with gradient background */}
@@ -350,7 +350,7 @@ const BusinessAssessment: React.FC = () => {
             transition={{ duration: 0.6 }}
             className="max-w-3xl mx-auto text-center"
           >
-            <h1 className="text-white text-4xl md:text-5xl font-bold mb-6">Business Assessment</h1>
+            <h1 className="text-white text-4xl md:text-5xl font-bold mb-6">Beacon - Business Assessment</h1>
             <p className="text-gray-100 text-lg md:text-xl mb-8">
               Evaluate your business readiness with detailed insights and tailored growth strategies.
             </p>
