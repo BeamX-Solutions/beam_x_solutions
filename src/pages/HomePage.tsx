@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, NavLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { BarChart3, BrainCircuit, Database, LineChart, Server } from 'lucide-react';
@@ -48,6 +48,40 @@ const HomePage: React.FC = () => {
       avatar: "/affix_rep.jpg"
     }
   ];
+
+  const featuredProducts = [
+    {
+      id: 1,
+      slug: "beacon",
+      title: "Beacon - Business Assessment",
+      description: "Evaluate your business readiness with detailed insights and tailored growth strategies.",
+      image: "/web_and_workflow.jpeg",
+    },
+    {
+      id: 3,
+      slug: "luna",
+      title: "Luna - AI Marketing Plan Generator",
+      description: "Generate comprehensive, data-driven marketing strategies tailored to your business goals and target audience.",
+      image: "/gen-ai-strategy.webp",
+      externalLink: "https://luna.beamxsolutions.com",
+    },
+    {
+      id: 4,
+      slug: "stellar",
+      title: "Stellar - Business Idea Validator",
+      description: "Validate your business ideas with AI-powered analysis, market insights, and feasibility assessments before you invest.",
+      image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&auto=format&fit=crop&q=80",
+      externalLink: "https://stellar.beamxsolutions.com",
+    },
+  ];
+
+  const handleTryNow = (slug: string, externalLink?: string) => {
+    if (externalLink) {
+      window.open(externalLink, '_blank', 'noopener,noreferrer');
+    } else {
+      navigate(`/products/${slug}`);
+    }
+  };
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -156,7 +190,61 @@ const HomePage: React.FC = () => {
       </section>
 
       <LogoScroller />
-      
+
+      {/* Featured Products Section */}
+      <section className="section bg-gray-50">
+        <div className="container-custom mx-auto px-4 sm:px-6">
+          <SectionHeader
+            title="Featured Products"
+            subtitle="Explore our cutting-edge products designed to empower your business with intelligent solutions."
+            center
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-4 sm:px-0">
+            {featuredProducts.map((product, index) => (
+              <motion.article
+                key={product.id}
+                className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+              >
+                <div className="relative h-32 overflow-hidden">
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className="w-full h-full object-cover bg-white"
+                  />
+                </div>
+                <div className="p-4">
+                  {product.externalLink ? (
+                    <a href={product.externalLink} target="_blank" rel="noopener noreferrer">
+                      <h2 className="text-lg font-semibold mb-2 hover:text-primary transition-colors line-clamp-2">
+                        {product.title}
+                      </h2>
+                    </a>
+                  ) : (
+                    <NavLink to={`/products/${product.slug}`}>
+                      <h2 className="text-lg font-semibold mb-2 hover:text-primary transition-colors line-clamp-2">
+                        {product.title}
+                      </h2>
+                    </NavLink>
+                  )}
+                  <p className="text-gray-600 text-sm mb-3 line-clamp-3">{product.description}</p>
+                  <Button
+                    variant="primary"
+                    className="text-sm"
+                    onClick={() => handleTryNow(product.slug, product.externalLink)}
+                  >
+                    Try Now
+                  </Button>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Why Choose Us Section */}
       <section className="section bg-white">
         <div className="container-custom">
