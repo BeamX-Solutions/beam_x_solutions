@@ -15,6 +15,7 @@ import MarketingPlanWaitlist from './pages/MarketingPlanWaitlist';
 import ScrollToTop from './components/ScrollToTop';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import AdvancedBusinessAssessment from './pages/AdvancedBusinessAssessment';
+import BeaconLandingPage from './pages/BeaconLandingPage';
 
 // Component to handle external redirects
 const ExternalRedirect: React.FC<{ url: string }> = ({ url }) => {
@@ -89,6 +90,7 @@ function App() {
     '/contact': 'BeamX Solutions | Contact Us',
     '/privacy-policy': 'BeamX Solutions | Privacy Policy',
     '/managed-intelligence': 'BeamX Solutions | Managed Intelligence Services',
+    '/beacon-landing': 'Beacon - Business Assessment Tools | BeamX Solutions',
   };
 
   useEffect(() => {
@@ -128,6 +130,8 @@ function App() {
             <Route path="products/beacon" element={<BusinessAssessment />} />
             <Route path="products/beacon-pro" element={<AdvancedBusinessAssessment />} />
             <Route path="products/luna/waitlist" element={<MarketingPlanWaitlist />} />
+            {/* Landing page for subdomain (preview locally) */}
+            <Route path="beacon-landing" element={<BeaconLandingPage />} />
             {/* Redirects from old /tools routes to /products */}
             <Route path="tools" element={<Navigate to="/products" replace />} />
             <Route path="tools/*" element={<Navigate to="/products" replace />} />

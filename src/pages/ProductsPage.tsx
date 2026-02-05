@@ -37,6 +37,7 @@ const products = [
     title: "Beacon - Business Assessment",
     description: "Evaluate your business readiness with detailed insights and tailored growth strategies.",
     image: "/web_and_workflow.jpeg",
+    landingLink: "/beacon-landing",
   },
   {
     id: 2,
@@ -44,6 +45,7 @@ const products = [
     title: "Beacon Pro - Advanced Business Assessment",
     description: "Evaluate your business across six key pillars with enhanced AI-powered insights and tailored strategies.",
     image: "/ai_and_machine_learning.webp",
+    landingLink: "/beacon-landing",
   },
   {
     id: 3,
@@ -76,9 +78,11 @@ const models = [
 const ProductsPage: React.FC = () => {
   const navigate = useNavigate();
 
-  const handleTryNow = (slug: string, externalLink?: string) => {
+  const handleTryNow = (slug: string, externalLink?: string, landingLink?: string) => {
     if (externalLink) {
       window.open(externalLink, '_blank', 'noopener,noreferrer');
+    } else if (landingLink) {
+      navigate(landingLink);
     } else {
       navigate(`/products/${slug}`);
     }
@@ -140,7 +144,7 @@ const ProductsPage: React.FC = () => {
                       </h2>
                     </a>
                   ) : (
-                    <NavLink to={`/products/${product.slug}`}>
+                    <NavLink to={product.landingLink || `/products/${product.slug}`}>
                       <h2 className="text-lg font-semibold mb-2 hover:text-primary transition-colors line-clamp-2">
                         {product.title}
                       </h2>
@@ -150,7 +154,7 @@ const ProductsPage: React.FC = () => {
                   <Button
                     variant="primary"
                     className="text-sm"
-                    onClick={() => handleTryNow(product.slug, product.externalLink)}
+                    onClick={() => handleTryNow(product.slug, product.externalLink, product.landingLink)}
                   >
                     Try Now
                   </Button>
