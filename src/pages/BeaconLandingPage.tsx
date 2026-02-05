@@ -15,13 +15,13 @@ const BeaconLandingPage: React.FC = () => {
       </Helmet>
 
       {/* Hero Section - Clean & Bold */}
-      <section className="relative min-h-[90vh] flex items-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 overflow-hidden">
+      <section className="relative min-h-[90vh] flex items-center bg-gradient-primary overflow-hidden">
         {/* Subtle grid pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:60px_60px]" />
 
         {/* Gradient orbs */}
-        <div className="absolute top-20 right-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 left-20 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl" />
+        <div className="absolute top-20 right-20 w-96 h-96 bg-white/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 left-20 w-72 h-72 bg-white/10 rounded-full blur-3xl" />
 
         <div className="container-custom relative z-10 py-20">
           <motion.div
@@ -33,7 +33,7 @@ const BeaconLandingPage: React.FC = () => {
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
               Know Your Business.
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
+              <span className="text-secondary">
                 Grow Your Business.
               </span>
             </h1>
@@ -360,7 +360,7 @@ const BeaconLandingPage: React.FC = () => {
 
             {/* Beacon Pro */}
             <motion.div
-              className="bg-gradient-to-br from-slate-900 to-blue-900 rounded-3xl p-8 md:p-10 shadow-xl relative overflow-hidden"
+              className="bg-gradient-primary rounded-3xl p-8 md:p-10 shadow-xl relative overflow-hidden"
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -467,8 +467,8 @@ const BeaconLandingPage: React.FC = () => {
       </section>
 
       {/* Final CTA - Clean & Bold */}
-      <section className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px]" />
+      <section className="py-24 bg-gradient-primary relative overflow-hidden">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:60px_60px]" />
 
         <div className="container-custom relative z-10">
           <motion.div
