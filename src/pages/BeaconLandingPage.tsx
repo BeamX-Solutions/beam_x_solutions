@@ -109,7 +109,7 @@ const BeaconLandingPage: React.FC = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <div className="text-6xl font-bold text-slate-200 mb-4">{item.step}</div>
+                <div className="text-6xl font-bold text-primary/30 mb-4">{item.step}</div>
                 <h3 className="text-xl font-semibold text-slate-900 mb-2">{item.title}</h3>
                 <p className="text-slate-600">{item.description}</p>
               </motion.div>
@@ -330,15 +330,15 @@ const BeaconLandingPage: React.FC = () => {
               </div>
 
               <p className="text-slate-600 mb-8 text-lg">
-                Perfect for quick insights into your business health.
+                AI-powered insights with a professional PDF report. Perfect to get started.
               </p>
 
               <ul className="space-y-4 mb-8">
                 {[
                   "4 key performance areas",
                   "15 strategic questions",
-                  "Instant score & insights",
-                  "Email report delivery",
+                  "AI-powered insights & PDF report",
+                  "Instant score breakdown",
                   "5-7 minutes to complete"
                 ].map((feature, i) => (
                   <li key={i} className="flex items-center gap-3 text-slate-700">
@@ -365,29 +365,24 @@ const BeaconLandingPage: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              {/* Popular badge */}
-              <div className="absolute top-6 right-6">
-                <span className="bg-gradient-to-r from-amber-400 to-orange-400 text-slate-900 px-4 py-1.5 rounded-full text-sm font-bold">
-                  Most Popular
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-2xl font-bold text-white">Beacon Pro</h3>
+                <span className="bg-white/20 text-white px-4 py-1.5 rounded-full text-sm font-semibold">
+                  Advanced
                 </span>
               </div>
 
-              <div className="flex items-center gap-3 mb-6">
-                <h3 className="text-2xl font-bold text-white">Beacon Pro</h3>
-              </div>
-
               <p className="text-white/70 mb-8 text-lg">
-                Comprehensive analysis with AI-powered insights & PDF report.
+                Go deeper with expanded analysis, benchmarking, and priority action plans.
               </p>
 
               <ul className="space-y-4 mb-8">
                 {[
                   "6 business pillars analyzed",
                   "40+ in-depth questions",
-                  "AI-powered recommendations",
-                  "Detailed PDF report",
                   "Competitive benchmarking",
                   "Priority action plan",
+                  "Extended PDF report",
                   "10-15 minutes to complete"
                 ].map((feature, i) => (
                   <li key={i} className="flex items-center gap-3 text-white/90">
@@ -448,7 +443,7 @@ const BeaconLandingPage: React.FC = () => {
               <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
             </svg>
             <blockquote className="text-2xl md:text-3xl text-slate-700 font-medium mb-8 leading-relaxed">
-              "In just 5 minutes, I got more clarity on my business than months of guessing.
+              "In just 5 minutes, I got more clarity on my business than I expected.
               The recommendations were spot-on."
             </blockquote>
             <div className="flex items-center justify-center gap-4">
