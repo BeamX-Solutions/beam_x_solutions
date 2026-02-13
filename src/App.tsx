@@ -87,10 +87,10 @@ function App() {
     '/products/loan-approval-model': 'BeamX Solutions | Loan Approval Model',
     '/products/business-assessment': 'BeamX Solutions | Business Assessment',
     '/products/advanced-business-assessment': 'BeamX Solutions | Advanced Business Assessment',
+    '/products/beacon-overview': 'Beacon - Business Assessment Tools | BeamX Solutions',
     '/contact': 'BeamX Solutions | Contact Us',
     '/privacy-policy': 'BeamX Solutions | Privacy Policy',
     '/managed-intelligence': 'BeamX Solutions | Managed Intelligence Services',
-    '/beacon-landing': 'Beacon - Business Assessment Tools | BeamX Solutions',
   };
 
   useEffect(() => {
@@ -130,8 +130,7 @@ function App() {
             <Route path="products/beacon" element={<BusinessAssessment />} />
             <Route path="products/beacon-pro" element={<AdvancedBusinessAssessment />} />
             <Route path="products/luna/waitlist" element={<MarketingPlanWaitlist />} />
-            {/* Landing page for subdomain (preview locally) */}
-            <Route path="beacon-landing" element={<BeaconLandingPage />} />
+            <Route path="products/beacon-overview" element={<BeaconLandingPage />} />
             {/* Redirects from old /tools routes to /products */}
             <Route path="tools" element={<Navigate to="/products" replace />} />
             <Route path="tools/*" element={<Navigate to="/products" replace />} />

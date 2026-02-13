@@ -56,7 +56,7 @@ const HomePage: React.FC = () => {
       title: "Beacon - Business Assessment",
       description: "Evaluate your business readiness with detailed insights and tailored growth strategies.",
       image: "/beacon-banner.png",
-      landingLink: "/beacon-landing",
+      landingLink: "/products/beacon-overview",
     },
     {
       id: 3,
