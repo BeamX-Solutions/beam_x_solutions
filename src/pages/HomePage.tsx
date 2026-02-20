@@ -2,13 +2,15 @@ import React from 'react';
 import { useLocation, useNavigate, NavLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
-import { BarChart3, BrainCircuit, Database, LineChart, Server } from 'lucide-react';
+import { BarChart3, BrainCircuit, Database, LineChart, Server, Clock, User } from 'lucide-react';
 import Button from '../components/Button';
 import SectionHeader from '../components/SectionHeader';
 import TestimonialCard from '../components/TestimonialCard';
 import CTASection from '../components/CTASection';
 import LogoScroller from '../components/LogoScroller';
 import NotificationBanner from '../components/NotificationBanner';
+import SubscribeButton from '../components/SubscribeButton';
+import { blogPosts } from '../data/blogPosts';
 
 const HomePage: React.FC = () => {
   const [currentTestimonial, setCurrentTestimonial] = React.useState(0);
@@ -347,6 +349,85 @@ const HomePage: React.FC = () => {
         </div>
       </section>
       
+      {/* Blog Section */}
+      <section className="section bg-white">
+        <div className="container-custom">
+          <SectionHeader
+            title="From Our Blog"
+            subtitle="Insights, guides, and thought leadership from the BeamX team to help you make smarter data-driven decisions."
+            center
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...blogPosts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 3).map((post, index) => (
+              <motion.a
+                key={post.id}
+                href={`https://blog.beamxsolutions.com/${post.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden group"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <span className="absolute top-3 left-3 bg-primary text-white text-xs font-medium px-3 py-1 rounded-full">
+                    {post.category}
+                  </span>
+                </div>
+                <div className="p-5">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                    {post.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">{post.excerpt}</p>
+                  <div className="flex items-center justify-between text-xs text-gray-500">
+                    <div className="flex items-center gap-1">
+                      <User className="h-3.5 w-3.5" />
+                      <span>{post.author}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Clock className="h-3.5 w-3.5" />
+                      <span>{post.readTime}</span>
+                    </div>
+                  </div>
+                </div>
+              </motion.a>
+            ))}
+          </div>
+
+          <div className="text-center mt-10">
+            <Button href="https://blog.beamxsolutions.com/" variant="outline" icon>
+              View All Posts
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter Section */}
+      <section className="section bg-gray-50">
+        <div className="container-custom">
+          <SectionHeader
+            title="Stay in the Loop"
+            subtitle="Subscribe to our newsletter for the latest insights on data analytics, AI, and business intelligence delivered straight to your inbox."
+            center
+          />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <SubscribeButton />
+          </motion.div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <CTASection
         title="Ready to See What’s Possible?"

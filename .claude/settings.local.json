@@ -8,7 +8,8 @@
       "Bash(npm run build:*)",
       "Bash(git push:*)",
       "Bash(git checkout:*)",
-      "WebFetch(domain:convogo.com)"
+      "WebFetch(domain:convogo.com)",
+      "Bash(npx tsc:*)"
     ]
   }
 }
