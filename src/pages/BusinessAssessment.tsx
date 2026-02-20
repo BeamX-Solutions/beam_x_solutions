@@ -205,6 +205,54 @@ const BusinessAssessment: React.FC = () => {
   const [formErrors, setFormErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   const [emailConsent, setEmailConsent] = useState(false);
   const [shareMessage, setShareMessage] = useState('');
+  const [pdfLoading, setPdfLoading] = useState(false);
+  const [emailLoading, setEmailLoading] = useState(false);
+
+  const handleDownloadPDF = async () => {
+    if (!result) return;
+    setPdfLoading(true);
+    try {
+      const response = await fetch('https://beamx-scorecard.onrender.com/download-pdf', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ result, formData }),
+        signal: AbortSignal.timeout(60000),
+      });
+      if (!response.ok) throw new Error('PDF generation failed');
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Beacon_Assessment_${formData.businessName.replace(/\s+/g, '_')}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      alert('PDF download failed. Your report was also sent to your email automatically.');
+    } finally {
+      setPdfLoading(false);
+    }
+  };
+
+  const handleEmailResults = async () => {
+    if (!result) return;
+    setEmailLoading(true);
+    try {
+      const response = await fetch('https://beamx-scorecard.onrender.com/email-results', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: formData.email, result, formData }),
+        signal: AbortSignal.timeout(30000),
+      });
+      if (!response.ok) throw new Error('Email failed');
+      setResult(prev => prev ? { ...prev, email_sent: true } : prev);
+    } catch (err) {
+      alert('Failed to resend email. Please try again.');
+    } finally {
+      setEmailLoading(false);
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -593,29 +641,47 @@ const BusinessAssessment: React.FC = () => {
                     </div>
                   )}
 
-                  {/* Sharing */}
-                  <div className="bg-purple-50 border border-purple-200 rounded-lg p-6">
-                    <h3 className="text-lg font-bold text-purple-800 mb-2 flex items-center gap-2">
-                      <ShareIcon /> Share Your Results
-                    </h3>
-                    <p className="text-sm text-purple-700 mb-4">Show others you're taking your business growth seriously.</p>
-                    {shareMessage && (
-                      <div className="mb-4 p-3 bg-green-100 text-green-800 rounded-md text-sm">{shareMessage}</div>
-                    )}
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                      <button onClick={() => handleShare('x')} className="flex items-center justify-center gap-2 px-4 py-2 bg-black hover:bg-gray-800 text-white rounded-md text-sm transition-colors">
-                        <XIcon /> X
+                  {/* Take Action */}
+                  <div className="text-center py-4">
+                    <h3 className="text-xl font-bold text-gray-800 mb-6">Take Action</h3>
+                    <div className="flex flex-wrap justify-center gap-4">
+                      {/* Download PDF */}
+                      <button
+                        onClick={handleDownloadPDF}
+                        disabled={pdfLoading}
+                        className="flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white rounded-md text-sm font-semibold transition-colors"
+                      >
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                        {pdfLoading ? 'Generating...' : 'Download PDF Report'}
                       </button>
-                      <button onClick={() => handleShare('linkedin')} className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white rounded-md text-sm transition-colors">
-                        <LinkedInIcon /> LinkedIn
+
+                      {/* Email Me Results */}
+                      <button
+                        onClick={handleEmailResults}
+                        disabled={emailLoading || result.email_sent}
+                        className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-md text-sm font-semibold transition-colors"
+                      >
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M3 4a2 2 0 00-2 2v1.161l8.441 4.221a1.25 1.25 0 001.118 0L19 7.162V6a2 2 0 00-2-2H3z" />
+                          <path d="M19 8.839l-7.77 3.885a2.75 2.75 0 01-2.46 0L1 8.839V14a2 2 0 002 2h14a2 2 0 002-2V8.839z" />
+                        </svg>
+                        {emailLoading ? 'Sending...' : result.email_sent ? 'Email Sent ✓' : 'Email Me Results'}
                       </button>
-                      <button onClick={() => handleShare('facebook')} className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm transition-colors">
-                        <FacebookIcon /> Facebook
-                      </button>
-                      <button onClick={() => handleShare('instagram')} className="flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white rounded-md text-sm transition-all">
-                        <InstagramIcon /> Instagram
+
+                      {/* Share on X */}
+                      <button
+                        onClick={() => handleShare('x')}
+                        className="flex items-center gap-2 px-6 py-3 bg-gray-900 hover:bg-black text-white rounded-md text-sm font-semibold transition-colors"
+                      >
+                        <XIcon />
+                        Share on X
                       </button>
                     </div>
+                    {shareMessage && (
+                      <p className="mt-4 text-sm text-green-700">{shareMessage}</p>
+                    )}
                   </div>
                 </div>
               )}
