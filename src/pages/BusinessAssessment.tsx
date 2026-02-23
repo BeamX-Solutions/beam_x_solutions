@@ -195,6 +195,7 @@ const BusinessAssessment: React.FC = () => {
   const [modalEmail, setModalEmail] = useState('');
   const [modalError, setModalError] = useState('');
   const [emailSuccess, setEmailSuccess] = useState(false);
+  const [modalSuccess, setModalSuccess] = useState(false);
 
   const handleDownloadPDF = async () => {
     if (!result) return;
@@ -250,24 +251,32 @@ const BusinessAssessment: React.FC = () => {
         throw new Error(data?.detail || data?.message || 'Email failed');
       }
 
-      // Success
-      setShowEmailModal(false);
-      setModalEmail('');
-      setModalError('');
-      setEmailSuccess(true);
+      // Success — show tick in modal first, then close after 2s
+      setModalSuccess(true);
       setResult(prev => prev ? { ...prev, email_sent: true } : prev);
-      setTimeout(() => setEmailSuccess(false), 5000);
+      setTimeout(() => {
+        setShowEmailModal(false);
+        setModalSuccess(false);
+        setModalEmail('');
+        setModalError('');
+        setEmailSuccess(true);
+        setTimeout(() => setEmailSuccess(false), 6000);
+      }, 2000);
     } catch (err) {
       const e = err as Error;
       if (e.name === 'TimeoutError') {
         // The server likely sent the email — it just took too long to respond.
         // Treat as success rather than showing a false error.
-        setShowEmailModal(false);
-        setModalEmail('');
-        setModalError('');
-        setEmailSuccess(true);
+        setModalSuccess(true);
         setResult(prev => prev ? { ...prev, email_sent: true } : prev);
-        setTimeout(() => setEmailSuccess(false), 5000);
+        setTimeout(() => {
+          setShowEmailModal(false);
+          setModalSuccess(false);
+          setModalEmail('');
+          setModalError('');
+          setEmailSuccess(true);
+          setTimeout(() => setEmailSuccess(false), 6000);
+        }, 2000);
       } else {
         setModalError('Failed to send. Please try again.');
       }
@@ -556,38 +565,56 @@ const BusinessAssessment: React.FC = () => {
               {showEmailModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4">
                   <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
-                    <h3 className="text-lg font-bold text-gray-800 mb-1">Email PDF Report</h3>
-                    <p className="text-sm text-gray-500 mb-4">Enter the email address you'd like the report sent to.</p>
-                    <input
-                      type="email"
-                      value={modalEmail}
-                      onChange={e => { setModalEmail(e.target.value); setModalError(''); }}
-                      placeholder="recipient@email.com"
-                      className="block w-full border border-gray-300 rounded-md p-3 text-sm mb-2 focus:outline-none focus:border-[#0066cc]"
-                    />
-                    {modalError && <p className="text-red-500 text-xs mb-3">{modalError}</p>}
-                    {emailLoading && (
-                      <p className="text-xs text-gray-500 mb-3">
-                        Sending your report... This may take up to 60 seconds while we generate your PDF.
-                      </p>
+                    {modalSuccess ? (
+                      /* ── Success state inside modal ── */
+                      <div className="flex flex-col items-center justify-center py-4 text-center">
+                        <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: '#e6f4ea' }}>
+                          <svg className="w-9 h-9" fill="none" viewBox="0 0 24 24" stroke="#34a853" strokeWidth={2.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                        <h3 className="text-lg font-bold text-gray-800 mb-1">Report Sent!</h3>
+                        <p className="text-sm text-gray-500">Your PDF report is on its way to</p>
+                        <p className="text-sm font-semibold text-gray-700 mt-1">{modalEmail}</p>
+                        <p className="text-xs text-gray-400 mt-3">This window will close automatically…</p>
+                      </div>
+                    ) : (
+                      /* ── Default input state ── */
+                      <>
+                        <h3 className="text-lg font-bold text-gray-800 mb-1">Email PDF Report</h3>
+                        <p className="text-sm text-gray-500 mb-4">Enter the email address you'd like the report sent to.</p>
+                        <input
+                          type="email"
+                          value={modalEmail}
+                          onChange={e => { setModalEmail(e.target.value); setModalError(''); }}
+                          placeholder="recipient@email.com"
+                          className="block w-full border border-gray-300 rounded-md p-3 text-sm mb-2 focus:outline-none focus:border-[#0066cc]"
+                        />
+                        {modalError && <p className="text-red-500 text-xs mb-3">{modalError}</p>}
+                        {emailLoading && (
+                          <p className="text-xs text-gray-500 mb-3">
+                            Sending your report… This may take up to 60 seconds while we generate your PDF.
+                          </p>
+                        )}
+                        <div className="flex gap-3 mt-4">
+                          <button
+                            onClick={() => { setShowEmailModal(false); setModalEmail(''); setModalError(''); }}
+                            disabled={emailLoading}
+                            className="flex-1 px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            onClick={handleEmailResults}
+                            disabled={emailLoading}
+                            className="flex-1 px-4 py-2 rounded-md text-sm font-semibold text-white transition-colors disabled:opacity-50"
+                            style={{ backgroundColor: '#0066cc' }}
+                          >
+                            {emailLoading ? 'Sending…' : 'Send Report'}
+                          </button>
+                        </div>
+                      </>
                     )}
-                    <div className="flex gap-3 mt-4">
-                      <button
-                        onClick={() => { setShowEmailModal(false); setModalEmail(''); setModalError(''); }}
-                        disabled={emailLoading}
-                        className="flex-1 px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        onClick={handleEmailResults}
-                        disabled={emailLoading}
-                        className="flex-1 px-4 py-2 rounded-md text-sm font-semibold text-white transition-colors disabled:opacity-50"
-                        style={{ backgroundColor: '#0066cc' }}
-                      >
-                        {emailLoading ? 'Sending...' : 'Send Report'}
-                      </button>
-                    </div>
                   </div>
                 </div>
               )}
@@ -606,15 +633,18 @@ const BusinessAssessment: React.FC = () => {
                     </p>
                   </div>
 
-                  {/* Email success toast */}
+                  {/* Email success banner */}
                   {emailSuccess && (
-                    <div className="p-4 rounded-md flex items-start gap-3" style={{ backgroundColor: '#e6f4ea', borderLeft: '4px solid #34a853' }}>
-                      <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="#34a853" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
-                      <p className="text-sm" style={{ color: '#1e7e34' }}>
-                        <strong>Report sent!</strong> Check your inbox — your PDF report is on its way.
-                      </p>
+                    <div className="p-4 rounded-lg flex items-center gap-4" style={{ backgroundColor: '#e6f4ea', border: '1.5px solid #34a853' }}>
+                      <div className="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center" style={{ backgroundColor: '#34a853' }}>
+                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold" style={{ color: '#1e7e34' }}>Report sent successfully!</p>
+                        <p className="text-xs mt-0.5" style={{ color: '#2d6a4f' }}>Check your inbox — your PDF report is on its way.</p>
+                      </div>
                     </div>
                   )}
 
