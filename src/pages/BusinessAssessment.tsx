@@ -168,6 +168,10 @@ const CategoryCard: React.FC<{ name: string; cat: CategoryResult; icon: string }
 // ─────────────────────────────────────────────
 
 const BusinessAssessment: React.FC = () => {
+  React.useEffect(() => {
+    fetch('/api/wake-scorecard-backend').catch(() => {});
+  }, []);
+
   const [formData, setFormData] = useState<FormData>({
     fullName: '', email: '', businessName: '', industry: '', yearsInBusiness: '',
     cashFlow: '', profitMargin: '', cashRunway: '', paymentSpeed: '',
@@ -303,8 +307,8 @@ const BusinessAssessment: React.FC = () => {
       }, 100);
     } catch (err) {
       const e = err as Error;
-      setError(e.name === 'TimeoutError'
-        ? 'Request timed out. The server may be starting up. Please try again in a moment.'
+      setError(e.name === 'TimeoutError' || e.message === 'Failed to fetch'
+        ? 'The server is starting up. Please wait a moment and try again.'
         : e.message || 'Request failed. Please check your connection.');
     } finally {
       setLoading(false);
