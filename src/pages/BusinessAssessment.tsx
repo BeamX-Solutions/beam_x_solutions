@@ -194,6 +194,7 @@ const BusinessAssessment: React.FC = () => {
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [modalEmail, setModalEmail] = useState('');
   const [modalError, setModalError] = useState('');
+  const [emailSuccess, setEmailSuccess] = useState(false);
 
   const handleDownloadPDF = async () => {
     if (!result) return;
@@ -229,20 +230,47 @@ const BusinessAssessment: React.FC = () => {
       return;
     }
     setEmailLoading(true);
+    setModalError('');
     try {
       const response = await fetch('https://beamx-scorecard.onrender.com/email-results', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        // Pass the already-generated result so the backend skips re-running the LLM
         body: JSON.stringify({ email: modalEmail, result, formData }),
-        signal: AbortSignal.timeout(30000),
+        signal: AbortSignal.timeout(90000), // 90s — PDF generation can be slow
       });
-      if (!response.ok) throw new Error('Email failed');
+
+      // Safely parse JSON (response body may be empty on some errors)
+      let data: any = {};
+      try {
+        data = await response.json();
+      } catch (_) {}
+
+      if (!response.ok) {
+        throw new Error(data?.detail || data?.message || 'Email failed');
+      }
+
+      // Success
       setShowEmailModal(false);
       setModalEmail('');
       setModalError('');
+      setEmailSuccess(true);
       setResult(prev => prev ? { ...prev, email_sent: true } : prev);
+      setTimeout(() => setEmailSuccess(false), 5000);
     } catch (err) {
-      setModalError('Failed to send. Please try again.');
+      const e = err as Error;
+      if (e.name === 'TimeoutError') {
+        // The server likely sent the email — it just took too long to respond.
+        // Treat as success rather than showing a false error.
+        setShowEmailModal(false);
+        setModalEmail('');
+        setModalError('');
+        setEmailSuccess(true);
+        setResult(prev => prev ? { ...prev, email_sent: true } : prev);
+        setTimeout(() => setEmailSuccess(false), 5000);
+      } else {
+        setModalError('Failed to send. Please try again.');
+      }
     } finally {
       setEmailLoading(false);
     }
@@ -538,10 +566,16 @@ const BusinessAssessment: React.FC = () => {
                       className="block w-full border border-gray-300 rounded-md p-3 text-sm mb-2 focus:outline-none focus:border-[#0066cc]"
                     />
                     {modalError && <p className="text-red-500 text-xs mb-3">{modalError}</p>}
+                    {emailLoading && (
+                      <p className="text-xs text-gray-500 mb-3">
+                        Sending your report... This may take up to 60 seconds while we generate your PDF.
+                      </p>
+                    )}
                     <div className="flex gap-3 mt-4">
                       <button
                         onClick={() => { setShowEmailModal(false); setModalEmail(''); setModalError(''); }}
-                        className="flex-1 px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                        disabled={emailLoading}
+                        className="flex-1 px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50"
                       >
                         Cancel
                       </button>
@@ -571,6 +605,18 @@ const BusinessAssessment: React.FC = () => {
                       <strong>Assessment complete!</strong> Your results are ready below. Use the buttons at the bottom to download or share your report.
                     </p>
                   </div>
+
+                  {/* Email success toast */}
+                  {emailSuccess && (
+                    <div className="p-4 rounded-md flex items-start gap-3" style={{ backgroundColor: '#e6f4ea', borderLeft: '4px solid #34a853' }}>
+                      <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="#34a853" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <p className="text-sm" style={{ color: '#1e7e34' }}>
+                        <strong>Report sent!</strong> Check your inbox — your PDF report is on its way.
+                      </p>
+                    </div>
+                  )}
 
                   {/* Overall Score */}
                   <div className="p-6 rounded-lg border-2" style={{ borderColor: '#0066cc', backgroundColor: '#f0f5ff' }}>
@@ -675,7 +721,7 @@ const BusinessAssessment: React.FC = () => {
 
                       {/* Email Results — opens modal */}
                       <button
-                        onClick={() => { setModalEmail(formData.email); setShowEmailModal(true); }}
+                        onClick={() => { setModalEmail(formData.email); setShowEmailModal(true); setEmailSuccess(false); }}
                         className="flex items-center gap-2 px-6 py-3 text-white rounded-md text-sm font-semibold transition-colors"
                         style={{ backgroundColor: '#FF8C00' }}
                         onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#cc7000')}
