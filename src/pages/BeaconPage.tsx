@@ -335,8 +335,8 @@ const BeaconLandingPage: React.FC = () => {
 
               <ul className="space-y-4 mb-8">
                 {[
-                  "4 key performance areas",
-                  "15 strategic questions",
+                  "5 key performance areas",
+                  "20 strategic questions",
                   "AI-powered insights & PDF report",
                   "Instant score breakdown",
                   "5-7 minutes to complete"
@@ -349,7 +349,7 @@ const BeaconLandingPage: React.FC = () => {
               </ul>
 
               <motion.a
-                href="/products/beacon"
+                href="/products/beacon-assessment"
                 className="block w-full text-center bg-slate-900 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-slate-800 transition-colors"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -393,7 +393,7 @@ const BeaconLandingPage: React.FC = () => {
               </ul>
 
               <motion.a
-                href="/products/beacon-pro"
+                href="/products/beacon-pro-assessment"
                 className="block w-full text-center bg-white text-slate-900 px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/90 transition-colors"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}

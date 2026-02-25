@@ -295,7 +295,7 @@ const BusinessAssessment: React.FC = () => {
 
   const handleShare = () => {
     const msg = `I just completed the Beacon Business Assessment by BeamX Solutions! 🚀`;
-    const url = 'https://beamxsolutions.com/tools/business-assessment';
+    const url = 'https://beamxsolutions.com/products/beacon-assessment';
     window.open(
       `https://twitter.com/intent/tweet?text=${encodeURIComponent(msg)}&url=${encodeURIComponent(url)}&hashtags=BeaconAssessment,BeamXSolutions`,
       '_blank', 'width=600,height=400'

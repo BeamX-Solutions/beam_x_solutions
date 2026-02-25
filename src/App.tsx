@@ -9,13 +9,13 @@ import ContactPage from './pages/ContactPage';
 import ProductsPage from './pages/ProductsPage';
 import ProductsDetailPage from './pages/ProductsDetailPage';
 import LoanApprovalPredictor from './pages/LoanApprovalPredictor';
-import BusinessAssessment from './pages/BusinessAssessment';
+import BeaconAssessment from './pages/BeaconAssessment';
 import ManagedIntelligencePage from './pages/ManagedIntelligencePage';
 import MarketingPlanWaitlist from './pages/MarketingPlanWaitlist';
 import ScrollToTop from './components/ScrollToTop';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
-import AdvancedBusinessAssessment from './pages/AdvancedBusinessAssessment';
-import BeaconLandingPage from './pages/BeaconLandingPage';
+import BeaconProAssessment from './pages/BeaconProAssessment';
+import BeaconPage from './pages/BeaconPage';
 
 // Component to handle external redirects
 const ExternalRedirect: React.FC<{ url: string }> = ({ url }) => {
@@ -85,9 +85,9 @@ function App() {
     '/services': 'BeamX Solutions | Services',
     '/products': 'BeamX Solutions | Products',
     '/products/loan-approval-model': 'BeamX Solutions | Loan Approval Model',
-    '/products/business-assessment': 'BeamX Solutions | Business Assessment',
-    '/products/advanced-business-assessment': 'BeamX Solutions | Advanced Business Assessment',
-    '/products/beacon-overview': 'Beacon - Business Assessment Tools | BeamX Solutions',
+    '/products/beacon': 'Beacon - Business Assessment Tools | BeamX Solutions',
+    '/products/beacon-assessment': 'BeamX Solutions | Beacon - Business Assessment',
+    '/products/beacon-pro-assessment': 'BeamX Solutions | Beacon Pro - Advanced Business Assessment',
     '/contact': 'BeamX Solutions | Contact Us',
     '/privacy-policy': 'BeamX Solutions | Privacy Policy',
     '/managed-intelligence': 'BeamX Solutions | Managed Intelligence Services',
@@ -127,10 +127,10 @@ function App() {
             <Route path="products" element={<ProductsPage />} />
             <Route path="products/:slug" element={<ProductsDetailPage />} />
             <Route path="products/loan-approval-model" element={<LoanApprovalPredictor />} />
-            <Route path="products/beacon" element={<BusinessAssessment />} />
-            <Route path="products/beacon-pro" element={<AdvancedBusinessAssessment />} />
+            <Route path="products/beacon" element={<BeaconPage />} />
+            <Route path="products/beacon-assessment" element={<BeaconAssessment />} />
+            <Route path="products/beacon-pro-assessment" element={<BeaconProAssessment />} />
             <Route path="products/luna/waitlist" element={<MarketingPlanWaitlist />} />
-            <Route path="products/beacon-overview" element={<BeaconLandingPage />} />
             {/* Redirects from old /tools routes to /products */}
             <Route path="tools" element={<Navigate to="/products" replace />} />
             <Route path="tools/*" element={<Navigate to="/products" replace />} />
