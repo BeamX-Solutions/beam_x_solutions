@@ -373,16 +373,16 @@ const BeaconLandingPage: React.FC = () => {
               </div>
 
               <p className="text-white/70 mb-8 text-lg">
-                Go deeper with expanded analysis, benchmarking, and priority action plans.
+                Deep diagnostic with an AI-written advisory personalised to your business, industry, and challenges.
               </p>
 
               <ul className="space-y-4 mb-8">
                 {[
-                  "6 business pillars analyzed",
-                  "40+ in-depth questions",
-                  "Competitive benchmarking",
-                  "Priority action plan",
-                  "Extended PDF report",
+                  "5 business dimensions analyzed",
+                  "25 diagnostic questions",
+                  "AI-written personalised advisory",
+                  "Instant score breakdown",
+                  "Downloadable PDF report",
                   "10-15 minutes to complete"
                 ].map((feature, i) => (
                   <li key={i} className="flex items-center gap-3 text-white/90">
