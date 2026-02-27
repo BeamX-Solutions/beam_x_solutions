@@ -188,7 +188,7 @@ const BeaconProAssessment: React.FC = () => {
     if (!fullResult) return;
     setPdfLoading(true);
     try {
-      const res = await fetch('https://beamx-scorecard-pro.onrender.com/download-pdf', {
+      const res = await fetch('https://beamx-scorecard-v2.onrender.com/download-pdf', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ result: fullResult, formData }),
         signal: AbortSignal.timeout(60000),
@@ -211,7 +211,7 @@ const BeaconProAssessment: React.FC = () => {
     }
     setEmailLoading(true); setModalError('');
     try {
-      const res = await fetch('https://beamx-scorecard-pro.onrender.com/email-results', {
+      const res = await fetch('https://beamx-scorecard-v2.onrender.com/email-results', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: modalEmail, result: fullResult, formData }),
         signal: AbortSignal.timeout(90000),
@@ -259,7 +259,7 @@ const BeaconProAssessment: React.FC = () => {
     setFormErrors({});
 
     try {
-      const response = await fetch('https://beamx-scorecard-pro.onrender.com/generate-report-stream', {
+      const response = await fetch('https://beamx-scorecard-v2.onrender.com/generate-report-stream', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
