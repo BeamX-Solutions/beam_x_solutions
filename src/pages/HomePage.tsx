@@ -459,7 +459,7 @@ const HomePage: React.FC = () => {
       <section className="section bg-gray-50">
         <div className="container-custom">
           <SectionHeader
-            title="Stay in the Loop"
+            title="Sign up to our Newsletter"
             subtitle="Subscribe to our newsletter for the latest insights on data analytics, AI, and business intelligence delivered straight to your inbox."
             center
           />
