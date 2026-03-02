@@ -71,7 +71,7 @@ const gradeColor = (g: string) =>
   ["A","B+"].includes(g) ? "text-green-600" : g === "B" ? "text-blue-600" : g === "C+" ? "text-yellow-600" : "text-red-600";
 
 const barColor = (pct: number) =>
-  pct >= 70 ? "bg-amber-600" : pct >= 50 ? "bg-amber-400" : "bg-red-500";
+  pct >= 70 ? "bg-gray-800" : pct >= 50 ? "bg-gray-600" : "bg-red-500";
 
 // ─────────────────────────────────────────────
 // SUB-COMPONENTS
@@ -87,7 +87,7 @@ const FormSelect: React.FC<{
       {label} <span className="text-red-500">*</span>
     </label>
     <select id={name} name={name} value={value} onChange={onChange}
-      className={`block w-full border ${error ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-amber-500 focus:border-amber-500 focus:outline-none`}>
+      className={`block w-full border ${error ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:ring-gray-900 focus:border-gray-900 focus:outline-none`}>
       <option value="" disabled>{placeholder}</option>
       {options.map(o => <option key={o} value={o}>{o}</option>)}
     </select>
@@ -97,7 +97,7 @@ const FormSelect: React.FC<{
 );
 
 const CategoryCard: React.FC<{ name: string; cat: CategoryResult; icon: string }> = ({ name, cat, icon }) => (
-  <div className="bg-white rounded-lg border border-amber-200 p-4">
+  <div className="bg-white rounded-lg border border-gray-200 p-4">
     <div className="flex items-center justify-between mb-2">
       <div className="flex items-center gap-2">
         <span className="text-lg">{icon}</span>
@@ -116,7 +116,7 @@ const CategoryCard: React.FC<{ name: string; cat: CategoryResult; icon: string }
 
 const TypingCursor = () => (
   <motion.span animate={{ opacity: [1, 0, 1] }} transition={{ duration: 0.8, repeat: Infinity }}
-    className="inline-block w-0.5 h-4 bg-amber-600 ml-0.5 align-middle" />
+    className="inline-block w-0.5 h-4 bg-gray-800 ml-0.5 align-middle" />
 );
 
 // ─────────────────────────────────────────────
@@ -342,7 +342,7 @@ const BeaconProAssessment: React.FC = () => {
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
             className="max-w-4xl mx-auto">
-            <div className="bg-white p-8 rounded-lg shadow-lg" style={{ border: '1px solid #e8d5a3' }}>
+            <div className="bg-white p-8 rounded-lg shadow-lg border border-gray-200">
 
               {error && (
                 <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
@@ -354,8 +354,8 @@ const BeaconProAssessment: React.FC = () => {
 
                 {/* Contact */}
                 <div>
-                  <h2 className="text-xl font-bold text-gray-800 mb-1">Contact Information</h2>
-                  <p className="text-sm text-gray-500 mb-4">Your AI-generated report will be emailed to the address below.</p>
+                  <h2 className="text-xl font-bold text-gray-900 mb-1">Contact Information</h2>
+                  <p className="text-sm text-gray-500 mb-4">Your report will be emailed to the address below.</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {(['fullName','email','businessName'] as const).map(field => (
                       <div key={field}>
@@ -364,7 +364,7 @@ const BeaconProAssessment: React.FC = () => {
                         </label>
                         <input type={field === 'email' ? 'email' : 'text'} id={field} name={field} value={formData[field]} onChange={handleChange}
                           placeholder={field === 'fullName' ? 'Your full name' : field === 'email' ? 'your@email.com' : 'Your business name'}
-                          className={`block w-full border ${formErrors[field] ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:outline-none focus:border-amber-500`} />
+                          className={`block w-full border ${formErrors[field] ? 'border-red-300' : 'border-gray-300'} rounded-md p-3 text-sm focus:outline-none focus:border-gray-900`} />
                         {formErrors[field] && <p className="text-red-500 text-xs mt-1">{formErrors[field]}</p>}
                       </div>
                     ))}
@@ -374,14 +374,14 @@ const BeaconProAssessment: React.FC = () => {
                     <FormSelect name="yearsInBusiness" label="Years in Business" value={formData.yearsInBusiness} onChange={handleChange} error={formErrors.yearsInBusiness}
                       placeholder="Select years in business" options={["Less than 1 year","1-3 years","3-5 years","5-10 years","10+ years"]} />
                   </div>
-                  <p className="text-sm mt-3 p-3 rounded-md" style={{ backgroundColor: '#fffbee', color: '#92680a', border: '1px solid #e8d5a3' }}>
-                    <strong>Note:</strong> Your AI-generated PDF report will be automatically sent to the email above.
+                  <p className="text-sm mt-3 p-3 rounded-md bg-gray-50 text-gray-600 border border-gray-200">
+                    <strong>Note:</strong> Your PDF report will be automatically sent to the email above.
                   </p>
                 </div>
 
                 {/* S1 */}
                 <div>
-                  <h2 className="text-xl font-bold text-gray-800 mb-1">Section 1: Financial Health</h2>
+                  <h2 className="text-xl font-bold text-gray-900 mb-1">Section 1: Financial Health</h2>
                   <p className="text-sm text-gray-500 mb-4">Cash, profit, and payment cycles.</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <FormSelect name="cashFlow" label="Cash Flow Situation" value={formData.cashFlow} onChange={handleChange} error={formErrors.cashFlow}
@@ -398,7 +398,7 @@ const BeaconProAssessment: React.FC = () => {
 
                 {/* S2 */}
                 <div>
-                  <h2 className="text-xl font-bold text-gray-800 mb-1">Section 2: Customer Strength</h2>
+                  <h2 className="text-xl font-bold text-gray-900 mb-1">Section 2: Customer Strength</h2>
                   <p className="text-sm text-gray-500 mb-4">Loyalty, acquisition, and pricing power.</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <FormSelect name="repeatCustomerRate" label="Repeat Customer Rate" value={formData.repeatCustomerRate} onChange={handleChange} error={formErrors.repeatCustomerRate}
@@ -413,7 +413,7 @@ const BeaconProAssessment: React.FC = () => {
 
                 {/* S3 */}
                 <div>
-                  <h2 className="text-xl font-bold text-gray-800 mb-1">Section 3: Operational Maturity</h2>
+                  <h2 className="text-xl font-bold text-gray-900 mb-1">Section 3: Operational Maturity</h2>
                   <p className="text-sm text-gray-500 mb-4">How well the business runs without you.</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <FormSelect name="founderDependency" label="Founder Dependency" value={formData.founderDependency} onChange={handleChange} error={formErrors.founderDependency}
@@ -427,7 +427,7 @@ const BeaconProAssessment: React.FC = () => {
 
                 {/* S4 */}
                 <div>
-                  <h2 className="text-xl font-bold text-gray-800 mb-1">Section 4: Financial Intelligence</h2>
+                  <h2 className="text-xl font-bold text-gray-900 mb-1">Section 4: Financial Intelligence</h2>
                   <p className="text-sm text-gray-500 mb-4">Understanding the numbers behind your business.</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <FormSelect name="expenseAwareness" label="Expense Awareness" value={formData.expenseAwareness} onChange={handleChange} error={formErrors.expenseAwareness}
@@ -441,7 +441,7 @@ const BeaconProAssessment: React.FC = () => {
 
                 {/* S5 */}
                 <div>
-                  <h2 className="text-xl font-bold text-gray-800 mb-1">Section 5: Growth & Resilience</h2>
+                  <h2 className="text-xl font-bold text-gray-900 mb-1">Section 5: Growth &amp; Resilience</h2>
                   <p className="text-sm text-gray-500 mb-4">Trajectory, diversification, and operating environment.</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <FormSelect name="businessTrajectory" label="Business Trajectory" value={formData.businessTrajectory} onChange={handleChange} error={formErrors.businessTrajectory}
@@ -461,25 +461,25 @@ const BeaconProAssessment: React.FC = () => {
 
                 {/* Pain Point */}
                 <div>
-                  <h2 className="text-xl font-bold text-gray-800 mb-1">Primary Challenge</h2>
-                  <p className="text-sm text-gray-500 mb-4">The AI uses this to focus your advisory on what matters most.</p>
+                  <h2 className="text-xl font-bold text-gray-900 mb-1">Primary Challenge</h2>
+                  <p className="text-sm text-gray-500 mb-4">This helps us focus your advisory on what matters most to your business right now.</p>
                   <FormSelect name="primaryPainPoint" label="Biggest challenge right now?" value={formData.primaryPainPoint} onChange={handleChange} error={formErrors.primaryPainPoint}
                     placeholder="Select your primary pain point"
                     options={["Getting more customers/sales","Managing cash flow/getting paid","Hiring or managing staff","Keeping costs under control","Too busy/overwhelmed","Inconsistent quality/delivery","Don't know where to focus","Competition/market changes","Actually doing well, want to optimize"]} />
                 </div>
 
                 {/* Consent */}
-                <div className="flex items-start gap-3 p-4 rounded-md" style={{ background: '#fffbee', border: '1px solid #e8d5a3' }}>
+                <div className="flex items-start gap-3 p-4 rounded-md bg-gray-50 border border-gray-200">
                   <input type="checkbox" id="emailConsent" checked={emailConsent} onChange={e => setEmailConsent(e.target.checked)}
-                    className="mt-0.5 h-4 w-4 rounded" style={{ accentColor: '#B8860B' }} />
+                    className="mt-0.5 h-4 w-4 rounded accent-gray-900" />
                   <label htmlFor="emailConsent" className="text-sm text-gray-700">
-                    I consent to receive my AI-generated assessment and PDF report via email at the address provided.
+                    I consent to receive my assessment report and PDF via email at the address provided.
                   </label>
                 </div>
 
                 <button type="submit" disabled={loading || !emailConsent}
                   className="w-full py-3 text-sm font-semibold text-white rounded-md transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                  style={{ background: loading || !emailConsent ? '#999' : 'linear-gradient(135deg, #B8860B, #d4af37)' }}>
+                  style={{ background: loading || !emailConsent ? '#999' : '#0f0f0f' }}>
                   {loading ? (
                     <>
                       <motion.span animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
@@ -495,17 +495,17 @@ const BeaconProAssessment: React.FC = () => {
               {/* Email Modal */}
               {showEmailModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4">
-                  <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-6" style={{ borderTop: '4px solid #B8860B' }}>
+                  <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-6 border-t-4 border-gray-900">
                     {modalSuccess ? (
                       <div className="flex flex-col items-center justify-center py-4 text-center">
-                        <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: '#fffbee', border: '2px solid #B8860B' }}>
-                          <svg className="w-9 h-9" fill="none" viewBox="0 0 24 24" stroke="#B8860B" strokeWidth={2.5}>
+                        <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-gray-100 border-2 border-gray-900">
+                          <svg className="w-9 h-9" fill="none" viewBox="0 0 24 24" stroke="#0f0f0f" strokeWidth={2.5}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                           </svg>
                         </div>
                         <h3 className="text-lg font-bold text-gray-800 mb-1">Report Sent!</h3>
                         <p className="text-sm text-gray-500">Your PDF is on its way to <strong>{modalEmail}</strong></p>
-                        <p className="text-xs text-gray-400 mt-3">This window will close automatically…</p>
+                        <p className="text-xs text-gray-400 mt-3">This window will close automatically...</p>
                       </div>
                     ) : (
                       <>
@@ -513,18 +513,17 @@ const BeaconProAssessment: React.FC = () => {
                         <p className="text-sm text-gray-500 mb-4">Enter the email to send the report to.</p>
                         <input type="email" value={modalEmail} onChange={e => { setModalEmail(e.target.value); setModalError(''); }}
                           placeholder="recipient@email.com"
-                          className="block w-full border border-gray-300 rounded-md p-3 text-sm mb-2 focus:outline-none" />
+                          className="block w-full border border-gray-300 rounded-md p-3 text-sm mb-2 focus:outline-none focus:border-gray-900" />
                         {modalError && <p className="text-red-500 text-xs mb-3">{modalError}</p>}
-                        {emailLoading && <p className="text-xs text-gray-500 mb-3">Generating PDF and sending… May take up to 60 seconds.</p>}
+                        {emailLoading && <p className="text-xs text-gray-500 mb-3">Generating PDF and sending... May take up to 60 seconds.</p>}
                         <div className="flex gap-3 mt-4">
                           <button onClick={() => { setShowEmailModal(false); setModalEmail(''); setModalError(''); }} disabled={emailLoading}
                             className="flex-1 px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50">
                             Cancel
                           </button>
                           <button onClick={handleEmailResults} disabled={emailLoading}
-                            className="flex-1 px-4 py-2 rounded-md text-sm font-semibold text-white disabled:opacity-50"
-                            style={{ backgroundColor: '#B8860B' }}>
-                            {emailLoading ? 'Sending…' : 'Send Report'}
+                            className="flex-1 px-4 py-2 rounded-md text-sm font-semibold text-white disabled:opacity-50 bg-gray-900">
+                            {emailLoading ? 'Sending...' : 'Send Report'}
                           </button>
                         </div>
                       </>
@@ -540,11 +539,11 @@ const BeaconProAssessment: React.FC = () => {
                     className="results-section mt-10 space-y-8">
 
                     {/* Status banner */}
-                    <div className="p-4 rounded-md flex items-start gap-3" style={{ backgroundColor: '#fffbee', borderLeft: '4px solid #B8860B' }}>
+                    <div className="p-4 rounded-md flex items-start gap-3 bg-gray-50 border-l-4 border-gray-900">
                       <SparkleIcon />
-                      <p className="text-sm" style={{ color: '#92680a' }}>
-                        <strong>Scores ready!</strong>{' '}
-                        {isStreaming ? 'The AI is writing your personalised advisory below...' : 'Your AI advisory is complete.'}
+                      <p className="text-sm text-gray-700">
+                        <strong>Scores ready.</strong>{' '}
+                        {isStreaming ? 'Your personalised advisory is being written below...' : 'Your advisory is complete.'}
                       </p>
                     </div>
 
@@ -558,30 +557,30 @@ const BeaconProAssessment: React.FC = () => {
                         </div>
                         <div>
                           <p className="text-sm font-bold" style={{ color: '#1e7e34' }}>Report sent!</p>
-                          <p className="text-xs mt-0.5" style={{ color: '#2d6a4f' }}>Check your inbox — your PDF is on the way.</p>
+                          <p className="text-xs mt-0.5" style={{ color: '#2d6a4f' }}>Check your inbox, your PDF is on the way.</p>
                         </div>
                       </div>
                     )}
 
                     {/* Score card */}
                     {scoreData && (
-                      <div className="p-6 rounded-lg" style={{ border: '2px solid #B8860B', backgroundColor: '#fffbee' }}>
+                      <div className="p-6 rounded-lg border-2 border-gray-900 bg-gray-900 text-white">
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                           <div>
                             <div className="flex items-center gap-2 mb-1">
-                              <p className="text-sm font-semibold uppercase tracking-wide" style={{ color: '#B8860B', opacity: 0.8 }}>Beacon Pro Score</p>
-                              <span className="text-xs font-bold px-2 py-0.5 rounded-full text-white" style={{ backgroundColor: '#B8860B' }}>PRO</span>
+                              <p className="text-sm font-semibold uppercase tracking-wide text-gray-400">Beacon Pro Score</p>
+                              <span className="text-xs font-bold px-2 py-0.5 rounded-full text-gray-900 bg-white">PRO</span>
                             </div>
-                            <p className="text-5xl font-bold" style={{ color: '#B8860B' }}>
-                              {scoreData.total_score}<span className="text-2xl font-normal">/100</span>
+                            <p className="text-5xl font-bold text-white">
+                              {scoreData.total_score}<span className="text-2xl font-normal text-gray-400">/100</span>
                             </p>
-                            <p className="text-xl font-semibold mt-1 text-gray-700">{scoreData.readiness_level}</p>
+                            <p className="text-xl font-semibold mt-1 text-gray-300">{scoreData.readiness_level}</p>
                           </div>
-                          <div className="text-sm space-y-1 text-gray-600">
-                            <p><strong>Business:</strong> {scoreData.context.businessName}</p>
-                            <p><strong>Industry:</strong> {scoreData.context.industry}</p>
-                            <p><strong>Years:</strong> {scoreData.context.yearsInBusiness}</p>
-                            <p><strong>Focus:</strong> {scoreData.context.primaryPainPoint}</p>
+                          <div className="text-sm space-y-1 text-gray-400">
+                            <p><strong className="text-white">Business:</strong> {scoreData.context.businessName}</p>
+                            <p><strong className="text-white">Industry:</strong> {scoreData.context.industry}</p>
+                            <p><strong className="text-white">Years:</strong> {scoreData.context.yearsInBusiness}</p>
+                            <p><strong className="text-white">Focus:</strong> {scoreData.context.primaryPainPoint}</p>
                           </div>
                         </div>
                       </div>
@@ -613,11 +612,11 @@ const BeaconProAssessment: React.FC = () => {
                           </div>
                         )}
                         {scoreData.flags.opportunities.length > 0 && (
-                          <div className="rounded-lg p-4" style={{ backgroundColor: '#fffbee', border: '1px solid #e8d5a3' }}>
-                            <h4 className="font-bold mb-3 text-sm" style={{ color: '#B8860B' }}>✅ Opportunity Flags</h4>
+                          <div className="rounded-lg p-4 bg-gray-50 border border-gray-200">
+                            <h4 className="font-bold mb-3 text-sm text-gray-800">✅ Opportunity Flags</h4>
                             <ul className="space-y-2">
                               {scoreData.flags.opportunities.map(f => (
-                                <li key={f} className="text-sm px-3 py-1.5 rounded" style={{ color: '#92680a', backgroundColor: '#fff3d0' }}>{f.replace(/_/g, ' ')}</li>
+                                <li key={f} className="text-sm px-3 py-1.5 rounded bg-white border border-gray-200 text-gray-700">{f.replace(/_/g, ' ')}</li>
                               ))}
                             </ul>
                           </div>
@@ -629,12 +628,11 @@ const BeaconProAssessment: React.FC = () => {
                     {(streamedAdvisory || isStreaming) && (
                       <div>
                         <div className="flex items-center gap-3 mb-4">
-                          <h3 className="text-lg font-bold text-gray-800">AI-Powered Strategic Advisory</h3>
+                          <h3 className="text-lg font-bold text-gray-800">Strategic Advisory</h3>
                           {isStreaming ? (
-                            <span className="flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full"
-                              style={{ backgroundColor: '#fffbee', color: '#B8860B', border: '1px solid #e8d5a3' }}>
+                            <span className="flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-gray-100 text-gray-700 border border-gray-200">
                               <motion.span animate={{ scale: [1, 1.3, 1] }} transition={{ duration: 1, repeat: Infinity }}
-                                className="w-1.5 h-1.5 rounded-full inline-block" style={{ backgroundColor: '#B8860B' }} />
+                                className="w-1.5 h-1.5 rounded-full inline-block bg-gray-800" />
                               Writing...
                             </span>
                           ) : (
@@ -644,17 +642,17 @@ const BeaconProAssessment: React.FC = () => {
                             </span>
                           )}
                         </div>
-                        <div ref={advisoryRef} className="bg-white rounded-lg p-6"
-                          style={{ border: '1px solid #e8d5a3', maxHeight: isStreaming ? '600px' : 'none', overflowY: isStreaming ? 'auto' : 'visible' }}>
+                        <div ref={advisoryRef} className="bg-white rounded-lg p-6 border border-gray-200"
+                          style={{ maxHeight: isStreaming ? '600px' : 'none', overflowY: isStreaming ? 'auto' : 'visible' }}>
                           <div className="prose prose-sm max-w-none">
                             <ReactMarkdown components={{
-                              h2: ({ children }) => <h2 style={{ color: '#B8860B', fontSize: '17px', fontWeight: 700, marginTop: '24px', marginBottom: '10px', borderBottom: '1px solid #e8d5a3', paddingBottom: '6px' }}>{children}</h2>,
-                              h3: ({ children }) => <h3 style={{ color: '#8B6914', fontSize: '15px', fontWeight: 600, marginTop: '16px', marginBottom: '8px' }}>{children}</h3>,
+                              h2: ({ children }) => <h2 style={{ color: '#0f0f0f', fontSize: '17px', fontWeight: 700, marginTop: '24px', marginBottom: '10px', borderBottom: '1px solid #e5e7eb', paddingBottom: '6px' }}>{children}</h2>,
+                              h3: ({ children }) => <h3 style={{ color: '#374151', fontSize: '15px', fontWeight: 600, marginTop: '16px', marginBottom: '8px' }}>{children}</h3>,
                               p: ({ children }) => <p style={{ color: '#333', lineHeight: '1.7', marginBottom: '12px' }}>{children}</p>,
                               ul: ({ children }) => <ul style={{ paddingLeft: '20px', marginBottom: '16px', listStyleType: 'disc' }}>{children}</ul>,
                               li: ({ children }) => <li style={{ color: '#444', lineHeight: '1.7', marginBottom: '6px' }}>{children}</li>,
                               strong: ({ children }) => <strong style={{ fontWeight: 700, color: '#111' }}>{children}</strong>,
-                              hr: () => <hr style={{ borderColor: '#e8d5a3', margin: '24px 0' }} />,
+                              hr: () => <hr style={{ borderColor: '#e5e7eb', margin: '24px 0' }} />,
                             }}>
                               {streamedAdvisory}
                             </ReactMarkdown>
@@ -664,26 +662,23 @@ const BeaconProAssessment: React.FC = () => {
                       </div>
                     )}
 
-                    {/* Action buttons — shown only after streaming is complete */}
+                    {/* Action buttons */}
                     {streamingDone && fullResult && (
                       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-center py-6">
                         <h3 className="text-xl font-bold text-gray-800 mb-6">Take Action</h3>
                         <div className="flex flex-wrap justify-center gap-4">
                           <button onClick={handleDownloadPDF} disabled={pdfLoading}
-                            className="flex items-center gap-2 px-6 py-3 text-white rounded-md text-sm font-semibold transition-colors disabled:opacity-50"
-                            style={{ backgroundColor: '#B8860B' }}
-                            onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#9a7009')}
-                            onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#B8860B')}>
+                            className="flex items-center gap-2 px-6 py-3 text-white rounded-md text-sm font-semibold transition-colors disabled:opacity-50 bg-gray-900 hover:bg-gray-700">
                             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                               <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
                             </svg>
                             {pdfLoading ? 'Generating...' : 'Download PDF Report'}
                           </button>
                           <button onClick={() => { setModalEmail(formData.email); setShowEmailModal(true); setEmailSuccess(false); }}
-                            className="flex items-center gap-2 px-6 py-3 text-white rounded-md text-sm font-semibold"
-                            style={{ backgroundColor: '#1a1a2e' }}
-                            onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#2d2d4e')}
-                            onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#1a1a2e')}>
+                            className="flex items-center gap-2 px-6 py-3 text-white rounded-md text-sm font-semibold transition-colors"
+                            style={{ backgroundColor: '#1a6b3c' }}
+                            onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#155c32')}
+                            onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#1a6b3c')}>
                             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                               <path d="M3 4a2 2 0 00-2 2v1.161l8.441 4.221a1.25 1.25 0 001.118 0L19 7.162V6a2 2 0 00-2-2H3z" />
                               <path d="M19 8.839l-7.77 3.885a2.75 2.75 0 01-2.46 0L1 8.839V14a2 2 0 002 2h14a2 2 0 002-2V8.839z" />
@@ -695,7 +690,7 @@ const BeaconProAssessment: React.FC = () => {
                             <XIcon /> Share on X
                           </button>
                         </div>
-                        {shareMessage && <p className="mt-4 text-sm font-medium" style={{ color: '#B8860B' }}>{shareMessage}</p>}
+                        {shareMessage && <p className="mt-4 text-sm font-medium text-gray-700">{shareMessage}</p>}
                       </motion.div>
                     )}
 

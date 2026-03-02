@@ -3,7 +3,6 @@ import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import Loading from './Loading';
-import WhatsAppButton from './WhatsAppButton';
 
 interface LayoutProps {
   isLoading: boolean;
@@ -34,7 +33,6 @@ const Layout: React.FC<LayoutProps> = ({ isLoading }) => {
         <Outlet />
       </main>
       <Footer />
-      <WhatsAppButton />
     </div>
   );
 };
