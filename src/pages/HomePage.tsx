@@ -10,14 +10,39 @@ import CTASection from '../components/CTASection';
 import LogoScroller from '../components/LogoScroller';
 import NotificationBanner from '../components/NotificationBanner';
 import SubscribeButton from '../components/SubscribeButton';
-import { blogPosts } from '../data/blogPosts';
+
+interface LiveBlogPost {
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  featured_image: string | null;
+  read_time: number | null;
+  authors: { name: string } | null;
+  categories: { name: string } | null;
+}
 
 const HomePage: React.FC = () => {
   const [currentTestimonial, setCurrentTestimonial] = React.useState(0);
   const [showNotification, setShowNotification] = React.useState(false);
   const [notificationMessage, setNotificationMessage] = React.useState('');
+  const [livePosts, setLivePosts] = React.useState<LiveBlogPost[]>([]);
+  const [postsLoading, setPostsLoading] = React.useState(true);
   const location = useLocation();
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const url = `${import.meta.env.VITE_BLOG_SUPABASE_URL}/rest/v1/posts?select=title,slug,excerpt,featured_image,read_time,authors(name),categories(name)&is_published=eq.true&order=published_at.desc&limit=3`;
+    fetch(url, {
+      headers: {
+        apikey: import.meta.env.VITE_BLOG_SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${import.meta.env.VITE_BLOG_SUPABASE_ANON_KEY}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setLivePosts(Array.isArray(data) ? data : []))
+      .catch(() => {})
+      .finally(() => setPostsLoading(false));
+  }, []);
 
   // Check for subscription confirmation
   React.useEffect(() => {
@@ -359,46 +384,67 @@ const HomePage: React.FC = () => {
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...blogPosts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 3).map((post, index) => (
-              <motion.a
-                key={post.id}
-                href={`https://blog.beamxsolutions.com/${post.slug}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden group"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <span className="absolute top-3 left-3 bg-primary text-white text-xs font-medium px-3 py-1 rounded-full">
-                    {post.category}
-                  </span>
-                </div>
-                <div className="p-5">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                    {post.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">{post.excerpt}</p>
-                  <div className="flex items-center justify-between text-xs text-gray-500">
-                    <div className="flex items-center gap-1">
-                      <User className="h-3.5 w-3.5" />
-                      <span>{post.author}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Clock className="h-3.5 w-3.5" />
-                      <span>{post.readTime}</span>
-                    </div>
+            {postsLoading ? (
+              [0, 1, 2].map((i) => (
+                <div key={i} className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
+                  <div className="h-48 bg-gray-200" />
+                  <div className="p-5 space-y-3">
+                    <div className="h-4 bg-gray-200 rounded w-3/4" />
+                    <div className="h-3 bg-gray-200 rounded" />
+                    <div className="h-3 bg-gray-200 rounded w-5/6" />
                   </div>
                 </div>
-              </motion.a>
-            ))}
+              ))
+            ) : (
+              livePosts.map((post, index) => (
+                <motion.a
+                  key={post.slug}
+                  href={`https://blog.beamxsolutions.com/${post.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden group"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    {post.featured_image && (
+                      <img
+                        src={post.featured_image}
+                        alt={post.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    )}
+                    {post.categories?.name && (
+                      <span className="absolute top-3 left-3 bg-primary text-white text-xs font-medium px-3 py-1 rounded-full">
+                        {post.categories.name}
+                      </span>
+                    )}
+                  </div>
+                  <div className="p-5">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                      {post.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-3">{post.excerpt}</p>
+                    <div className="flex items-center justify-between text-xs text-gray-500">
+                      {post.authors?.name && (
+                        <div className="flex items-center gap-1">
+                          <User className="h-3.5 w-3.5" />
+                          <span>{post.authors.name}</span>
+                        </div>
+                      )}
+                      {post.read_time && (
+                        <div className="flex items-center gap-1">
+                          <Clock className="h-3.5 w-3.5" />
+                          <span>{post.read_time} min read</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </motion.a>
+              ))
+            )}
           </div>
 
           <div className="text-center mt-10">
