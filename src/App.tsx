@@ -16,6 +16,7 @@ import ScrollToTop from './components/ScrollToTop';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import BeaconProAssessment from './pages/BeaconProAssessment';
 import BeaconPage from './pages/BeaconPage';
+import WhitepaperPage from './pages/WhitepaperPage';
 
 // Component to handle external redirects
 const ExternalRedirect: React.FC<{ url: string }> = ({ url }) => {
@@ -91,6 +92,7 @@ function App() {
     '/contact': 'BeamX Solutions | Contact Us',
     '/privacy-policy': 'BeamX Solutions | Privacy Policy',
     '/managed-intelligence': 'BeamX Solutions | Managed Intelligence Services',
+    '/whitepaper': 'White Paper: Blending Instinct with Intelligence | BeamX Solutions',
   };
 
   useEffect(() => {
@@ -137,6 +139,7 @@ function App() {
             <Route path="contact" element={<ContactPage />} />
             <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
             <Route path="managed-intelligence" element={<ManagedIntelligencePage />} />
+            <Route path="whitepaper" element={<WhitepaperPage />} />
             {/* Redirect old blog URLs to external blog */}
             <Route path="blog" element={<ExternalRedirect url="https://blog.beamxsolutions.com/" />} />
             <Route path="blog/*" element={<ExternalRedirect url="https://blog.beamxsolutions.com/" />} />
