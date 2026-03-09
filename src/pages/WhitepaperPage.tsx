@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
-import { FileText, CheckCircle, Download, BarChart3, Brain, Target, Shield } from 'lucide-react';
+import { FileText, CheckCircle, Download, Eye, BarChart3, Brain, Target, Shield } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import Button from '../components/Button';
 import CTASection from '../components/CTASection';
@@ -247,16 +247,27 @@ const WhitepaperPage: React.FC = () => {
                   <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
                   <h3 className="text-2xl font-semibold text-gray-900 mb-2">Access Granted!</h3>
                   <p className="text-gray-600 mb-6">
-                    A copy has also been sent to your email. Click below to download now.
+                    A copy has also been sent to your email. View it right here or download for later.
                   </p>
-                  <a
-                    href={WHITEPAPER_PDF_URL}
-                    download="BeamX_White_Paper_March_2026.pdf"
-                    className="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-opacity-90 transition-colors"
-                  >
-                    <Download className="h-5 w-5" />
-                    Download White Paper (PDF)
-                  </a>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a
+                      href={WHITEPAPER_PDF_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-opacity-90 transition-colors w-full sm:w-auto justify-center"
+                    >
+                      <Eye className="h-5 w-5" />
+                      View White Paper
+                    </a>
+                    <a
+                      href={WHITEPAPER_PDF_URL}
+                      download="BeamX_White_Paper_March_2026.pdf"
+                      className="inline-flex items-center gap-2 border-2 border-primary text-primary px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary hover:text-white transition-colors w-full sm:w-auto justify-center"
+                    >
+                      <Download className="h-5 w-5" />
+                      Download PDF
+                    </a>
+                  </div>
                   <div className="mt-6 bg-green-50 p-4 rounded-lg">
                     <p className="text-green-800 text-sm">
                       <strong>Want to discuss what you've read?</strong>{' '}
