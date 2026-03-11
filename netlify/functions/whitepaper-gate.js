@@ -6,13 +6,13 @@
 //   RESEND_API_KEY       - your Resend API key (you likely already have this)
 //   RESEND_AUDIENCE_ID   - the Audience ID to store contacts in
 //   WHITEPAPER_PDF_URL   - public URL of the hosted PDF
-//                          e.g. https://www.beamxsolutions.com/BeamX_White_Paper_March_2026.pdf
+//                          e.g. https://www.beamxsolutions.com/BeamX_White_Paper_February_2026.pdf
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const RESEND_AUDIENCE_ID = process.env.RESEND_AUDIENCE_ID;
 const WHITEPAPER_PDF_URL =
   process.env.WHITEPAPER_PDF_URL ||
-  "https://www.beamxsolutions.com/BeamX_White_Paper_March_2026.pdf";
+  "https://www.beamxsolutions.com/BeamX_White_Paper_February_2026.pdf";
 
 exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {
