@@ -90,7 +90,7 @@ const WhitepaperPage: React.FC = () => {
     },
   ];
 
-  const WHITEPAPER_PDF_URL = '/BeamX_White_Paper_March_2026.pdf';
+  const WHITEPAPER_PDF_URL = '/BeamX_White_Paper_February_2026.pdf';
 
   return (
     <>
@@ -110,7 +110,7 @@ const WhitepaperPage: React.FC = () => {
               transition={{ duration: 0.6 }}
             >
               <div className="inline-block bg-secondary bg-opacity-20 text-white px-4 py-2 rounded-full text-sm font-medium mb-6">
-                Technical White Paper — March 2026
+                Technical White Paper — February 2026
               </div>
               <h1 className="text-white text-4xl md:text-5xl font-bold mb-6 leading-tight">
                 Blending Instinct{' '}
@@ -152,7 +152,7 @@ const WhitepaperPage: React.FC = () => {
                     <div className="h-2 w-3/5 bg-gray-200 rounded" />
                   </div>
                   <div className="text-xs text-gray-400">Technical White Paper</div>
-                  <div className="text-xs text-gray-400">March 2026</div>
+                  <div className="text-xs text-gray-400">February 2026</div>
                 </div>
                 <div className="absolute -bottom-4 -right-4 bg-secondary text-white rounded-full px-4 py-2 text-sm font-semibold shadow-lg">
                   Free Download
@@ -261,7 +261,7 @@ const WhitepaperPage: React.FC = () => {
                     </a>
                     <a
                       href={WHITEPAPER_PDF_URL}
-                      download="BeamX_White_Paper_March_2026.pdf"
+                      download="BeamX_White_Paper_February_2026.pdf"
                       className="inline-flex items-center gap-2 border-2 border-primary text-primary px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary hover:text-white transition-colors w-full sm:w-auto justify-center"
                     >
                       <Download className="h-5 w-5" />
