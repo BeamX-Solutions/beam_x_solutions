@@ -20,7 +20,7 @@ exports.handler = async (event) => {
   }
 
   try {
-    const { firstName, lastName, email, company } = JSON.parse(event.body || "{}");
+    const { firstName, lastName, email } = JSON.parse(event.body || "{}");
 
     if (!firstName || !email) {
       return {
@@ -98,7 +98,6 @@ exports.handler = async (event) => {
         `,
         tags: [
           { name: "source", value: "whitepaper-download" },
-          { name: "company", value: company || "not-provided" },
         ],
       }),
     });
