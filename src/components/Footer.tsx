@@ -27,8 +27,7 @@ const Footer: React.FC = () => {
               className="h-12 w-auto max-w-[200px] mb-6" 
             />
             <p className="text-gray-400 mb-6">
-              Partnering with businesses to unlock the full potential of their data through expert data strategy, 
-              business intelligence, and AI solutions.
+              We help businesses see what is working, stop what is losing money, and grow faster.
             </p>
             <div className="flex space-x-4">
               <a href="https://linkedin.com/company/beamxsolutions" className="text-gray-400 hover:text-primary transition-colors" aria-label="LinkedIn">

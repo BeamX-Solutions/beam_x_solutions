@@ -61,18 +61,25 @@ const HomePage: React.FC = () => {
 
   const testimonials = [
     {
-      quote: "BeamX didn't just build our site, they redesigned our business operations. We now attract the kind of clients we always wanted, and we're finally growing with confidence.",
+      quote: "Every route and every client has different economics. We could feel the business growing but could not tell which parts were truly profitable. BeamX showed us the numbers behind our trips and clients. We now make sharper decisions about who to grow with and how to protect our margins as we scale across Lagos and Abuja.",
+      author: "Emmanuel Nwadinobi",
+      position: "CEO",
+      company: "Perficient Logistics",
+      avatar: "/first-person1.jpg"
+    },
+    {
+      quote: "As a platform business, we had data coming from different tools but no single view of what was actually happening. BeamX built us an executive dashboard that brought everything into one place. We can now see our users, revenue, retention, and growth across cities in real time. It changed how we run the business day to day.",
+      author: "Franklin Chigozie",
+      position: "Co-founder",
+      company: "Affixdot",
+      avatar: "/affix_rep.jpg"
+    },
+    {
+      quote: "Running a creative business, it is easy to get lost in the work and miss what the numbers are saying. BeamX helped us see exactly where we were making money, rethink how we attract clients, and choose better work. The result is we are now more focused, more selective with clients, and growing faster with real clarity.",
       author: "Emeka Dioha",
       position: "CEO",
       company: "Maple Maven Designs",
       avatar: "/first-person1.jpg"
-    },
-    {
-      quote: "BeamX joined us as a data partner and first provided a real-time dashboard and a model informing us 30 days before customers are likely to churn. In just 90 days, we improved retention by 28%, our team saves over 20 hours weekly, and we've cut $10K in annual costs.",
-      author: "Franklin Chigozie",
-      position: "Co-founder",
-      company: "AffixDot.com",
-      avatar: "/affix_rep.jpg"
     }
   ];
 
@@ -80,25 +87,34 @@ const HomePage: React.FC = () => {
     {
       id: 1,
       slug: "beacon",
-      title: "Beacon - Business Assessment",
-      description: "Evaluate your business readiness with detailed insights and tailored growth strategies.",
-      image: "/beacon-banner.png",
+      brand: "Beacon",
+      title: "Business Health Check",
+      description: "Understand your sales, customers, costs, and operations, then see what to fix first.",
+      forLine: "For existing business owners",
+      cta: "Check My Business",
+      image: "/predictive_analysis.webp",
       landingLink: "/products/beacon",
     },
     {
       id: 3,
       slug: "luna",
-      title: "Luna - AI Marketing Plan Generator",
-      description: "Generate comprehensive, data-driven marketing strategies tailored to your business goals and target audience.",
-      image: "/luna-banner.png",
+      brand: "Luna",
+      title: "Marketing Plan Builder",
+      description: "Get a marketing plan built around your customers and your budget, not generic advice that does not fit your business.",
+      forLine: "For businesses ready to market better",
+      cta: "Build My Plan",
+      image: "/gen-ai-strategy.webp",
       externalLink: "https://luna.beamxsolutions.com",
     },
     {
       id: 4,
       slug: "stellar",
-      title: "Stellar - Business Idea Validator",
-      description: "Validate your business ideas with AI-powered analysis, market insights, and feasibility assessments before you invest.",
-      image: "/stellar-banner.png",
+      brand: "Stellar",
+      title: "Business Idea Validator",
+      description: "Check if your business idea is worth pursuing before you spend time, money, and energy on it.",
+      forLine: "For new ideas and expansion plans",
+      cta: "Test My Idea",
+      image: "/ai_and_machine_learning.webp",
       externalLink: "https://stellar.beamxsolutions.com",
     },
   ];
@@ -150,10 +166,10 @@ const HomePage: React.FC = () => {
               transition={{ duration: 0.6 }}
             >
               <h1 className="text-white font-bold mb-4 text-4xl md:text-5xl">
-                There is gold in your <span className="text-secondary">Data</span>, we help you unlock it.
+                See what is working. Fix what is losing money. <span className="text-secondary">Grow faster.</span>
               </h1>
               <p className="text-white text-base md:text-lg mb-6">
-                Leverage BeamX Solutions expertise in business intelligence and AI to uncover hidden opportunities, optimize operations, increase revenue, and fuel long-term innovation.
+                We help business leaders understand their sales, customers, and costs, so they can spot what is working, fix what is not, and focus on what actually grows the business.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button href="https://calendly.com/beamxsolutions" variant="white" icon>
@@ -225,8 +241,8 @@ const HomePage: React.FC = () => {
       <section className="section bg-gray-50">
         <div className="container-custom mx-auto px-4 sm:px-6">
           <SectionHeader
-            title="Featured Products"
-            subtitle="Explore our cutting-edge products designed to empower your business with intelligent solutions."
+            title="Tools to Help You Understand and Grow Your Business"
+            subtitle="Use BeamX tools to check your business health, create a practical marketing plan, and test new ideas before spending money."
             center
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-4 sm:px-0">
@@ -247,6 +263,7 @@ const HomePage: React.FC = () => {
                   />
                 </div>
                 <div className="p-4">
+                  <span className="text-xs font-medium text-primary uppercase tracking-wide mb-1 block">{product.brand}</span>
                   {product.externalLink ? (
                     <a href={product.externalLink} target="_blank" rel="noopener noreferrer">
                       <h2 className="text-lg font-semibold mb-2 hover:text-primary transition-colors line-clamp-2">
@@ -261,12 +278,13 @@ const HomePage: React.FC = () => {
                     </NavLink>
                   )}
                   <p className="text-gray-600 text-sm mb-3 line-clamp-3">{product.description}</p>
+                  <p className="text-xs text-gray-400 mb-3">{product.forLine}</p>
                   <Button
                     variant="primary"
                     className="text-sm"
                     onClick={() => handleTryNow(product.slug, product.externalLink, product.landingLink)}
                   >
-                    Try Now
+                    {product.cta}
                   </Button>
                 </div>
               </motion.article>
@@ -279,32 +297,32 @@ const HomePage: React.FC = () => {
       <section className="section bg-white">
         <div className="container-custom">
           <SectionHeader
-            title="Why Choose BeamX Solutions"
-            subtitle="Partner with us to transform your data into actionable insights and drive business growth."
+            title="What Working with BeamX Solutions Looks Like"
+            subtitle="Straight answers. Practical plans. Real results."
             center
           />
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
                 icon: <BrainCircuit className="h-8 w-8 text-blue-500" />,
-                title: "Strategy First",
-                description: "We align solutions with your business goals, using data analytics to drive measurable results."
-              },
-              {
-                icon: <Server className="h-8 w-8 text-blue-500" />,
-                title: "Built to Scale",
-                description: "Our scalable AI solutions grow with your business, from startup to enterprise."
+                title: "We Speak Your Language",
+                description: "You will not sit through a presentation full of charts you cannot read. We explain everything in plain English so you can make decisions with confidence."
               },
               {
                 icon: <BarChart3 className="h-8 w-8 text-blue-500" />,
-                title: "Value-Led",
-                description: "We focus on ROI, delivering business intelligence that saves time and boosts profits."
+                title: "We Focus on What Pays",
+                description: "Every recommendation we make is tied to one question: will this make you more money or save you money? If the answer is no, we do not waste your time on it."
+              },
+              {
+                icon: <Server className="h-8 w-8 text-blue-500" />,
+                title: "We Stay Until It Works",
+                description: "Most consultants hand you a report and disappear. We help you put the changes in place and stay close enough to know if they worked."
               },
               {
                 icon: <Database className="h-8 w-8 text-blue-500" />,
-                title: "Insight + Action",
-                description: "Our AI-driven tools provide real-time insights and automation for smarter decisions."
+                title: "We Have Done This Before",
+                description: "Obinna has shaped decisions for McDonald's, T-Mobile, and Samsung. The same level of thinking now works for growing businesses that deserve it."
               }
             ].map((item, index) => (
               <motion.div
@@ -330,8 +348,8 @@ const HomePage: React.FC = () => {
       <section className="section bg-gray-50">
         <div className="container-custom">
           <SectionHeader
-            title="What our Clients Say"
-            subtitle="Hear what our clients have to say about their experience working with BeamX Solutions."
+            title="What Changes After Working with BeamX"
+            subtitle="Clearer business. Better operations. Stronger growth."
             center
           />
           
@@ -459,8 +477,8 @@ const HomePage: React.FC = () => {
       <section className="section bg-gray-50">
         <div className="container-custom">
           <SectionHeader
-            title="Sign up to our Newsletter"
-            subtitle="Subscribe to our newsletter for the latest insights on data analytics, AI, and business intelligence delivered straight to your inbox."
+            title="Get sharper at running your business."
+            subtitle="One short, practical idea every week to help you grow with more clarity. Unsubscribe anytime."
             center
           />
           <motion.div
@@ -476,12 +494,12 @@ const HomePage: React.FC = () => {
 
       {/* CTA Section */}
       <CTASection
-        title="Ready to See What’s Possible?"
-        subtitle="Let's discuss how we can help you unlock the full potential of your data."
-        primaryButtonText="Get Started"
-        primaryButtonHref="/contact"
-        secondaryButtonText="Explore Services"
-        secondaryButtonHref="/services"
+        title="You have read enough. Let us look at your business."
+        subtitle="Book a free 30 minute conversation. We will tell you exactly where to focus first to make more money."
+        primaryButtonText="Book a call"
+        primaryButtonHref="https://calendly.com/beamxsolutions"
+        secondaryButtonText="See Our Work"
+        secondaryButtonHref="/products"
       />
     </>
   );
