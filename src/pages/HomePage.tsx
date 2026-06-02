@@ -65,7 +65,7 @@ const HomePage: React.FC = () => {
       author: "Emmanuel Nwadinobi",
       position: "CEO",
       company: "Perficient Logistics",
-      avatar: "/first-person1.jpg"
+      avatar: "/team-emmanuel.png"
     },
     {
       quote: "As a platform business, we had data coming from different tools but no single view of what was actually happening. BeamX built us an executive dashboard that brought everything into one place. We can now see our users, revenue, retention, and growth across cities in real time. It changed how we run the business day to day.",
