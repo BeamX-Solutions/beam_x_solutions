@@ -172,8 +172,42 @@ const AboutPage: React.FC = () => {
             </div>
           </section>
 
-          {/* Our Approach to Data Excellence */}
+          {/* Why BeamX Exists */}
           <section className="section bg-gray-50">
+            <div className="container-custom">
+              <motion.div
+                className="max-w-3xl mx-auto text-center"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+              >
+                <svg className="w-12 h-12 text-gray-300 mx-auto mb-8" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                </svg>
+                <blockquote className="text-xl md:text-2xl text-gray-800 font-medium leading-relaxed mb-8">
+                  "I've done this work at scale, providing decision science for some of the most
+                  recognizable brands in the world. BeamX exists because that level of thinking
+                  shouldn't be reserved for Fortune 500 companies. Growing businesses deserve it
+                  too."
+                </blockquote>
+                <div className="flex items-center justify-center gap-4">
+                  <img
+                    src="/second-person.jpg"
+                    alt="Obinna Nweke"
+                    className="w-14 h-14 rounded-full object-cover"
+                  />
+                  <div className="text-left">
+                    <p className="font-semibold text-gray-900">Obinna Nweke</p>
+                    <p className="text-gray-500">Founder & CEO, BeamX Solutions</p>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </section>
+
+          {/* Our Approach to Data Excellence */}
+          <section className="section bg-white">
             <div className="container-custom">
               <SectionHeader
                 title="Our Approach to Data Excellence"

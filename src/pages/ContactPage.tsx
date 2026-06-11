@@ -157,15 +157,9 @@ const ContactPage: React.FC = () => {
                   <li className="flex items-center">
                     <Phone className="h-5 w-5 text-primary mr-3 flex-shrink-0" />
                     <a href="tel:+2348164711076" className="text-gray-600 hover:text-primary transition-colors">
-                      +234 706 805 1221
-                    </a>
-                  </li>
-                  <li className="flex items-center">
-                    <Phone className="h-5 w-5 text-primary mr-3 flex-shrink-0" />
-                    <a href="tel:+2348164711076" className="text-gray-600 hover:text-primary transition-colors">
                       +234 816 471 1076
                     </a>
-                    </li>
+                  </li>
                   <li className="flex items-center">
                     <Mail className="h-5 w-5 text-primary mr-3 flex-shrink-0" />
                     <div>

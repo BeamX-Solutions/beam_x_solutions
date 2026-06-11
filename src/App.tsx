@@ -10,7 +10,8 @@ import ProductsPage from './pages/ProductsPage';
 import ProductsDetailPage from './pages/ProductsDetailPage';
 import LoanApprovalPredictor from './pages/LoanApprovalPredictor';
 import BeaconAssessment from './pages/BeaconAssessment';
-import ManagedIntelligencePage from './pages/ManagedIntelligencePage';
+import BusinessReportingPage from './pages/BusinessReportingPage';
+import MarketingPlanWorkshopPage from './pages/MarketingPlanWorkshopPage';
 import MarketingPlanWaitlist from './pages/MarketingPlanWaitlist';
 import ScrollToTop from './components/ScrollToTop';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
@@ -91,7 +92,8 @@ function App() {
     '/products/beacon-pro-assessment': 'BeamX Solutions | Beacon Pro - Advanced Business Assessment',
     '/contact': 'BeamX Solutions | Contact Us',
     '/privacy-policy': 'BeamX Solutions | Privacy Policy',
-    '/managed-intelligence': 'BeamX Solutions | Managed Intelligence Services',
+    '/business-reporting': 'BeamX Solutions | Business Reporting',
+    '/marketing-plan-workshop': 'BeamX Solutions | Marketing Plan Workshop',
     '/whitepaper': 'White Paper: Blending Instinct with Intelligence | BeamX Solutions',
   };
 
@@ -138,7 +140,8 @@ function App() {
             <Route path="tools/*" element={<Navigate to="/products" replace />} />
             <Route path="contact" element={<ContactPage />} />
             <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
-            <Route path="managed-intelligence" element={<ManagedIntelligencePage />} />
+            <Route path="business-reporting" element={<BusinessReportingPage />} />
+            <Route path="marketing-plan-workshop" element={<MarketingPlanWorkshopPage />} />
             <Route path="whitepaper" element={<WhitepaperPage />} />
             {/* Redirect old blog URLs to external blog */}
             <Route path="blog" element={<ExternalRedirect url="https://blog.beamxsolutions.com/" />} />

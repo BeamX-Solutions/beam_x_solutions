@@ -5,7 +5,7 @@ import { CheckCircle, Star } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import CTASection from '../components/CTASection';
 
-const ManagedIntelligencePage: React.FC = () => {
+const BusinessReportingPage: React.FC = () => {
   const benefits = [
     {
       title: "Business Health Dashboard",
@@ -95,8 +95,8 @@ const ManagedIntelligencePage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>BeamX Solutions | Managed Intelligence Services</title>
-        <meta name="description" content="Transform your data into actionable insights with BeamX's Managed Intelligence Services. Get real-time dashboards, expert reports, and AI-driven answers." />
+        <title>BeamX Solutions | Business Reporting</title>
+        <meta name="description" content="Transform your data into actionable insights with BeamX's Business Reporting service. Get real-time dashboards, expert reports, and AI-driven answers." />
       </Helmet>
 
       {/* Hero Section */}
@@ -109,7 +109,7 @@ const ManagedIntelligencePage: React.FC = () => {
             transition={{ duration: 0.6 }}
             className="max-w-3xl mx-auto text-center"
           >
-            <h1 className="text-white mb-6">Managed Intelligence Services</h1>
+            <h1 className="text-white mb-6">Business Reporting</h1>
             <p className="text-gray-100 text-lg mb-8">
               Turn your data into a competitive advantage with clear, actionable insights that drive growth.
             </p>
@@ -121,7 +121,7 @@ const ManagedIntelligencePage: React.FC = () => {
       <section className="section bg-white">
         <div className="container-custom mx-auto px-4 sm:px-6">
           <SectionHeader
-            title="Why Choose Our Intelligence Services?"
+            title="Why Choose Our Business Reporting?"
             subtitle="We simplify your data to deliver insights that matter, helping you make smarter decisions faster."
             center
           />
@@ -258,7 +258,7 @@ const ManagedIntelligencePage: React.FC = () => {
       {/* CTA Section */}
       <CTASection
         title="Ready to Unlock Your Data's Potential?"
-        subtitle="Schedule a consultation to see how our Managed Intelligence Services can drive your business forward."
+        subtitle="Schedule a consultation to see how our Business Reporting service can drive your business forward."
         primaryButtonText="Book a Consultation"
         primaryButtonHref="/contact"
         secondaryButtonText="Back to Services"
@@ -268,4 +268,4 @@ const ManagedIntelligencePage: React.FC = () => {
   );
 };
 
-export default ManagedIntelligencePage;
+export default BusinessReportingPage;

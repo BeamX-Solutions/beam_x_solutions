@@ -70,7 +70,7 @@ const reportingSubServices = [
 const standaloneServices = [
   {
     icon: <TrendingUp className="h-10 w-10 text-primary" />,
-    title: "Customer Profitability Analysis",
+    title: "Customer Analysis",
     description: "We show you which customers, products, and segments are making you money, breaking even, or costing you. You leave with a clear profit picture and a specific action list."
   },
   {
@@ -81,7 +81,8 @@ const standaloneServices = [
   {
     icon: <Target className="h-10 w-10 text-primary" />,
     title: "Marketing Plan Workshop",
-    description: "A guided session where we build a practical marketing plan around your customers, your budget, and your business goals, not generic advice that does not fit. Powered by Luna, our AI marketing planning tool."
+    description: "A guided session where we build a practical marketing plan around your customers, your budget, and your business goals, not generic advice that does not fit. Powered by Luna, our AI marketing planning tool.",
+    href: "/marketing-plan-workshop"
   }
 ];
 
@@ -153,7 +154,12 @@ const ServicesPage: React.FC = () => {
                   {service.icon}
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">{service.title}</h3>
-                <p className="text-gray-600 text-base leading-relaxed flex-1">{service.description}</p>
+                <p className="text-gray-600 text-base leading-relaxed flex-1 mb-4">{service.description}</p>
+                {service.href && (
+                  <Button href={service.href} variant="outline" icon>
+                    Learn More
+                  </Button>
+                )}
               </motion.div>
             ))}
           </div>
@@ -192,6 +198,11 @@ const ServicesPage: React.FC = () => {
                 </ul>
               </motion.div>
             ))}
+          </div>
+          <div className="text-center mt-10">
+            <Button href="/business-reporting" variant="primary" icon>
+              Learn More About Business Reporting
+            </Button>
           </div>
         </div>
       </section>
