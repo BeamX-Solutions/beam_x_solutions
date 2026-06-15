@@ -168,7 +168,7 @@ const MarketingPlanWorkshopPage: React.FC = () => {
             <img
               src="/obinna-headshot.jpeg"
               alt="Obinna Nweke"
-              className="w-24 h-24 rounded-full object-cover flex-shrink-0"
+              className="w-40 h-40 rounded-full object-cover flex-shrink-0"
             />
             <div className="text-center sm:text-left">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">

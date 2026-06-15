@@ -195,7 +195,7 @@ const AboutPage: React.FC = () => {
                   <img
                     src="/obinna-headshot.jpeg"
                     alt="Obinna Nweke"
-                    className="w-14 h-14 rounded-full object-cover"
+                    className="w-28 h-28 rounded-full object-cover"
                   />
                   <div className="text-left">
                     <p className="font-semibold text-gray-900">Obinna Nweke</p>
