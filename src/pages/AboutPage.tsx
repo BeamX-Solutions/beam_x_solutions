@@ -48,9 +48,9 @@ const AboutPage: React.FC = () => {
   const teamMembers = [
     {
       name: "Obinna Nweke",
-      role: "CEO & Founder",
+      role: "Lead Consultant",
       bio: "With over 15 years of experience in data science and AI, Obinna leads our team in developing cutting-edge analytics solutions.",
-      image: "/second-person.jpg",
+      image: "/obinna-headshot.jpeg",
     },
     {
       name: "Michael Chen",
@@ -193,13 +193,13 @@ const AboutPage: React.FC = () => {
                 </blockquote>
                 <div className="flex items-center justify-center gap-4">
                   <img
-                    src="/second-person.jpg"
+                    src="/obinna-headshot.jpeg"
                     alt="Obinna Nweke"
                     className="w-14 h-14 rounded-full object-cover"
                   />
                   <div className="text-left">
                     <p className="font-semibold text-gray-900">Obinna Nweke</p>
-                    <p className="text-gray-500">Founder & CEO, BeamX Solutions</p>
+                    <p className="text-gray-500">Lead Consultant, BeamX Solutions</p>
                   </div>
                 </div>
               </motion.div>

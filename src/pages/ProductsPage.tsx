@@ -34,7 +34,7 @@ const products = [
   {
     id: 1,
     slug: "beacon",
-    title: "Beacon - Business Assessment",
+    title: "Beacon - Business Health Check",
     description: "Evaluate your business readiness with detailed insights and tailored growth strategies.",
     image: "/predictive_analysis.webp",
     landingLink: "/products/beacon",
@@ -42,7 +42,7 @@ const products = [
   {
     id: 2,
     slug: "beacon-pro",
-    title: "Beacon Pro - Advanced Business Assessment",
+    title: "Beacon Pro - Advanced Business Health Check",
     description: "Evaluate your business across six key pillars with enhanced AI-powered insights and tailored strategies.",
     image: "/eliminate-data.webp",
     landingLink: "/products/beacon",
@@ -50,7 +50,7 @@ const products = [
   {
     id: 3,
     slug: "luna",
-    title: "Luna - AI Marketing Plan Generator",
+    title: "Luna - Marketing Plan Builder",
     description: "Generate comprehensive, data-driven marketing strategies tailored to your business goals and target audience.",
     image: "/gen-ai-strategy.webp",
     externalLink: "https://luna.beamxsolutions.com",

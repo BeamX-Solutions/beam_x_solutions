@@ -166,13 +166,13 @@ const MarketingPlanWorkshopPage: React.FC = () => {
             className="mt-10 bg-white rounded-xl p-8 border border-gray-100 shadow-sm flex flex-col sm:flex-row items-center sm:items-start gap-6"
           >
             <img
-              src="/second-person.jpg"
+              src="/obinna-headshot.jpeg"
               alt="Obinna Nweke"
               className="w-24 h-24 rounded-full object-cover flex-shrink-0"
             />
             <div className="text-center sm:text-left">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                Obinna Nweke <span className="text-gray-500 font-normal">— Founder & CEO, BeamX Solutions</span>
+                Obinna Nweke <span className="text-gray-500 font-normal">— Lead Consultant, BeamX Solutions</span>
               </h3>
               <p className="text-gray-600 text-sm mb-3">
                 He has worked with some of the most recognized brands in the world, leading
@@ -210,7 +210,7 @@ const MarketingPlanWorkshopPage: React.FC = () => {
               <span className="text-xl text-gray-400 line-through">₦250,000</span>
             </div>
             <Button href="#" variant="primary" icon fullWidth>
-              Buy Now
+              Book a Session
             </Button>
           </motion.div>
         </div>
@@ -220,7 +220,7 @@ const MarketingPlanWorkshopPage: React.FC = () => {
       <CTASection
         title="Ready to Build Your Marketing Plan?"
         subtitle="Book your session today before this month's spots are gone."
-        primaryButtonText="Buy Now"
+        primaryButtonText="Book a Session"
         primaryButtonHref="#"
         secondaryButtonText="Back to Services"
         secondaryButtonHref="/services"

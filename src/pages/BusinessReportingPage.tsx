@@ -1,11 +1,13 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
-import { CheckCircle, Star } from 'lucide-react';
+import { CheckCircle, Star, ChevronDown } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import CTASection from '../components/CTASection';
 
 const BusinessReportingPage: React.FC = () => {
+  const [openFaq, setOpenFaq] = React.useState<number | null>(null);
+
   const benefits = [
     {
       title: "Business Health Dashboard",
@@ -233,7 +235,7 @@ const BusinessReportingPage: React.FC = () => {
       <section className="section bg-gray-50">
         <div className="container-custom mx-auto px-4 sm:px-6">
           <SectionHeader
-            title="frequently Asked Questions"
+            title="Frequently Asked Questions"
             subtitle="Get answers to help you make an informed decision."
             center
           />
@@ -241,14 +243,36 @@ const BusinessReportingPage: React.FC = () => {
             {faqs.map((faq, index) => (
               <motion.div
                 key={index}
-                className="bg-white p-4 rounded-xl shadow-sm border border-gray-100"
+                className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
               >
-                <h3 className="text-base font-semibold text-gray-900 mb-2">{faq.question}</h3>
-                <p className="text-gray-600 text-sm">{faq.answer}</p>
+                <button
+                  className="w-full flex items-center justify-between p-4 text-left bg-white hover:bg-gray-50 transition-colors"
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  aria-expanded={openFaq === index}
+                >
+                  <h3 className="text-base font-semibold text-gray-900 pr-4">{faq.question}</h3>
+                  <ChevronDown
+                    className={`h-5 w-5 text-gray-400 flex-shrink-0 transition-transform duration-300 ${openFaq === index ? 'rotate-180' : ''}`}
+                  />
+                </button>
+                <AnimatePresence initial={false}>
+                  {openFaq === index && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <p className="px-4 pb-4 text-gray-600 text-sm border-t border-gray-100 pt-3">
+                        {faq.answer}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             ))}
           </div>
