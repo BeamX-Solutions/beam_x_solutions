@@ -166,10 +166,10 @@ const HomePage: React.FC = () => {
               transition={{ duration: 0.6 }}
             >
               <h1 className="text-white font-bold mb-4 text-4xl md:text-5xl">
-                See what is working. Fix what is losing money. <span className="text-secondary">Grow faster.</span>
+                Turn Your Data into Your <span className="text-secondary">Biggest Competitive Advantage</span>
               </h1>
               <p className="text-white text-base md:text-lg mb-6">
-                We help business leaders understand their sales, customers, and costs, so they can spot what is working, fix what is not, and focus on what actually grows the business.
+                We combine advanced analytics, custom AI solutions, and intelligent product development to help you see what's working, eliminate hidden losses, and build AI-powered capabilities that drive real, sustainable growth.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button href="https://calendly.com/beamxsolutions" variant="white" icon>
