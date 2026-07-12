@@ -31,7 +31,7 @@ const AboutPage: React.FC = () => {
     },
     {
       value: 90,
-      label: "AI Adoption Succes",
+      label: "AI Adoption Success",
       description:
         "With 90% of our clients successfully adopting Gen AI solutions, we help you maximize AI technology to grow your business.",
       suffix: "%",
