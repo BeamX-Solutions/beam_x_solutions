@@ -19,7 +19,7 @@ exports.handler = async function (event, context) {
     console.error('Error pinging business assessment backend:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Error pinging business assessment backend', error: error.message }),
+      body: JSON.stringify({ message: 'Error pinging business assessment backend' }),
     };
   }
 };

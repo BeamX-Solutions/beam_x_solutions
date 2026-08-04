@@ -24,7 +24,7 @@ const SubscribeButton: React.FC = () => {
       }
       try {
         const response = await axios.get<{ isSubscribed: boolean }>('/.netlify/functions/check-subscription', {
-          params: { email, audienceId: process.env.REACT_APP_RESEND_AUDIENCE_ID },
+          params: { email },
         });
         setIsSubscribed(response.data.isSubscribed);
       } catch (error: unknown) {

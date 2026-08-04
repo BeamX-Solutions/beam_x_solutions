@@ -14,6 +14,15 @@ const WHITEPAPER_PDF_URL =
   process.env.WHITEPAPER_PDF_URL ||
   "https://www.beamxsolutions.com/BeamX_White_Paper_February_2026.pdf";
 
+const escapeHtml = (value) =>
+  String(value ?? "").replace(/[&<>"']/g, (ch) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  }[ch]));
+
 exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: JSON.stringify({ message: "Method not allowed" }) };
@@ -67,7 +76,7 @@ exports.handler = async (event) => {
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
             <img src="https://www.beamxsolutions.com/Beamx-Logo-Colour.png" alt="BeamX Solutions" style="height: 40px; margin-bottom: 24px;" />
 
-            <h2 style="color: #0D2B4E; margin-bottom: 16px;">Hi ${firstName},</h2>
+            <h2 style="color: #0D2B4E; margin-bottom: 16px;">Hi ${escapeHtml(firstName)},</h2>
 
             <p style="color: #333; line-height: 1.7; margin-bottom: 16px;">
               Thank you for your interest in our white paper, <strong>&ldquo;Blending Instinct with Intelligence: How AI-Powered Tools Are Reshaping SME Growth in African Markets.&rdquo;</strong>

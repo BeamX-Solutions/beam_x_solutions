@@ -19,7 +19,7 @@ exports.handler = async function (event, context) {
     console.error('Error pinging scorecard backend:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Error pinging scorecard backend', error: error.message }),
+      body: JSON.stringify({ message: 'Error pinging scorecard backend' }),
     };
   }
 };

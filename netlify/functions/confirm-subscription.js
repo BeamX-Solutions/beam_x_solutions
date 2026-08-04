@@ -25,7 +25,7 @@ const retryOnRateLimit = async (fn, retries = 3, baseDelay = 1000) => {
 exports.handler = async (event) => {
   const resend = new Resend(process.env.RESEND_API_KEY);
   const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
-  const { token, email } = event.queryStringParameters;
+  const { token, email } = event.queryStringParameters || {};
 
   if (!token || !email) {
     return {
@@ -163,7 +163,7 @@ exports.handler = async (event) => {
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; text-align: center;">
           <img src="https://beamxsolutions.com/Beamx-Logo-Colour3.jpg" alt="BeamX Solutions Logo" style="max-width: 200px; display: block; margin: 0 auto 20px;">
           <h1 style="color: #333;">Subscription Error</h1>
-          <p style="color: #555; line-height: 1.6;">Could not confirm subscription: ${error.message}. Please try again or contact support.</p>
+          <p style="color: #555; line-height: 1.6;">Could not confirm subscription. Please try again or contact support.</p>
           <p style="color: #555; line-height: 1.6;">You can close this page.</p>
         </div>
       `,

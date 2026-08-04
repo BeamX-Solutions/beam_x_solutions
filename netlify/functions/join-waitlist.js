@@ -1,7 +1,23 @@
 const { createClient } = require('@supabase/supabase-js');
 const { Resend } = require('resend');
 
+const escapeHtml = (value) =>
+  String(value ?? '').replace(/[&<>"']/g, (ch) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  }[ch]));
+
 exports.handler = async function (event, context) {
+  if (event.httpMethod !== 'POST') {
+    return {
+      statusCode: 405,
+      body: JSON.stringify({ message: 'Method not allowed' }),
+    };
+  }
+
   let body;
   try {
     body = JSON.parse(event.body);
@@ -60,7 +76,7 @@ exports.handler = async function (event, context) {
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h1 style="color: #333; text-align: center;">You're on the Waitlist!</h1>
-          <p style="color: #555; line-height: 1.6;">Hello ${firstName} ${lastName}, thank you for joining the waitlist for our AI Marketing Plan Generator. We'll notify you when it launches.</p>
+          <p style="color: #555; line-height: 1.6;">Hello ${escapeHtml(firstName)} ${escapeHtml(lastName)}, thank you for joining the waitlist for our AI Marketing Plan Generator. We'll notify you when it launches.</p>
         </div>
       `,
     });

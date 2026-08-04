@@ -26,7 +26,7 @@ exports.handler = async function (event, context) {
     console.error('Error waking backend:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Error waking backend', error: error.message }),
+      body: JSON.stringify({ message: 'Error waking backend' }),
     };
   }
 };

@@ -4,6 +4,15 @@ const crypto = require('crypto');
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+const escapeHtml = (value) =>
+  String(value ?? '').replace(/[&<>"']/g, (ch) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  }[ch]));
+
 const retryOnRateLimit = async (fn, retries = 3, baseDelay = 1000) => {
   for (let i = 0; i < retries; i++) {
     try {
@@ -24,9 +33,25 @@ const retryOnRateLimit = async (fn, retries = 3, baseDelay = 1000) => {
 };
 
 exports.handler = async (event) => {
+  if (event.httpMethod !== 'POST') {
+    return {
+      statusCode: 405,
+      body: JSON.stringify({ message: 'Method not allowed' }),
+    };
+  }
+
   const resend = new Resend(process.env.RESEND_API_KEY);
   const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
-  const { firstName, lastName, email, action } = JSON.parse(event.body);
+
+  let firstName, lastName, email, action;
+  try {
+    ({ firstName, lastName, email, action } = JSON.parse(event.body || '{}'));
+  } catch {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ message: 'Invalid JSON in request body' }),
+    };
+  }
 
   // Validate email format
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -34,6 +59,13 @@ exports.handler = async (event) => {
     return {
       statusCode: 400,
       body: JSON.stringify({ message: 'Invalid email address' }),
+    };
+  }
+
+  if (!firstName || !lastName || String(firstName).length > 100 || String(lastName).length > 100) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ message: 'First name and last name are required' }),
     };
   }
 
@@ -77,7 +109,7 @@ exports.handler = async (event) => {
           html: `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
               <img src="https://beamxsolutions.com/Beamx-Logo-Colour3.jpg" alt="BeamX Solutions Logo" style="max-width: 200px; display: block; margin: 0 auto 20px;">
-              <h1 style="color: #333; text-align: center;">We're Sorry to See You Go, ${firstName} ${lastName}</h1>
+              <h1 style="color: #333; text-align: center;">We're Sorry to See You Go, ${escapeHtml(firstName)} ${escapeHtml(lastName)}</h1>
               <p style="color: #555; line-height: 1.6;">You have successfully unsubscribed. <a href="https://beamxsolutions.com/subscribe" style="color: #0066cc;">Resubscribe here</a>.</p>
             </div>
           `,
@@ -114,7 +146,8 @@ exports.handler = async (event) => {
       throw new Error('Failed to store pending subscription');
     }
 
-    const confirmationUrl = `https://${event.headers.host}/.netlify/functions/confirm-subscription?token=${token}&email=${encodeURIComponent(email)}`;
+    const siteUrl = process.env.URL || 'https://beamxsolutions.com';
+    const confirmationUrl = `${siteUrl}/.netlify/functions/confirm-subscription?token=${token}&email=${encodeURIComponent(email)}`;
     const emailResponse = await retryOnRateLimit(() =>
       resend.emails.send({
         from: 'BeamX Solutions Team <info@beamxsolutions.com>',
@@ -124,7 +157,7 @@ exports.handler = async (event) => {
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
             <img src="https://beamxsolutions.com/Beamx-Logo-Colour3.jpg" alt="BeamX Solutions Logo" style="max-width: 200px; display: block; margin: 0 auto 20px;">
             <h1 style="color: #333; text-align: center;">Confirm Your Subscription</h1>
-            <p style="color: #555; line-height: 1.6;">Hello ${firstName} ${lastName},</p>
+            <p style="color: #555; line-height: 1.6;">Hello ${escapeHtml(firstName)} ${escapeHtml(lastName)},</p>
             <p style="color: #555; line-height: 1.6;">Thank you for signing up for the BeamX Solutions newsletter! Please confirm your subscription by clicking the button below.</p>
             <p style="text-align: center; margin: 30px 0;">
               <a href="${confirmationUrl}" style="display: inline-block; background-color: #0066cc; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold;">Confirm Subscription</a>
@@ -148,7 +181,7 @@ exports.handler = async (event) => {
     console.error('Error:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: `Error: Could not process request. ${error.message}` }),
+      body: JSON.stringify({ message: 'Error: Could not process request. Please try again later.' }),
     };
   }
 };
