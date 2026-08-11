@@ -1,6 +1,7 @@
 const { Resend } = require('resend');
 const { createClient } = require('@supabase/supabase-js');
 const crypto = require('crypto');
+const { verifyTurnstile, clientIp, rejection } = require('../lib/turnstile.cjs');
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -40,12 +41,9 @@ exports.handler = async (event) => {
     };
   }
 
-  const resend = new Resend(process.env.RESEND_API_KEY);
-  const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
-
-  let firstName, lastName, email, action;
+  let firstName, lastName, email, action, turnstileToken;
   try {
-    ({ firstName, lastName, email, action } = JSON.parse(event.body || '{}'));
+    ({ firstName, lastName, email, action, turnstileToken } = JSON.parse(event.body || '{}'));
   } catch {
     return {
       statusCode: 400,
@@ -68,6 +66,14 @@ exports.handler = async (event) => {
       body: JSON.stringify({ message: 'First name and last name are required' }),
     };
   }
+
+  const verification = await verifyTurnstile(turnstileToken, clientIp(event));
+  if (!verification.ok) {
+    return rejection(verification.reason);
+  }
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
   try {
     if (action === 'unsubscribe') {

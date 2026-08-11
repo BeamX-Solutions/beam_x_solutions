@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import Button from './Button';
+import TurnstileWidget, { TurnstileHandle } from './TurnstileWidget';
 
 const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -20,6 +21,9 @@ const ContactForm: React.FC = () => {
     message: null,
   });
 
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const turnstileRef = useRef<TurnstileHandle>(null);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -31,6 +35,7 @@ const ContactForm: React.FC = () => {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) return 'Invalid email format';
     if (!formData.message.trim()) return 'Message is required';
     if (formData.botField) return 'Bot detected';
+    if (!turnstileToken) return 'Please complete the bot check below';
     return '';
   };
 
@@ -55,8 +60,12 @@ const ContactForm: React.FC = () => {
           company: formData.company,
           message: formData.message,
           botField: formData.botField,
+          turnstileToken,
         }),
       });
+
+      // Turnstile tokens are single-use, so a fresh one is needed either way.
+      turnstileRef.current?.reset();
 
       const data = await response.json();
       if (response.ok) {
@@ -76,6 +85,7 @@ const ContactForm: React.FC = () => {
         setFormStatus({ type: 'error', message: data.error || 'Failed to send message' });
       }
     } catch (error) {
+      turnstileRef.current?.reset();
       setFormStatus({ type: 'error', message: 'Network error. Please try again later.' });
     }
   };
@@ -168,6 +178,7 @@ const ContactForm: React.FC = () => {
           onChange={handleChange}
         />
       </div>
+      <TurnstileWidget ref={turnstileRef} onVerify={setTurnstileToken} />
       {formStatus.message && (
         <motion.div
           initial={{ opacity: 0 }}

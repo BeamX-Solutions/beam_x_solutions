@@ -8,6 +8,8 @@
 //   WHITEPAPER_PDF_URL   - public URL of the hosted PDF
 //                          e.g. https://www.beamxsolutions.com/BeamX_White_Paper_February_2026.pdf
 
+const { verifyTurnstile, clientIp, rejection } = require("../lib/turnstile.cjs");
+
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const RESEND_AUDIENCE_ID = process.env.RESEND_AUDIENCE_ID;
 const WHITEPAPER_PDF_URL =
@@ -29,13 +31,18 @@ exports.handler = async (event) => {
   }
 
   try {
-    const { firstName, lastName, email } = JSON.parse(event.body || "{}");
+    const { firstName, lastName, email, turnstileToken } = JSON.parse(event.body || "{}");
 
     if (!firstName || !email) {
       return {
         statusCode: 400,
         body: JSON.stringify({ message: "First name and email are required." }),
       };
+    }
+
+    const verification = await verifyTurnstile(turnstileToken, clientIp(event));
+    if (!verification.ok) {
+      return rejection(verification.reason);
     }
 
     // ── 1. Add contact to Resend Audience (viewer tracking) ──

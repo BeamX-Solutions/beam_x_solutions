@@ -1,4 +1,5 @@
 const { Resend } = require('resend');
+const { verifyTurnstile, clientIp, rejection } = require('../lib/turnstile.cjs');
 
 const escapeHtml = (value) =>
   String(value ?? '').replace(/[&<>"']/g, (ch) => ({
@@ -17,11 +18,9 @@ exports.handler = async (event) => {
     };
   }
 
-  const resend = new Resend(process.env.RESEND_API_KEY);
-
   try {
     const body = JSON.parse(event.body || '{}');
-    const { name, email, phone, company, message, botField } = body;
+    const { name, email, phone, company, message, botField, turnstileToken } = body;
 
     // Check for bot field
     if (botField) {
@@ -45,6 +44,13 @@ exports.handler = async (event) => {
         body: JSON.stringify({ error: 'Invalid email address' }),
       };
     }
+
+    const verification = await verifyTurnstile(turnstileToken, clientIp(event));
+    if (!verification.ok) {
+      return rejection(verification.reason);
+    }
+
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
     const { data, error } = await resend.emails.send({
       from: 'admin@beamxsolutions.com',

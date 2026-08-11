@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { MapPin, Mail, Phone, Clock, ChevronDown } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
+import TurnstileWidget, { TurnstileHandle } from '../components/TurnstileWidget';
 
 const ContactPage: React.FC = () => {
   // State for FAQ expansion
@@ -20,6 +21,8 @@ const ContactPage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const turnstileRef = useRef<TurnstileHandle>(null);
 
   // FAQ data
   const faqs = [
@@ -60,6 +63,7 @@ const ContactPage: React.FC = () => {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) return 'Invalid email format';
     if (!formData.message.trim()) return 'Message is required';
     if (formData.botField) return 'Bot detected';
+    if (!turnstileToken) return 'Please complete the bot check below';
     return '';
   };
 
@@ -81,8 +85,11 @@ const ContactPage: React.FC = () => {
       const response = await fetch('/.netlify/functions/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, turnstileToken }),
       });
+
+      // Turnstile tokens are single-use, so a fresh one is needed either way.
+      turnstileRef.current?.reset();
 
       const data = await response.json();
       if (response.ok) {
@@ -103,6 +110,7 @@ const ContactPage: React.FC = () => {
         setErrorMessage(data.error || 'Failed to send message');
       }
     } catch (error) {
+      turnstileRef.current?.reset();
       setSubmitStatus('error');
       setErrorMessage('Network error. Please try again later.');
     } finally {
@@ -284,6 +292,7 @@ const ContactPage: React.FC = () => {
                     onChange={handleChange}
                   />
                 </div>
+                <TurnstileWidget ref={turnstileRef} onVerify={setTurnstileToken} />
                 {submitStatus === 'success' && (
                   <motion.div
                     initial={{ opacity: 0 }}

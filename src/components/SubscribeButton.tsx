@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Button from './Button'; // Adjust path to your Button component
+import TurnstileWidget, { TurnstileHandle } from './TurnstileWidget';
 
 interface SubscribeResponse {
   message: string;
@@ -14,6 +15,8 @@ const SubscribeButton: React.FC = () => {
   const [message, setMessage] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSubscribed, setIsSubscribed] = useState<boolean | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string>('');
+  const turnstileRef = useRef<TurnstileHandle>(null);
 
   // Check subscription status on email change
   useEffect(() => {
@@ -38,6 +41,12 @@ const SubscribeButton: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     setMessage('');
+
+    if (!turnstileToken) {
+      setMessage('Please complete the bot check below.');
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -46,6 +55,7 @@ const SubscribeButton: React.FC = () => {
         lastName,
         email,
         action: isSubscribed ? 'unsubscribe' : undefined, // Send action only for unsubscribe
+        turnstileToken,
       });
       setMessage(response.data.message);
       if (!isSubscribed) {
@@ -63,6 +73,8 @@ const SubscribeButton: React.FC = () => {
         setMessage(errorMessage);
       }
     } finally {
+      // Turnstile tokens are single-use, so a fresh one is needed either way.
+      turnstileRef.current?.reset();
       setIsLoading(false);
     }
   };
@@ -94,6 +106,7 @@ const SubscribeButton: React.FC = () => {
           className="flex-grow px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary"
           required
         />
+        <TurnstileWidget ref={turnstileRef} onVerify={setTurnstileToken} />
         <Button type="submit" variant="primary" disabled={isLoading || isSubscribed === null}>
           {isLoading ? 'Submitting...' : isSubscribed === null ? 'Loading...' : isSubscribed ? 'Unsubscribe' : 'Subscribe'}
         </Button>

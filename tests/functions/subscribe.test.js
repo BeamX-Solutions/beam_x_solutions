@@ -1,18 +1,19 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { installFetchStub, sentEmails } from './fetch-stub.js';
+import { installFetchStub, sentEmails, turnstileRejects } from './fetch-stub.js';
 
 process.env.SUPABASE_URL = 'https://stub.supabase.co';
 process.env.SUPABASE_KEY = 'stub-key';
 process.env.RESEND_API_KEY = 'stub-key';
 process.env.RESEND_AUDIENCE_ID = 'stub-audience';
 process.env.URL = 'https://beamxsolutions.com';
+process.env.TURNSTILE_SECRET_KEY = 'stub-turnstile-secret';
 
 const { handler } = await import('../../netlify/functions/subscribe.js');
 
 const postEvent = (body) => ({
   httpMethod: 'POST',
   headers: { host: 'evil.example.com' },
-  body: JSON.stringify(body),
+  body: JSON.stringify({ turnstileToken: 'valid-token', ...body }),
 });
 
 describe('subscribe function', () => {
@@ -42,6 +43,25 @@ describe('subscribe function', () => {
   it('rejects missing names', async () => {
     const res = await handler(postEvent({ email: 'a@b.com' }));
     expect(res.statusCode).toBe(400);
+  });
+
+  it('rejects a submission with no Turnstile token', async () => {
+    const res = await handler({
+      httpMethod: 'POST',
+      headers: {},
+      body: JSON.stringify({ firstName: 'Ada', lastName: 'Obi', email: 'ada@b.com' }),
+    });
+    expect(res.statusCode).toBe(400);
+    expect(sentEmails(fetchStub)).toHaveLength(0);
+  });
+
+  it('rejects a submission Cloudflare says is a bot', async () => {
+    fetchStub = turnstileRejects();
+    const res = await handler(
+      postEvent({ firstName: 'Ada', lastName: 'Obi', email: 'ada@b.com' })
+    );
+    expect(res.statusCode).toBe(403);
+    expect(sentEmails(fetchStub)).toHaveLength(0);
   });
 
   it('stores a pending subscription and emails a confirmation link on the canonical domain', async () => {

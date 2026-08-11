@@ -1,13 +1,14 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { installFetchStub, sentEmails } from './fetch-stub.js';
+import { installFetchStub, sentEmails, turnstileRejects } from './fetch-stub.js';
 
 process.env.RESEND_API_KEY = 'stub-key';
+process.env.TURNSTILE_SECRET_KEY = 'stub-turnstile-secret';
 
 const { handler } = await import('../../netlify/functions/send-email.js');
 
 const postEvent = (body) => ({
   httpMethod: 'POST',
-  body: JSON.stringify(body),
+  body: JSON.stringify({ turnstileToken: 'valid-token', ...body }),
 });
 
 describe('send-email function', () => {
@@ -46,6 +47,24 @@ describe('send-email function', () => {
   it('rejects invalid JSON bodies without crashing', async () => {
     const res = await handler({ httpMethod: 'POST', body: '{not json' });
     expect(res.statusCode).toBe(500);
+  });
+
+  it('rejects a submission with no Turnstile token', async () => {
+    const res = await handler({
+      httpMethod: 'POST',
+      body: JSON.stringify({ name: 'A', email: 'a@b.com', message: 'hi' }),
+    });
+    expect(res.statusCode).toBe(400);
+    expect(sentEmails(fetchStub)).toHaveLength(0);
+  });
+
+  it('rejects a submission Cloudflare says is a bot', async () => {
+    fetchStub = turnstileRejects();
+    const res = await handler(
+      postEvent({ name: 'A', email: 'a@b.com', message: 'hi' })
+    );
+    expect(res.statusCode).toBe(403);
+    expect(sentEmails(fetchStub)).toHaveLength(0);
   });
 
   it('sends the email and escapes HTML in user input', async () => {

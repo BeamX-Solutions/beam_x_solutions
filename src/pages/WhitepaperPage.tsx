@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { FileText, CheckCircle, Download, Eye, BarChart3, Brain, Target, Shield } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import Button from '../components/Button';
 import CTASection from '../components/CTASection';
+import TurnstileWidget, { TurnstileHandle } from '../components/TurnstileWidget';
 
 const WhitepaperPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -17,6 +18,8 @@ const WhitepaperPage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [error, setError] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const turnstileRef = useRef<TurnstileHandle>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -39,6 +42,11 @@ const WhitepaperPage: React.FC = () => {
 
     if (formData.botField) return;
 
+    if (!turnstileToken) {
+      setError('Please complete the bot check below.');
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -50,6 +58,7 @@ const WhitepaperPage: React.FC = () => {
           lastName: formData.lastName,
           email: formData.email,
           company: formData.company,
+          turnstileToken,
         }),
       });
 
@@ -63,6 +72,8 @@ const WhitepaperPage: React.FC = () => {
     } catch (err) {
       setError('Network error. Please try again later.');
     } finally {
+      // Turnstile tokens are single-use, so a fresh one is needed either way.
+      turnstileRef.current?.reset();
       setIsSubmitting(false);
     }
   };
@@ -355,6 +366,8 @@ const WhitepaperPage: React.FC = () => {
                       onChange={handleChange}
                     />
                   </div>
+
+                  <TurnstileWidget ref={turnstileRef} onVerify={setTurnstileToken} />
 
                   {error && (
                     <motion.div

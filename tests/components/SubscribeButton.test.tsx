@@ -1,7 +1,21 @@
+import React from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
+
+// Stand in for the real widget, which needs Cloudflare's script. It hands back
+// a token as soon as it mounts, mirroring a visitor passing the check.
+vi.mock('../../src/components/TurnstileWidget', () => ({
+  default: React.forwardRef(
+    ({ onVerify }: { onVerify: (t: string) => void }, ref: React.Ref<unknown>) => {
+      React.useImperativeHandle(ref, () => ({ reset: () => onVerify('') }), [onVerify]);
+      React.useEffect(() => onVerify('test-token'), [onVerify]);
+      return <div data-testid="turnstile-widget" />;
+    }
+  ),
+}));
+
 import SubscribeButton from '../../src/components/SubscribeButton';
 
 vi.mock('axios');
@@ -47,5 +61,19 @@ describe('SubscribeButton', () => {
       '/.netlify/functions/subscribe',
       expect.objectContaining({ email: 'ada@b.com', firstName: 'Ada', lastName: 'Obi' })
     );
+  });
+
+  it('sends the Turnstile token with the subscription request', async () => {
+    render(<SubscribeButton />);
+    await userEvent.type(screen.getByPlaceholderText('First name'), 'Ada');
+    await userEvent.type(screen.getByPlaceholderText('Last name'), 'Obi');
+    await userEvent.type(screen.getByPlaceholderText('Your email'), 'ada@b.com');
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: 'Subscribe' })).toBeEnabled()
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'Subscribe' }));
+    await waitFor(() => expect(mockedAxios.post).toHaveBeenCalled());
+    const [, payload] = mockedAxios.post.mock.lastCall!;
+    expect((payload as { turnstileToken: string }).turnstileToken).toBe('test-token');
   });
 });

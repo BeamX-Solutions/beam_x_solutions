@@ -16,6 +16,7 @@ export const installFetchStub = (overrides = {}) => {
     for (const [needle, respond] of Object.entries(overrides)) {
       if (u.includes(needle)) return respond(u, options);
     }
+    if (u.includes('challenges.cloudflare.com')) return json({ success: true });
     if (u.includes('api.resend.com/emails')) return json({ id: 'email-id' });
     if (u.includes('api.resend.com/audiences')) return json({ data: [] });
     if (u.includes('/rest/v1/')) return new Response('', { status: 201 });
@@ -29,5 +30,12 @@ export const sentEmails = (stub) =>
   stub.mock.calls
     .filter(([url]) => String(url).includes('api.resend.com/emails'))
     .map(([, options]) => JSON.parse(options.body));
+
+// Turnstile rejects every token.
+export const turnstileRejects = () =>
+  installFetchStub({
+    'challenges.cloudflare.com': () =>
+      installFetchStub.json({ success: false, 'error-codes': ['invalid-input-response'] }),
+  });
 
 installFetchStub.json = json;

@@ -1,15 +1,16 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { installFetchStub, sentEmails } from './fetch-stub.js';
+import { installFetchStub, sentEmails, turnstileRejects } from './fetch-stub.js';
 
 process.env.SUPABASE_URL = 'https://stub.supabase.co';
 process.env.SUPABASE_KEY = 'stub-key';
 process.env.RESEND_API_KEY = 'stub-key';
+process.env.TURNSTILE_SECRET_KEY = 'stub-turnstile-secret';
 
 const { handler } = await import('../../netlify/functions/join-waitlist.js');
 
 const postEvent = (body) => ({
   httpMethod: 'POST',
-  body: JSON.stringify(body),
+  body: JSON.stringify({ turnstileToken: 'valid-token', ...body }),
 });
 
 describe('join-waitlist function', () => {
@@ -39,6 +40,24 @@ describe('join-waitlist function', () => {
       postEvent({ firstName: 'A', lastName: 'B', email: 'bad-email' })
     );
     expect(res.statusCode).toBe(400);
+  });
+
+  it('rejects a submission with no Turnstile token', async () => {
+    const res = await handler({
+      httpMethod: 'POST',
+      body: JSON.stringify({ firstName: 'A', lastName: 'B', email: 'a@b.com' }),
+    });
+    expect(res.statusCode).toBe(400);
+    expect(sentEmails(fetchStub)).toHaveLength(0);
+  });
+
+  it('rejects a submission Cloudflare says is a bot', async () => {
+    fetchStub = turnstileRejects();
+    const res = await handler(
+      postEvent({ firstName: 'A', lastName: 'B', email: 'a@b.com' })
+    );
+    expect(res.statusCode).toBe(403);
+    expect(sentEmails(fetchStub)).toHaveLength(0);
   });
 
   it('saves the signup and escapes HTML in the confirmation email', async () => {

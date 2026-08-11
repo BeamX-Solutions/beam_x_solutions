@@ -1,5 +1,6 @@
 const { createClient } = require('@supabase/supabase-js');
 const { Resend } = require('resend');
+const { verifyTurnstile, clientIp, rejection } = require('../lib/turnstile.cjs');
 
 const escapeHtml = (value) =>
   String(value ?? '').replace(/[&<>"']/g, (ch) => ({
@@ -28,7 +29,7 @@ exports.handler = async function (event, context) {
     };
   }
 
-  const { firstName, lastName, email } = body;
+  const { firstName, lastName, email, turnstileToken } = body;
 
   if (!email || !firstName || !lastName) {
     return {
@@ -43,6 +44,11 @@ exports.handler = async function (event, context) {
       statusCode: 400,
       body: JSON.stringify({ message: 'Invalid email address' }),
     };
+  }
+
+  const verification = await verifyTurnstile(turnstileToken, clientIp(event));
+  if (!verification.ok) {
+    return rejection(verification.reason);
   }
 
   const supabaseUrl = process.env.SUPABASE_URL;

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { CheckCircle, TrendingUp, Target, BarChart3, Users } from 'lucide-react';
 import Button from '../components/Button';
 import CTASection from '../components/CTASection';
+import TurnstileWidget, { TurnstileHandle } from '../components/TurnstileWidget';
 
 const MarketingPlanWaitlist: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -12,11 +13,19 @@ const MarketingPlanWaitlist: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const turnstileRef = useRef<TurnstileHandle>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
     setError('');
+
+    if (!turnstileToken) {
+      setError('Please complete the bot check below.');
+      return;
+    }
+
+    setIsLoading(true);
 
     try {
       const response = await fetch('/.netlify/functions/join-waitlist', {
@@ -28,6 +37,7 @@ const MarketingPlanWaitlist: React.FC = () => {
           firstName,
           lastName,
           email,
+          turnstileToken,
         }),
       });
 
@@ -44,6 +54,8 @@ const MarketingPlanWaitlist: React.FC = () => {
     } catch (err) {
       setError('Network error. Please try again later.');
     } finally {
+      // Turnstile tokens are single-use, so a fresh one is needed either way.
+      turnstileRef.current?.reset();
       setIsLoading(false);
     }
   };
@@ -232,6 +244,8 @@ const MarketingPlanWaitlist: React.FC = () => {
                       placeholder="Enter your email address"
                     />
                   </div>
+
+                  <TurnstileWidget ref={turnstileRef} onVerify={setTurnstileToken} />
 
                   {error && (
                     <div className="bg-red-50 border border-red-200 rounded-lg p-4">
