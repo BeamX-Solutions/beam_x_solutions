@@ -20,6 +20,36 @@
   to = "/.netlify/functions/:splat"
   status = 200
 
+# The blog lives on its own subdomain. These were client-side JS redirects,
+# which crawlers do not follow and which pass no ranking signal, so they are
+# server-side 301s now.
+[[redirects]]
+  from = "/blog"
+  to = "https://blog.beamxsolutions.com/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/*"
+  to = "https://blog.beamxsolutions.com/:splat"
+  status = 301
+  force = true
+
+# Legacy /tools paths were folded into /products.
+[[redirects]]
+  from = "/tools"
+  to = "/products"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/*"
+  to = "/products"
+  status = 301
+  force = true
+
+# SPA fallback. Not forced, so the prerendered HTML at dist/<route>/index.html
+# is served in preference to this for every known route.
 [[redirects]]
   from = "/*"
   to = "/index.html"

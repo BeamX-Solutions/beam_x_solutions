@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams, NavLink } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
+import { ORGANIZATION_SCHEMA, absoluteUrl } from '../lib/siteConfig';
 import { motion } from 'framer-motion';
 import { Quote, Building, AlertCircle, CheckCircle, BarChart } from 'lucide-react';
 import Button from '../components/Button';
@@ -185,15 +186,22 @@ const ProductsDetailPage: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>BeamX Solutions | {caseStudy.title}</title>
-        <meta name="description" content={caseStudy.description} />
-        <meta property="og:title" content={`BeamX Solutions | ${caseStudy.title}`} />
-        <meta property="og:description" content={caseStudy.description} />
-        <meta property="og:image" content={caseStudy.logo} />
-        <meta property="og:url" content={`https://beamxsolutions.com/products/${caseStudy.slug}`} />
-        <meta name="twitter:card" content="summary_large_image" />
-      </Helmet>
+      <Seo
+        title={`${caseStudy.title} | BeamX Solutions`}
+        description={caseStudy.description}
+        path={`/products/${caseStudy.slug}`}
+        image={caseStudy.logo}
+        type="article"
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          headline: caseStudy.title,
+          description: caseStudy.description,
+          image: absoluteUrl(caseStudy.logo),
+          publisher: ORGANIZATION_SCHEMA,
+          mainEntityOfPage: absoluteUrl(`/products/${caseStudy.slug}`),
+        }}
+      />
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-36 md:pb-12 bg-gradient-primary bg-opacity-75 z-0">
         <div className="container-custom mx-auto px-4 sm:px-6">

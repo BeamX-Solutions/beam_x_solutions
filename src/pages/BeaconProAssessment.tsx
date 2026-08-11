@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Button from '../components/Button';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 import CTASection from '../components/CTASection';
 import ReactMarkdown from 'react-markdown';
 
@@ -314,10 +314,12 @@ const BeaconProAssessment: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>BeamX Solutions | Beacon Pro – AI Business Assessment</title>
-        <meta name="description" content="Beacon Pro: AI-powered deep diagnostic. A personalised advisory written by AI — specific to your business, industry, and challenges." />
-      </Helmet>
+      <Seo
+        title="Beacon Pro — AI Business Assessment | BeamX Solutions"
+        description="Beacon Pro: AI-powered deep diagnostic. A personalised advisory written by AI — specific to your business, industry, and challenges."
+        path="/products/beacon-pro-assessment"
+        image="/beacon-pro-banner.png"
+      />
 
       {/* Hero */}
       <section className="relative min-h-[50vh] flex items-center bg-gradient-primary overflow-hidden">

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Component, ReactNode } from 'react';
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
@@ -120,36 +119,34 @@ function App() {
   }, [location.pathname, location.search]);
 
   return (
-    <HelmetProvider>
-      <ErrorBoundary>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Layout isLoading={isLoading} />}>
-            <Route index element={<HomePage />} />
-            <Route path="about" element={<AboutPage />} />
-            <Route path="services" element={<ServicesPage />} />
-            <Route path="products" element={<ProductsPage />} />
-            <Route path="products/:slug" element={<ProductsDetailPage />} />
-            <Route path="products/loan-approval-model" element={<LoanApprovalPredictor />} />
-            <Route path="products/beacon" element={<BeaconPage />} />
-            <Route path="products/beacon-assessment" element={<BeaconAssessment />} />
-            <Route path="products/beacon-pro-assessment" element={<BeaconProAssessment />} />
-            <Route path="products/luna/waitlist" element={<MarketingPlanWaitlist />} />
-            {/* Redirects from old /tools routes to /products */}
-            <Route path="tools" element={<Navigate to="/products" replace />} />
-            <Route path="tools/*" element={<Navigate to="/products" replace />} />
-            <Route path="contact" element={<ContactPage />} />
-            <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
-            <Route path="business-reporting" element={<BusinessReportingPage />} />
-            <Route path="marketing-plan-workshop" element={<MarketingPlanWorkshopPage />} />
-            <Route path="whitepaper" element={<WhitepaperPage />} />
-            {/* Redirect old blog URLs to external blog */}
-            <Route path="blog" element={<ExternalRedirect url="https://blog.beamxsolutions.com/" />} />
-            <Route path="blog/*" element={<ExternalRedirect url="https://blog.beamxsolutions.com/" />} />
-          </Route>
-        </Routes>
-      </ErrorBoundary>
-    </HelmetProvider>
+    <ErrorBoundary>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Layout isLoading={isLoading} />}>
+          <Route index element={<HomePage />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="services" element={<ServicesPage />} />
+          <Route path="products" element={<ProductsPage />} />
+          <Route path="products/:slug" element={<ProductsDetailPage />} />
+          <Route path="products/loan-approval-model" element={<LoanApprovalPredictor />} />
+          <Route path="products/beacon" element={<BeaconPage />} />
+          <Route path="products/beacon-assessment" element={<BeaconAssessment />} />
+          <Route path="products/beacon-pro-assessment" element={<BeaconProAssessment />} />
+          <Route path="products/luna/waitlist" element={<MarketingPlanWaitlist />} />
+          {/* Redirects from old /tools routes to /products */}
+          <Route path="tools" element={<Navigate to="/products" replace />} />
+          <Route path="tools/*" element={<Navigate to="/products" replace />} />
+          <Route path="contact" element={<ContactPage />} />
+          <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="business-reporting" element={<BusinessReportingPage />} />
+          <Route path="marketing-plan-workshop" element={<MarketingPlanWorkshopPage />} />
+          <Route path="whitepaper" element={<WhitepaperPage />} />
+          {/* Redirect old blog URLs to external blog */}
+          <Route path="blog" element={<ExternalRedirect url="https://blog.beamxsolutions.com/" />} />
+          <Route path="blog/*" element={<ExternalRedirect url="https://blog.beamxsolutions.com/" />} />
+        </Route>
+      </Routes>
+    </ErrorBoundary>
   );
 }
 

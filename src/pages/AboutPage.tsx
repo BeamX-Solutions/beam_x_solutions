@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async'; // Changed to react-helmet-async
+import Seo from '../components/Seo';
+import { ORGANIZATION_SCHEMA } from '../lib/siteConfig';
 import CountUp from 'react-countup';
 import SectionHeader from '../components/SectionHeader';
 import CTASection from '../components/CTASection';
@@ -68,9 +69,12 @@ const AboutPage: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>BeamX Solutions | About Us</title>
-      </Helmet>
+      <Seo
+        title="About BeamX Solutions | Data & AI Consultancy in Lagos"
+        description="Meet the BeamX Solutions team. We combine deep technical expertise with business acumen to deliver data and AI solutions that drive measurable growth."
+        path="/about"
+        jsonLd={ORGANIZATION_SCHEMA}
+      />
       {/* Hero Section */}
       <section
         className={`relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden ${
@@ -80,8 +84,14 @@ const AboutPage: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-primary z-0" />
         <div className="container-custom relative z-10">
           <div className="max-w-3xl mx-auto text-center min-h-[150px]">
+            {/* The h1 stays in the DOM throughout so crawlers and screen
+                readers always find it; during the intro phrases it is only
+                visually hidden, and it becomes visible moments later. */}
+            <h1 className={showFinalHeader ? 'text-white mb-6' : 'sr-only'}>
+              About Us
+            </h1>
             {!showFinalHeader ? (
-              <motion.h2
+              <motion.p
                 key={phrases[currentIndex]}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -90,16 +100,15 @@ const AboutPage: React.FC = () => {
                 className="text-white text-3xl md:text-4xl font-bold leading-snug"
               >
                 {phrases[currentIndex]}
-              </motion.h2>
+              </motion.p>
             ) : (
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                <h1 className="text-white mb-6">About Us</h1>
                 <p className="text-gray-100 text-lg mb-8">
-                  We're passionate about helping businesses leverage data to drive growth, 
+                  We're passionate about helping businesses leverage data to drive growth,
                   innovation, and competitive advantage.
                 </p>
               </motion.div>
@@ -108,9 +117,10 @@ const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Render other sections and footer only when animation is complete */}
-      {showFinalHeader && (
-        <>
+      {/* Body content renders unconditionally. It used to be gated behind the
+          6s intro animation, which meant crawlers (and anyone who left early)
+          got an effectively empty page. */}
+      <>
           {/* Mission, Vision & Goal Section */}
           <section className="section bg-white">
             <div className="container-custom">
@@ -336,8 +346,7 @@ const AboutPage: React.FC = () => {
             secondaryButtonText="Explore Services"
             secondaryButtonHref="/services"
           />
-        </>
-      )}
+      </>
     </>
   );
 };

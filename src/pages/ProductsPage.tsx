@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 import { NavLink, useNavigate } from 'react-router-dom';
 import SectionHeader from '../components/SectionHeader';
 import Button from '../components/Button';
@@ -90,9 +90,11 @@ const ProductsPage: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>BeamX Solutions | Products</title>
-      </Helmet>
+      <Seo
+        title="Products & Success Stories | BeamX Solutions"
+        description="Explore BeamX products — Beacon, Stellar and Luna — plus real client success stories showing how our data and AI work delivers measurable results."
+        path="/products"
+      />
       <section className="relative pt-32 pb-20 md:pt-36 md:pb-12 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-primary bg-opacity-75 z-0" />
         <div className="container-custom mx-auto px-4 sm:px-6 relative z-10">

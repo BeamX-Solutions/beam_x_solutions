@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation, useNavigate, NavLink } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
+import { ORGANIZATION_SCHEMA } from '../lib/siteConfig';
 import { motion } from 'framer-motion';
 import { BarChart3, BrainCircuit, Database, LineChart, Server, Clock, User } from 'lucide-react';
 import Button from '../components/Button';
@@ -139,9 +140,20 @@ const HomePage: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>BeamX Solutions | Home</title>
-      </Helmet>
+      <Seo
+        title="BeamX Solutions | Data Analytics & AI Consulting"
+        description="BeamX Solutions provides expert data strategy, business intelligence, and AI consulting to help businesses unlock their data's potential and drive growth."
+        path="/"
+        jsonLd={[
+          ORGANIZATION_SCHEMA,
+          {
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: 'BeamX Solutions',
+            url: 'https://beamxsolutions.com',
+          },
+        ]}
+      />
 
       {/* Notification Banner */}
       {showNotification && (

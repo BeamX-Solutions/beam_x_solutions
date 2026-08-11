@@ -1,7 +1,11 @@
 User-agent: *
-Disallow: /api/
-Disallow: /tools/loan-approval-predictor/results/
-Disallow: /tools/business-assessment/results/
-Disallow: /tools/advanced-business-assessment/results/
 Allow: /
-Sitemap: https://www.beamxsolutions.com/sitemap.xml
+
+# Serverless endpoints, not content
+Disallow: /api/
+Disallow: /.netlify/
+
+# Transactional pages with no standalone search value
+Disallow: /products/luna/waitlist
+
+Sitemap: https://beamxsolutions.com/sitemap.xml

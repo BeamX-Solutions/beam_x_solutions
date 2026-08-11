@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 import { CheckCircle, Star, ChevronDown } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import CTASection from '../components/CTASection';
@@ -96,10 +96,12 @@ const BusinessReportingPage: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>BeamX Solutions | Business Reporting</title>
-        <meta name="description" content="Transform your data into actionable insights with BeamX's Business Reporting service. Get real-time dashboards, expert reports, and AI-driven answers." />
-      </Helmet>
+      <Seo
+        title="Business Reporting & Dashboards | BeamX Solutions"
+        description="Transform your data into actionable insights with BeamX's Business Reporting service. Get real-time dashboards, expert reports, and AI-driven answers."
+        path="/business-reporting"
+        image="/Dashboard.png"
+      />
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-36 md:pb-12 overflow-hidden">

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 import { CheckCircle, TrendingUp, Target, BarChart3, Users } from 'lucide-react';
 import Button from '../components/Button';
 import CTASection from '../components/CTASection';
@@ -85,10 +85,13 @@ const MarketingPlanWaitlist: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>AI Marketing Plan Generator - Coming Soon | BeamX Solutions</title>
-        <meta name="description" content="Join the waitlist for BeamX Solutions' AI Marketing Plan Generator. Get comprehensive, data-driven marketing strategies tailored to your business." />
-      </Helmet>
+      <Seo
+        title="AI Marketing Plan Generator — Waitlist | BeamX Solutions"
+        description="Join the waitlist for BeamX Solutions' AI Marketing Plan Generator. Get comprehensive, data-driven marketing strategies tailored to your business."
+        path="/products/luna/waitlist"
+        image="/luna-banner.png"
+        noindex
+      />
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-36 md:pb-12 overflow-hidden">

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 import { TrendingUp, ClipboardList, Target, LayoutDashboard, FileText, Bot, ChevronDown, ArrowRight, Calendar } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import CTASection from '../components/CTASection';
@@ -91,9 +91,11 @@ const ServicesPage: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>BeamX Solutions | Services</title>
-      </Helmet>
+      <Seo
+        title="Data & AI Services | BeamX Solutions"
+        description="Data strategy, business intelligence, analytics engineering and AI consulting. BeamX Solutions builds the data foundations that let your business act with confidence."
+        path="/services"
+      />
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-36 md:pb-12 overflow-hidden">

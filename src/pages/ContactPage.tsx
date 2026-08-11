@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
+import { ORGANIZATION_SCHEMA } from '../lib/siteConfig';
 import { MapPin, Mail, Phone, Clock, ChevronDown } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import TurnstileWidget, { TurnstileHandle } from '../components/TurnstileWidget';
@@ -120,9 +121,12 @@ const ContactPage: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>BeamX Solutions | Contact Us</title>
-      </Helmet>
+      <Seo
+        title="Contact BeamX Solutions | Data & AI Consulting"
+        description="Get in touch with BeamX Solutions. Based in Victoria Island, Lagos, we help businesses turn data into decisions. Call +234 816 471 1076 or send us a message."
+        path="/contact"
+        jsonLd={ORGANIZATION_SCHEMA}
+      />
       
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 import { CheckCircle, Calendar, Video, FileText, Users } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import CTASection from '../components/CTASection';
@@ -38,10 +38,11 @@ const MarketingPlanWorkshopPage: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>BeamX Solutions | Marketing Plan Workshop</title>
-        <meta name="description" content="A 60-minute live session with Obinna Nweke to build a personalized marketing plan for your business, powered by BeamX Luna." />
-      </Helmet>
+      <Seo
+        title="Marketing Plan Workshop | BeamX Solutions"
+        description="A 60-minute live session with Obinna Nweke to build a personalized marketing plan for your business, powered by BeamX Luna."
+        path="/marketing-plan-workshop"
+      />
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-36 md:pb-12 overflow-hidden">

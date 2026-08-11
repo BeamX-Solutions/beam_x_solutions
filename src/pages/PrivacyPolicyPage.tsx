@@ -1,15 +1,16 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 import { motion } from 'framer-motion';
 import CTASection from '../components/CTASection';
 
 const PrivacyPolicyPage: React.FC = () => {
   return (
     <>
-      <Helmet>
-        <title>Privacy Policy - BeamX Solutions</title>
-        <meta name="description" content="Learn about BeamX Solutions' privacy policy, detailing how we handle your data with care and transparency." />
-      </Helmet>
+      <Seo
+        title="Privacy Policy | BeamX Solutions"
+        description="Learn about BeamX Solutions' privacy policy, detailing how we handle your data with care and transparency."
+        path="/privacy-policy"
+      />
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-36 md:pb-12 overflow-hidden">

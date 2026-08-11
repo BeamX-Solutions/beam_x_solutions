@@ -1,18 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 import { ArrowRight, Check } from 'lucide-react';
 
 const BeaconLandingPage: React.FC = () => {
   return (
     <>
-      <Helmet>
-        <title>Beacon - Business Assessment Tools | BeamX Solutions</title>
-        <meta
-          name="description"
-          content="Discover where your business stands and get actionable insights to grow. Choose from our free assessment or go deeper with Beacon Pro."
-        />
-      </Helmet>
+      <Seo
+        title="Beacon — Free Business Assessment Tool | BeamX Solutions"
+        description="Discover where your business stands and get actionable insights to grow. Choose from our free assessment or go deeper with Beacon Pro."
+        path="/products/beacon"
+        image="/beacon-banner.png"
+      />
 
       {/* Hero Section - Clean & Bold */}
       <section className="relative min-h-[90vh] flex items-center bg-gradient-primary overflow-hidden">

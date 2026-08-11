@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 import { FileText, CheckCircle, Download, Eye, BarChart3, Brain, Target, Shield } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import Button from '../components/Button';
@@ -105,10 +105,12 @@ const WhitepaperPage: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>White Paper: Blending Instinct with Intelligence | BeamX Solutions</title>
-        <meta name="description" content="Download the BeamX white paper on how AI-powered tools are reshaping SME growth in African markets." />
-      </Helmet>
+      <Seo
+        title="White Paper: Blending Instinct with Intelligence | BeamX Solutions"
+        description="Download the BeamX white paper on how AI-powered tools are reshaping SME growth in African markets."
+        path="/whitepaper"
+        type="article"
+      />
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-36 md:pb-12 overflow-hidden">
