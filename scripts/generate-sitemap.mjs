@@ -10,8 +10,11 @@ import { SITE_URL, sitemapRoutes } from './routes.mjs';
 
 const outDir = process.argv[2] || 'dist';
 
-// Prefer the real commit date in CI so lastmod reflects content, not build time.
-const lastmod = (process.env.COMMIT_REF_DATE || new Date().toISOString()).slice(0, 10);
+// Build date. Netlify exposes COMMIT_REF (a SHA) but no commit date, so this
+// is deploy time rather than true content-change time. That is still far more
+// honest than the hardcoded date this replaced; if lastmod accuracy starts to
+// matter, derive it per-route from git log.
+const lastmod = new Date().toISOString().slice(0, 10);
 
 const urls = sitemapRoutes
   .map(({ path, priority, changefreq }) => {
