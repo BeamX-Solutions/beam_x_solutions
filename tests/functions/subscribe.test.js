@@ -80,6 +80,13 @@ describe('subscribe function', () => {
     expect(email.html).not.toContain('evil.example.com');
   });
 
+  it('accepts a subscription without a last name', async () => {
+    const res = await handler(postEvent({ firstName: 'Ada', email: 'ada@b.com' }));
+    expect(res.statusCode).toBe(200);
+    const [email] = sentEmails(fetchStub);
+    expect(email.html).toContain('Hello Ada,');
+  });
+
   it('escapes HTML in names in the confirmation email', async () => {
     const res = await handler(
       postEvent({ firstName: '<b>X</b>', lastName: 'Y', email: 'x@y.com' })
