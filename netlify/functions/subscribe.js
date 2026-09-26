@@ -60,10 +60,12 @@ exports.handler = async (event) => {
     };
   }
 
-  if (!firstName || !lastName || String(firstName).length > 100 || String(lastName).length > 100) {
+  // Last name is optional: the site-wide opt-in prompt only asks for a first name.
+  lastName = lastName || '';
+  if (!firstName || String(firstName).length > 100 || String(lastName).length > 100) {
     return {
       statusCode: 400,
-      body: JSON.stringify({ message: 'First name and last name are required' }),
+      body: JSON.stringify({ message: 'First name is required' }),
     };
   }
 
@@ -163,7 +165,7 @@ exports.handler = async (event) => {
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
             <img src="https://beamxsolutions.com/Beamx-Logo-Colour3.jpg" alt="BeamX Solutions Logo" style="max-width: 200px; display: block; margin: 0 auto 20px;">
             <h1 style="color: #333; text-align: center;">Confirm Your Subscription</h1>
-            <p style="color: #555; line-height: 1.6;">Hello ${escapeHtml(firstName)} ${escapeHtml(lastName)},</p>
+            <p style="color: #555; line-height: 1.6;">Hello ${escapeHtml(`${firstName} ${lastName}`.trim())},</p>
             <p style="color: #555; line-height: 1.6;">Thank you for signing up for the BeamX Solutions newsletter! Please confirm your subscription by clicking the button below.</p>
             <p style="text-align: center; margin: 30px 0;">
               <a href="${confirmationUrl}" style="display: inline-block; background-color: #0066cc; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold;">Confirm Subscription</a>
