@@ -67,6 +67,30 @@ describe('send-email function', () => {
     expect(sentEmails(fetchStub)).toHaveLength(0);
   });
 
+  it('silently drops random-letter spam messages', async () => {
+    const res = await handler(
+      postEvent({
+        name: 'Gjrilg Eeurnfe',
+        email: 'someone@example.edu',
+        company: 'Hexdfk LLC',
+        message: 'emCwMEYevilBGDMjEfV',
+      })
+    );
+    expect(res.statusCode).toBe(200);
+    expect(sentEmails(fetchStub)).toHaveLength(0);
+  });
+
+  it.each([
+    'Hi, I would like a quote for a Power BI dashboard.',
+    'Interested',
+    'https://example.com/ourCompanyDataNeedsHelp',
+    'PowerBI',
+  ])('still delivers real messages: %s', async (message) => {
+    const res = await handler(postEvent({ name: 'Ada Obi', email: 'a@b.com', message }));
+    expect(res.statusCode).toBe(200);
+    expect(sentEmails(fetchStub)).toHaveLength(1);
+  });
+
   it('sends the email and escapes HTML in user input', async () => {
     const res = await handler(
       postEvent({
