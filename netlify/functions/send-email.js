@@ -10,6 +10,17 @@ const escapeHtml = (value) =>
     "'": '&#39;',
   }[ch]));
 
+// Some bots get past Turnstile (e.g. via paid solving services) and fill the
+// form with random letters, like the message "emCwMEYevilBGDMjEfV". Real
+// messages have spaces; a long single token with several lower-to-upper case
+// flips mid-word is a strong spam signal. URLs and emails are left alone.
+const looksLikeGibberish = (text) => {
+  const value = String(text ?? '').trim();
+  if (value.length < 12 || /\s/.test(value) || /[@./:]/.test(value)) return false;
+  const caseFlips = (value.match(/[a-z][A-Z]/g) || []).length;
+  return caseFlips >= 3;
+};
+
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return {
@@ -42,6 +53,15 @@ exports.handler = async (event) => {
       return {
         statusCode: 400,
         body: JSON.stringify({ error: 'Invalid email address' }),
+      };
+    }
+
+    // Answer as if it worked so the bot has no signal to adapt to.
+    if (looksLikeGibberish(message)) {
+      console.warn('Dropped likely spam contact submission (gibberish message).');
+      return {
+        statusCode: 200,
+        body: JSON.stringify({ message: 'Email sent successfully' }),
       };
     }
 
