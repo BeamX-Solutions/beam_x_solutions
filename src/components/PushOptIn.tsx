@@ -151,7 +151,7 @@ const PushOptIn: React.FC = () => {
           <div className="flex items-start gap-3 pr-6">
             <Bell className="h-6 w-6 text-primary flex-shrink-0 mt-0.5" />
             <div>
-              <h2 id="push-optin-title" className="font-semibold text-gray-900">
+              <h2 id="push-optin-title" className="text-lg md:text-lg font-semibold text-gray-900">
                 Stay in the loop with BeamX
               </h2>
               <p className="text-sm text-gray-600 mt-1">
