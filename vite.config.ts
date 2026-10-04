@@ -4,9 +4,10 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react()],
-  optimizeDeps: {
-    exclude: ['lucide-react'],
-  },
+  // lucide-react is deliberately NOT excluded from optimizeDeps. Excluded, the
+  // dev server loads every icon as its own file, and privacy blockers (Firefox
+  // tracking protection, uBlock) block icons/fingerprint.js by name, which
+  // fails the whole module graph and leaves a white screen in dev.
   ssr: {
     // Bundle every dependency into the prerender build. Several UI packages
     // (and their transitive deps) are CommonJS; left external, Node's ESM
