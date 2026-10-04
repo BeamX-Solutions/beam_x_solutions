@@ -33,7 +33,7 @@ const renderOptIn = (path = '/') =>
     </MemoryRouter>
   );
 
-const waitForPrompt = () => act(() => vi.advanceTimersByTime(20_000));
+const waitForPrompt = () => act(() => vi.advanceTimersByTime(4_000));
 
 describe('PushOptIn', () => {
   beforeEach(() => {
@@ -53,6 +53,14 @@ describe('PushOptIn', () => {
     waitForPrompt();
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     expect(initOneSignal).toHaveBeenCalled();
+  });
+
+  it('opens early on exit intent', () => {
+    renderOptIn();
+    act(() => {
+      document.dispatchEvent(new MouseEvent('mouseout', { clientY: 0, relatedTarget: null }));
+    });
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
   });
 
   it('does not show for someone who already subscribed', () => {
@@ -75,21 +83,24 @@ describe('PushOptIn', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
-  it('requests push and subscribes the email in one submit', async () => {
+  it('requests push and subscribes the name and email in one submit', async () => {
     renderOptIn();
     waitForPrompt();
     vi.useRealTimers();
 
-    fireEvent.change(screen.getByPlaceholderText('First name'), { target: { value: 'Ada' } });
-    fireEvent.change(screen.getByPlaceholderText('Your email'), {
+    fireEvent.change(screen.getByPlaceholderText('Your name'), {
+      target: { value: ' Ada  Obi Nwosu ' },
+    });
+    fireEvent.change(screen.getByPlaceholderText('Enter your email address'), {
       target: { value: 'ada@b.com' },
     });
-    fireEvent.click(screen.getByRole('button', { name: 'Subscribe' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Get Updates' }));
 
     expect(requestPushWithEmail).toHaveBeenCalledWith('ada@b.com', 'Ada');
     await waitFor(() =>
       expect(mockedAxios.post).toHaveBeenCalledWith('/.netlify/functions/subscribe', {
         firstName: 'Ada',
+        lastName: 'Obi Nwosu',
         email: 'ada@b.com',
         turnstileToken: 'test-token',
       })
@@ -98,10 +109,29 @@ describe('PushOptIn', () => {
     expect(window.localStorage.getItem('bx_optin')).toBe('subscribed');
   });
 
-  it('remembers a dismissal', () => {
+  it('asks for a name when only spaces are entered', () => {
     renderOptIn();
     waitForPrompt();
-    fireEvent.click(screen.getByText('No thanks'));
+    fireEvent.change(screen.getByPlaceholderText('Your name'), { target: { value: '   ' } });
+    fireEvent.change(screen.getByPlaceholderText('Enter your email address'), {
+      target: { value: 'ada@b.com' },
+    });
+    fireEvent.submit(screen.getByRole('button', { name: 'Get Updates' }).closest('form')!);
+    expect(screen.getByText('Please enter your name.')).toBeInTheDocument();
+    expect(mockedAxios.post).not.toHaveBeenCalled();
+  });
+
+  it('closes on Escape and remembers the dismissal', () => {
+    renderOptIn();
+    waitForPrompt();
+    fireEvent.keyDown(document, { key: 'Escape' });
+    expect(Number(window.localStorage.getItem('bx_optin'))).toBeGreaterThan(0);
+  });
+
+  it('remembers a "No thanks" dismissal', () => {
+    renderOptIn();
+    waitForPrompt();
+    fireEvent.click(screen.getByText(/No thanks/));
     expect(Number(window.localStorage.getItem('bx_optin'))).toBeGreaterThan(0);
   });
 });

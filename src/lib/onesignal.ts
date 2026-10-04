@@ -30,19 +30,23 @@ declare global {
   }
 }
 
+// The OneSignal app only accepts its configured Site URL and throws on any
+// other origin (localhost, deploy previews), so the SDK is only loaded there.
+// The popup still works elsewhere; it just skips the push part.
+const PUSH_HOSTNAME = 'beamxsolutions.com';
+const isPushHost = (): boolean =>
+  typeof window !== 'undefined' && window.location.hostname === PUSH_HOSTNAME;
+
 let initialized = false;
 
 /** Loads the SDK and initializes it once. Safe to call repeatedly. */
 export const initOneSignal = (): void => {
-  if (typeof window === 'undefined' || initialized) return;
+  if (!isPushHost() || initialized) return;
   initialized = true;
 
   window.OneSignalDeferred = window.OneSignalDeferred || [];
   window.OneSignalDeferred.push(async (OneSignal) => {
-    await OneSignal.init({
-      appId: APP_ID,
-      allowLocalhostAsSecureOrigin: window.location.hostname === 'localhost',
-    });
+    await OneSignal.init({ appId: APP_ID });
   });
 
   const script = document.createElement('script');
@@ -52,7 +56,7 @@ export const initOneSignal = (): void => {
 };
 
 const withOneSignal = (fn: Deferred): void => {
-  if (typeof window === 'undefined') return;
+  if (!isPushHost()) return;
   initOneSignal();
   window.OneSignalDeferred!.push(fn);
 };
@@ -74,10 +78,10 @@ export const isPushSupported = (): boolean =>
  * Call this synchronously from the click handler: Safari and Firefox only show
  * the permission dialog in response to a user gesture.
  */
-export const requestPushWithEmail = (email: string, firstName: string): void => {
+export const requestPushWithEmail = (email: string, firstName?: string): void => {
   withOneSignal(async (OneSignal) => {
     OneSignal.User.addEmail(email);
-    OneSignal.User.addTag('first_name', firstName);
+    if (firstName) OneSignal.User.addTag('first_name', firstName);
     OneSignal.User.addTag('source', 'site_optin');
     if (isPushSupported() && !OneSignal.Notifications.permission) {
       await OneSignal.Notifications.requestPermission();

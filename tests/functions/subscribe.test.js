@@ -40,8 +40,15 @@ describe('subscribe function', () => {
     expect(res.statusCode).toBe(400);
   });
 
-  it('rejects missing names', async () => {
+  it('accepts an email-only subscription from the newsletter popup', async () => {
     const res = await handler(postEvent({ email: 'a@b.com' }));
+    expect(res.statusCode).toBe(200);
+    const [email] = sentEmails(fetchStub);
+    expect(email.html).toContain('Hello,');
+  });
+
+  it('rejects overly long names', async () => {
+    const res = await handler(postEvent({ firstName: 'x'.repeat(101), email: 'a@b.com' }));
     expect(res.statusCode).toBe(400);
   });
 

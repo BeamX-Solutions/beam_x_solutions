@@ -21,6 +21,7 @@ interface TurnstileApi {
       'expired-callback'?: () => void;
       'error-callback'?: () => void;
       theme?: 'light' | 'dark' | 'auto';
+      appearance?: 'always' | 'execute' | 'interaction-only';
     }
   ) => string;
   reset: (widgetId?: string) => void;
@@ -70,10 +71,15 @@ interface TurnstileWidgetProps {
   /** Fires with a token when the check passes, and with '' when it lapses. */
   onVerify: (token: string) => void;
   className?: string;
+  /**
+   * 'interaction-only' keeps the widget invisible unless Cloudflare needs the
+   * visitor to click something. Defaults to Cloudflare's visible widget.
+   */
+  appearance?: 'always' | 'interaction-only';
 }
 
 const TurnstileWidget = React.forwardRef<TurnstileHandle, TurnstileWidgetProps>(
-  ({ onVerify, className }, ref) => {
+  ({ onVerify, className, appearance = 'always' }, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const widgetIdRef = useRef<string | null>(null);
     const onVerifyRef = useRef(onVerify);
@@ -105,8 +111,9 @@ const TurnstileWidget = React.forwardRef<TurnstileHandle, TurnstileWidgetProps>(
         'expired-callback': () => onVerifyRef.current(''),
         'error-callback': () => onVerifyRef.current(''),
         theme: 'light',
+        appearance,
       });
-    }, []);
+    }, [appearance]);
 
     useEffect(() => {
       let cancelled = false;
