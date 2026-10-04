@@ -51,8 +51,10 @@ const HomePage: React.FC = () => {
     const confirmed = urlParams.get('confirmed');
     const name = urlParams.get('name');
     
-    if (confirmed === 'true' && name) {
-      setNotificationMessage(`Welcome to BeamX Solutions, ${decodeURIComponent(name)}! Your subscription is confirmed and you'll receive our latest insights and updates.`);
+    // The newsletter popup only asks for an email, so the name may be empty.
+    if (confirmed === 'true') {
+      const greeting = name ? `, ${decodeURIComponent(name)}` : '';
+      setNotificationMessage(`Welcome to BeamX Solutions${greeting}! Your subscription is confirmed and you'll receive our latest insights and updates.`);
       setShowNotification(true);
       
       // Clean up URL parameters

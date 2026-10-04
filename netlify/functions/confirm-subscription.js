@@ -85,8 +85,8 @@ exports.handler = async (event) => {
       };
     }
 
-    // Last name is optional (the site-wide opt-in prompt only asks for a first name).
-    const fullName = `${pendingSubscription.first_name} ${pendingSubscription.last_name || ''}`.trim();
+    // Names are optional (the site-wide newsletter popup only asks for an email).
+    const fullName = `${pendingSubscription.first_name || ''} ${pendingSubscription.last_name || ''}`.trim();
 
     // Add to Resend audience
     const audienceResponse = await retryOnRateLimit(() =>
@@ -120,7 +120,7 @@ exports.handler = async (event) => {
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
             <img src="https://beamxsolutions.com/Beamx-Logo-Colour3.jpg" alt="BeamX Solutions Logo" style="max-width: 200px; display: block; margin: 0 auto 20px;">
-            <h1 style="color: #333; text-align: center;">Welcome, ${fullName}!</h1>
+            <h1 style="color: #333; text-align: center;">Welcome${fullName ? `, ${fullName}` : ''}!</h1>
             <p style="color: #555; line-height: 1.6;">Thank you for joining the BeamX Solutions community! We're thrilled to have you on board. Our newsletter will keep you updated with the latest insights, trends, and innovations in data analytics, artificial intelligence, and digital transformation.</p>
             <p style="color: #555; line-height: 1.6;">Here's what you can expect:</p>
             <ul style="color: #555; line-height: 1.6;">

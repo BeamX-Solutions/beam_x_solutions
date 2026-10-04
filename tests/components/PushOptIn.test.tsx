@@ -33,7 +33,7 @@ const renderOptIn = (path = '/') =>
     </MemoryRouter>
   );
 
-const waitForPrompt = () => act(() => vi.advanceTimersByTime(20_000));
+const waitForPrompt = () => act(() => vi.advanceTimersByTime(4_000));
 
 describe('PushOptIn', () => {
   beforeEach(() => {
@@ -53,6 +53,14 @@ describe('PushOptIn', () => {
     waitForPrompt();
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     expect(initOneSignal).toHaveBeenCalled();
+  });
+
+  it('opens early on exit intent', () => {
+    renderOptIn();
+    act(() => {
+      document.dispatchEvent(new MouseEvent('mouseout', { clientY: 0, relatedTarget: null }));
+    });
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
   });
 
   it('does not show for someone who already subscribed', () => {
@@ -80,16 +88,14 @@ describe('PushOptIn', () => {
     waitForPrompt();
     vi.useRealTimers();
 
-    fireEvent.change(screen.getByPlaceholderText('First name'), { target: { value: 'Ada' } });
-    fireEvent.change(screen.getByPlaceholderText('Your email'), {
+    fireEvent.change(screen.getByPlaceholderText('Enter your email address'), {
       target: { value: 'ada@b.com' },
     });
-    fireEvent.click(screen.getByRole('button', { name: 'Subscribe' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Get Updates' }));
 
-    expect(requestPushWithEmail).toHaveBeenCalledWith('ada@b.com', 'Ada');
+    expect(requestPushWithEmail).toHaveBeenCalledWith('ada@b.com');
     await waitFor(() =>
       expect(mockedAxios.post).toHaveBeenCalledWith('/.netlify/functions/subscribe', {
-        firstName: 'Ada',
         email: 'ada@b.com',
         turnstileToken: 'test-token',
       })
@@ -98,10 +104,17 @@ describe('PushOptIn', () => {
     expect(window.localStorage.getItem('bx_optin')).toBe('subscribed');
   });
 
-  it('remembers a dismissal', () => {
+  it('closes on Escape and remembers the dismissal', () => {
     renderOptIn();
     waitForPrompt();
-    fireEvent.click(screen.getByText('No thanks'));
+    fireEvent.keyDown(document, { key: 'Escape' });
+    expect(Number(window.localStorage.getItem('bx_optin'))).toBeGreaterThan(0);
+  });
+
+  it('remembers a "No thanks" dismissal', () => {
+    renderOptIn();
+    waitForPrompt();
+    fireEvent.click(screen.getByText(/No thanks/));
     expect(Number(window.localStorage.getItem('bx_optin'))).toBeGreaterThan(0);
   });
 });

@@ -74,10 +74,10 @@ export const isPushSupported = (): boolean =>
  * Call this synchronously from the click handler: Safari and Firefox only show
  * the permission dialog in response to a user gesture.
  */
-export const requestPushWithEmail = (email: string, firstName: string): void => {
+export const requestPushWithEmail = (email: string, firstName?: string): void => {
   withOneSignal(async (OneSignal) => {
     OneSignal.User.addEmail(email);
-    OneSignal.User.addTag('first_name', firstName);
+    if (firstName) OneSignal.User.addTag('first_name', firstName);
     OneSignal.User.addTag('source', 'site_optin');
     if (isPushSupported() && !OneSignal.Notifications.permission) {
       await OneSignal.Notifications.requestPermission();
