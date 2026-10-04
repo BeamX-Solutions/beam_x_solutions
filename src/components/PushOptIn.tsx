@@ -46,13 +46,14 @@ const shouldPrompt = (): boolean => {
 const PushOptIn: React.FC = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [isDone, setIsDone] = useState(false);
   const turnstileRef = useRef<TurnstileHandle>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     // Arriving from the confirmation link means they already subscribed.
@@ -104,7 +105,7 @@ const PushOptIn: React.FC = () => {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     document.addEventListener('keydown', onKeyDown);
-    emailRef.current?.focus();
+    nameRef.current?.focus();
     return () => {
       document.body.style.overflow = previousOverflow;
       document.removeEventListener('keydown', onKeyDown);
@@ -117,17 +118,31 @@ const PushOptIn: React.FC = () => {
     e.preventDefault();
     setMessage('');
 
+    if (!name.trim()) {
+      setMessage('Please enter your name.');
+      return;
+    }
+
     if (!turnstileToken) {
       setMessage('Just a moment, verifying you are human. Please try again.');
       return;
     }
 
+    // One "name" field, stored as first + last like the other signup forms.
+    const [firstName, ...rest] = name.trim().split(/\s+/);
+    const lastName = rest.join(' ');
+
     // Must run before any await so the browser treats it as a user gesture.
-    requestPushWithEmail(email);
+    requestPushWithEmail(email, firstName);
 
     setIsLoading(true);
     try {
-      await axios.post('/.netlify/functions/subscribe', { email, turnstileToken });
+      await axios.post('/.netlify/functions/subscribe', {
+        firstName,
+        lastName,
+        email,
+        turnstileToken,
+      });
       writeState('subscribed');
       setIsDone(true);
       window.setTimeout(() => setIsOpen(false), 6000);
@@ -206,12 +221,27 @@ const PushOptIn: React.FC = () => {
                   </p>
 
                   <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3">
+                    <label htmlFor="newsletter-popup-name" className="sr-only">
+                      Name
+                    </label>
+                    <input
+                      ref={nameRef}
+                      id="newsletter-popup-name"
+                      type="text"
+                      autoComplete="name"
+                      placeholder="Your name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      maxLength={100}
+                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary"
+                      required
+                    />
                     <label htmlFor="newsletter-popup-email" className="sr-only">
                       Email
                     </label>
                     <input
-                      ref={emailRef}
                       id="newsletter-popup-email"
+                      autoComplete="email"
                       type="email"
                       placeholder="Enter your email address"
                       value={email}
